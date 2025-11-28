@@ -1,0 +1,935 @@
+.carousel-container {
+    width: 100%;
+    position: relative;
+    margin: auto;
+    padding: 80px 40px;
+    background: transparent;
+}
+
+.carousel-wrapper {
+    display: none; /* legacy carousel no longer used */
+}
+
+/* New grid layout for separate tilted cards */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 26px; /* slightly wider info cards */
+    row-gap: 42px;    /* more space vertically */
+    align-items: flex-start;
+    justify-items: center;
+    margin-top: 20px;
+}
+
+.project-card-wrapper {
+    width: 100%;
+    max-width: 560px;
+    position: relative;
+    transition: transform 0.2s ease;
+}
+
+.project-card {
+    position: relative;
+    width: 100%;
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 26px 32px 34px;
+    box-shadow: 12px 12px 0px #000;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    border: 6px solid #000;
+    box-sizing: border-box;
+    overflow: visible;
+    z-index: 1;
+}
+
+.project-card.tilt-right {
+    transform: rotate(2deg);
+}
+
+.project-card.tilt-left {
+    transform: rotate(-2deg);
+}
+
+.project-card:hover {
+    transform: translateY(-4px) scale(1.01);
+}
+
+/* Paper pin at top center of each card */
+.paper-pin {
+    position: absolute;
+    top: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #ffeb3b;
+    border: 5px solid #000;
+    box-shadow: 0 5px 0 #000;
+    z-index: 3;
+}
+
+.paper-pin::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 7px;
+    height: 18px;
+    background: #000;
+    border-radius: 999px;
+    transform: translate(-50%, -10%);
+}
+
+/* Inner content scroll area for long descriptions */
+.card-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Optional: clean scrollbars for most browsers */
+.card-inner::-webkit-scrollbar {
+    width: 8px;
+}
+.card-inner::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.12);
+    border-radius: 6px;
+}
+.card-inner::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.card-inner {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0,0,0,0.12) transparent;
+}
+
+.project-card.center .card-inner {
+    animation: none;
+}
+
+/* Project Image */
+.project-image-container {
+    width: 100%;
+    height: 190px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fff;
+    margin-bottom: 20px;
+    border: 5px solid #000;
+    box-shadow: 6px 6px 0px #FF1744;
+    position: relative;
+}
+
+.project-image-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.03) 2px,
+        rgba(0,0,0,0.03) 4px
+    );
+    pointer-events: none;
+}
+
+.project-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.project-card:hover .project-image {
+    transform: scale(1.1) rotate(1deg);
+    filter: contrast(1.1);
+}
+
+.project-image-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    color: #9ca3af;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.project-image-placeholder svg {
+    opacity: 0.3;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    flex: 0 0 auto;
+}
+
+.title-section {
+    flex: 1;
+}
+
+.project-title {
+    font-size: 30px;
+    font-weight: 400;
+    color: #000000;
+    margin-bottom: 12px;
+    line-height: 1.1;
+    font-family: 'Bangers', cursive;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 3px 3px 0px #00E5FF;
+    animation: titleWiggle 3s ease-in-out infinite;
+}
+
+.project-description {
+    font-size: 14px;
+    color: #666666;
+    line-height: 1.6;
+    margin-bottom: 8px;
+    font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 10px 24px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 700;
+    white-space: nowrap;
+    font-family: 'Bangers', cursive;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 4px solid #000;
+    box-shadow: 4px 4px 0px #000;
+    animation: badgePop 2s ease-in-out infinite;
+}
+
+.status-live {
+    background: #76FF03;
+    color: #000;
+}
+
+.status-progress {
+    background: #FFD700;
+    color: #000;
+}
+
+.tech-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 16px 0;
+    flex: 0 0 auto;
+}
+
+.tech-badge {
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    border: 3px solid #000;
+    cursor: default;
+    transition: all 0.3s ease;
+    font-family: 'Roboto', sans-serif;
+    background: #fff;
+    color: #000;
+    box-shadow: 4px 4px 0px #000;
+    position: relative;
+}
+
+.tech-badge:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px #000;
+    background: #00E5FF;
+}
+
+.project-links {
+    display: flex;
+    gap: 12px;
+    margin-top: 12px;
+    margin-top: auto; /* push links to bottom of card */
+    margin-bottom: 12px; /* small gap from bottom */
+}
+
+.link-button {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 10px 18px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 700;
+    border: 4px solid #000;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+    box-shadow: 5px 5px 0px #000;
+    flex: 1;
+    justify-content: center;
+    text-transform: uppercase;
+}
+
+.git-link {
+    background: #000;
+    color: white;
+}
+
+.git-link:hover {
+    background: #000;
+    transform: translate(-2px, -2px);
+    box-shadow: 7px 7px 0px #000;
+}
+
+.live-link {
+    background: #00E5FF;
+    color: #000;
+}
+
+.live-link:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 7px 7px 0px #000;
+}
+
+.live-link:disabled {
+    background: #e5e7eb;
+    color: #666;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.details-button {
+    background: #FF1744;
+    color: #fff;
+    border: 4px solid #000;
+}
+
+.details-button:hover {
+    background: #FF1744;
+    transform: translate(-2px, -2px);
+    box-shadow: 7px 7px 0px #000;
+}
+
+.carousel-controls {
+    display: none;
+}
+
+.carousel-controls > * {
+    pointer-events: auto;
+}
+
+.nav-button {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 5px solid #000;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 6px 6px 0px #000;
+    transition: all 0.2s ease;
+    z-index: 10;
+}
+
+.nav-button:hover {
+    background: #00E5FF;
+    border-color: #000;
+    box-shadow: 8px 8px 0px #000;
+    transform: translate(-2px, -2px);
+}
+
+.nav-button:hover svg {
+    color: #000 !important;
+}
+
+.nav-button:active {
+    transform: scale(0.98);
+}
+
+.carousel-dots {
+    display: none;
+}
+
+.dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #fff;
+    border: 3px solid #000;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.dot.active {
+    background: #fff;
+    width: 40px;
+    border-radius: 8px;
+    box-shadow: 4px 4px 0px #000;
+    border: 3px solid #000;
+}
+
+.progress-bar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background: #00E5FF;
+    border-radius: 8px;
+    transition: width 0.05s linear;
+}
+
+.dot:hover:not(.active) {
+    background: #00E5FF;
+    transform: scale(1.2);
+}
+
+.section-header {
+    font-family: 'Bangers', cursive;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.section-header .section-title {
+    font-size: 56px;
+    color: #000;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-shadow: 4px 4px 0px #FF1744;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    animation: sectionTitleBounce 3s ease-in-out infinite;
+}
+
+.section-header .section-subtitle {
+    font-size: 18px;
+    margin-top: 10px;
+    margin-bottom: 2%;
+    font-family: 'Roboto', sans-serif;
+    color: #000;
+    font-weight: 600;
+}
+
+/* More Projects Section */
+.more-projects-section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 40px 40px;
+    margin-top: 50px;
+}
+
+.more-projects-content {
+    max-width: 600px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.more-projects-title {
+    font-size: 36px;
+    font-weight: 400;
+    color: #000;
+    margin: 0;
+    font-family: 'Bangers', cursive;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 3px 3px 0px #FFD700;
+}
+
+.more-projects-description {
+    font-size: 16px;
+    color: #000;
+    line-height: 1.6;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+}
+
+.github-profile-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 36px;
+    background: #000;
+    color: #ffffff;
+    border: 5px solid #000;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: 'Roboto', sans-serif;
+    text-decoration: none;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 6px 6px 0px #FF1744;
+    margin-top: 10px;
+}
+
+.github-profile-button:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 8px 8px 0px #FF1744;
+}
+
+.github-profile-button:active {
+    transform: translate(0, 0);
+    box-shadow: 4px 4px 0px #FF1744;
+}
+
+@media (max-width: 1024px) {
+    .carousel-container {
+        padding: 60px 30px;
+    }
+
+    .section-header .section-title {
+        font-size: 48px;
+    }
+
+    .section-header .section-subtitle {
+        font-size: 17px;
+    }
+
+    .projects-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: 22px;
+        row-gap: 36px;
+    }
+
+    .project-card {
+        padding: 22px 26px 30px;
+    }
+
+    .project-image-container {
+        height: 180px;
+    }
+
+    .project-title {
+        font-size: 28px;
+    }
+
+    .more-projects-section {
+        padding: 50px 30px 30px;
+    }
+
+    .more-projects-title {
+        font-size: 32px;
+    }
+
+    .more-projects-description {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .carousel-container {
+        padding: 50px 20px;
+    }
+
+    .section-header .section-title {
+        font-size: 42px;
+        gap: 12px;
+    }
+
+    .section-header .section-title svg {
+        width: 30px;
+        height: 30px;
+    }
+
+    .section-header .section-subtitle {
+        font-size: 16px;
+    }
+
+    .projects-grid {
+        grid-template-columns: minmax(0, 1fr);
+        column-gap: 0;
+        row-gap: 30px;
+    }
+
+    .project-card-wrapper {
+        max-width: 480px;
+        margin: 0 auto;
+    }
+
+    .paper-pin {
+        width: 30px;
+        height: 30px;
+        border: 4px solid #000;
+        top: -14px;
+    }
+
+    .paper-pin::after {
+        width: 6px;
+        height: 16px;
+    }
+
+    .project-card {
+        padding: 20px 20px 26px;
+        border: 5px solid #000;
+        box-shadow: 10px 10px 0px #000;
+    }
+
+    .project-card.tilt-right {
+        transform: rotate(0.5deg);
+    }
+
+    .project-card.tilt-left {
+        transform: rotate(-0.5deg);
+    }
+
+    .project-card.tilt-right:hover {
+        transform: translateY(-4px) scale(1.01) rotate(0.5deg);
+    }
+
+    .project-card.tilt-left:hover {
+        transform: translateY(-4px) scale(1.01) rotate(-0.5deg);
+    }
+
+    .project-image-container {
+        height: 170px;
+        border: 4px solid #000;
+        box-shadow: 5px 5px 0px #FF1744;
+        margin-bottom: 16px;
+    }
+
+    .project-title {
+        font-size: 26px;
+        text-shadow: 2px 2px 0px #00E5FF;
+    }
+
+    .project-description {
+        font-size: 14px;
+    }
+
+    .card-header {
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .status-badge {
+        padding: 8px 20px;
+        font-size: 13px;
+        border: 3px solid #000;
+        box-shadow: 3px 3px 0px #000;
+        align-self: flex-start;
+    }
+
+    .tech-stack {
+        margin: 12px 0;
+        gap: 10px;
+    }
+
+    .tech-badge {
+        padding: 7px 14px;
+        font-size: 13px;
+        border: 3px solid #000;
+        box-shadow: 3px 3px 0px #000;
+    }
+
+    .project-links {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .link-button {
+        width: 100%;
+        justify-content: center;
+        flex: none;
+        padding: 12px 20px;
+        font-size: 14px;
+        border: 3px solid #000;
+        box-shadow: 4px 4px 0px #000;
+    }
+
+    .nav-button {
+        width: 48px;
+        height: 48px;
+    }
+
+    .carousel-controls {
+        padding: 0 10px;
+    }
+
+    .more-projects-section {
+        padding: 40px 20px 30px;
+        margin-top: 30px;
+    }
+
+    .more-projects-content {
+        gap: 16px;
+    }
+
+    .more-projects-title {
+        font-size: 28px;
+    }
+
+    .more-projects-description {
+        font-size: 15px;
+    }
+
+    .github-profile-button {
+        padding: 14px 28px;
+        font-size: 15px;
+        border: 4px solid #000;
+        box-shadow: 5px 5px 0px #FF1744;
+    }
+}
+
+/* Comic-style Animations */
+@keyframes cardFloat {
+    0%, 100% {
+        transform: translateX(0) translateY(0) scale(1);
+    }
+    50% {
+        transform: translateX(0) translateY(-6px) scale(1);
+    }
+}
+
+@keyframes titleWiggle {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(-1deg);
+    }
+    50% {
+        transform: rotate(0deg);
+    }
+    75% {
+        transform: rotate(1deg);
+    }
+}
+
+@keyframes badgePop {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.08);
+    }
+}
+
+@keyframes sectionTitleBounce {
+    0%, 100% {
+        transform: translateY(0) rotate(-1deg);
+    }
+    50% {
+        transform: translateY(-6px) rotate(-1deg);
+    }
+}
+
+@media (max-width: 480px) {
+    .carousel-container {
+        padding: 40px 16px;
+    }
+
+    .section-header {
+        margin-bottom: 30px;
+    }
+
+    .section-header .section-title {
+        font-size: 32px;
+        gap: 10px;
+        letter-spacing: 2px;
+    }
+
+    .section-header .section-title svg {
+        width: 26px;
+        height: 26px;
+    }
+
+    .section-header .section-subtitle {
+        font-size: 14px;
+        margin-top: 8px;
+    }
+
+    .projects-grid {
+        row-gap: 25px;
+    }
+
+    .project-card-wrapper {
+        max-width: 100%;
+    }
+
+    .paper-pin {
+        width: 26px;
+        height: 26px;
+        border: 3px solid #000;
+        top: -12px;
+        box-shadow: 0 4px 0 #000;
+    }
+
+    .paper-pin::after {
+        width: 5px;
+        height: 14px;
+    }
+
+    .project-card {
+        padding: 16px 16px 22px;
+        border: 4px solid #000;
+        box-shadow: 8px 8px 0px #000;
+        gap: 14px;
+    }
+
+    .project-card.tilt-right {
+        transform: rotate(0.5deg);
+    }
+
+    .project-card.tilt-left {
+        transform: rotate(-0.5deg);
+    }
+
+    .project-card.tilt-right:hover {
+        transform: translateY(-4px) scale(1.01) rotate(0.5deg);
+    }
+
+    .project-card.tilt-left:hover {
+        transform: translateY(-4px) scale(1.01) rotate(-0.5deg);
+    }
+
+    .project-image-container {
+        height: 150px;
+        border: 3px solid #000;
+        box-shadow: 4px 4px 0px #FF1744;
+        margin-bottom: 14px;
+        border-radius: 10px;
+    }
+
+    .project-title {
+        font-size: 22px;
+        letter-spacing: 1px;
+        text-shadow: 2px 2px 0px #00E5FF;
+        margin-bottom: 10px;
+    }
+
+    .project-description {
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    .card-header {
+        gap: 12px;
+    }
+
+    .status-badge {
+        padding: 7px 16px;
+        font-size: 12px;
+        border: 3px solid #000;
+        box-shadow: 3px 3px 0px #000;
+        border-radius: 10px;
+    }
+
+    .tech-stack {
+        margin: 10px 0;
+        gap: 8px;
+    }
+
+    .tech-badge {
+        padding: 6px 12px;
+        font-size: 12px;
+        border: 2px solid #000;
+        box-shadow: 3px 3px 0px #000;
+        border-radius: 6px;
+    }
+
+    .tech-badge:hover {
+        box-shadow: 4px 4px 0px #000;
+    }
+
+    .project-links {
+        gap: 8px;
+        margin-top: 8px;
+    }
+
+    .link-button {
+        padding: 10px 18px;
+        font-size: 13px;
+        border: 3px solid #000;
+        box-shadow: 4px 4px 0px #000;
+        gap: 7px;
+        border-radius: 10px;
+    }
+
+    .link-button svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    .link-button:hover {
+        box-shadow: 5px 5px 0px #000;
+    }
+
+    .nav-button {
+        width: 44px;
+        height: 44px;
+    }
+
+    .nav-button svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .carousel-controls {
+        padding: 0 5px;
+    }
+
+    .more-projects-section {
+        padding: 30px 16px 20px;
+        margin-top: 25px;
+    }
+
+    .more-projects-content {
+        gap: 14px;
+    }
+
+    .more-projects-title {
+        font-size: 24px;
+        letter-spacing: 1px;
+    }
+
+    .more-projects-description {
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+    .github-profile-button {
+        padding: 12px 24px;
+        font-size: 14px;
+        gap: 8px;
+        border: 4px solid #000;
+        box-shadow: 5px 5px 0px #FF1744;
+        border-radius: 10px;
+    }
+
+    .github-profile-button svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    .github-profile-button:hover {
+        box-shadow: 6px 6px 0px #FF1744;
+    }
+}

@@ -1,0 +1,22 @@
+/* Portfolio Page Styles */
+
+/* Add padding top to account for fixed navbar */
+body {
+  padding-top: 0;
+  margin: 0;
+}
+
+/* Section spacing to account for navbar */
+section {
+  scroll-margin-top: 80px; /* Offset for fixed navbar */
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Prevent horizontal scroll */
+body {
+  overflow-x: hidden;
+}

@@ -1,0 +1,43 @@
+/* Comic Separator Styles */
+
+.comic-separator-wrapper {
+  position: relative;
+  width: 100%;
+  height: 120px;
+  overflow: hidden;
+  background: transparent;
+  z-index: 5;
+  margin: 0;
+  padding: 0;
+}
+
+.comic-separator-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Comic lined background */
+.comic-lines {
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.03) 2px,
+    rgba(0, 0, 0, 0.03) 4px
+  );
+  pointer-events: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .comic-separator-wrapper {
+    height: 80px;
+  }
+}
+

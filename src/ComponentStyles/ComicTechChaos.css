@@ -1,0 +1,617 @@
+/* ComicTechChaos Component Styles */
+
+/* Main Container */
+.comic-tech-container {
+  min-height: 100vh;
+  background: transparent;
+  position: relative;
+  font-family: 'Roboto', sans-serif;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 4rem;
+}
+
+.comic-tech-container::selection {
+  background: #000;
+  color: #FFE135;
+}
+
+/* Background Texture */
+.comic-tech-bg-texture {
+  display: none;
+}
+
+/* Header Section */
+.comic-tech-header {
+  position: relative;
+  z-index: 50;
+  padding-top: 1.5rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+  .comic-tech-header {
+    padding-top: 2rem;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.comic-tech-title {
+  font-size: 2.5rem;
+  font-weight: 400;
+  color: #000;
+  font-family: 'Bangers', cursive;
+  text-transform: uppercase;
+  text-shadow: 
+    3px 3px 0px #FF1744,
+    6px 6px 0px #000;
+  letter-spacing: 2px;
+  margin-bottom: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .comic-tech-title {
+    font-size: 3.5rem;
+  }
+}
+
+.comic-tech-subtitle {
+  color: #000;
+  margin-top: 0.5rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-family: 'Titillium Web', sans-serif;
+  font-size: 0.9rem;
+}
+
+@media (min-width: 768px) {
+  .comic-tech-subtitle {
+    font-size: 1rem;
+  }
+}
+
+/* Comic Container */
+.comic-tech-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+  flex: 1;
+  padding: 0.5rem;
+  overflow: visible;
+}
+
+@media (min-width: 768px) {
+  .comic-tech-wrapper {
+    padding: 1rem;
+  }
+}
+
+/* Center Image */
+.comic-tech-image-placeholder {
+  position: absolute;
+  left: 49%;
+  transform: translate3d(-50%, -50%, 0) rotate(-2deg);
+  top: 0;
+  margin-top: 33%;
+  z-index: 30;
+  width: 45%;
+  max-width: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  background: #fff;
+  border: 6px solid #000;
+  border-radius: 20px;
+  box-shadow: 
+    8px 8px 0px #000,
+    inset 0 0 0 3px #fff,
+    inset 0 0 0 6px #FF1744;
+  position: relative;
+  animation: comicFloat 6s ease-in-out infinite;
+  animation-fill-mode: both;
+    will-change: transform, top;
+    animation-play-state: paused; /* don't run until we are hydrated */
+    transition: top 450ms cubic-bezier(0.22, 1, 0.36, 1), transform 400ms ease;
+}
+
+@media (min-width: 768px) {
+  .comic-tech-image-placeholder {
+    width: 28%;
+    max-width: 230px;
+    padding: 18px;
+    border: 8px solid #000;
+    box-shadow: 
+      10px 10px 0px #000,
+      inset 0 0 0 4px #fff,
+      inset 0 0 0 8px #FF1744;
+  }
+}
+
+/* Comic corner badges */
+.comic-tech-image-placeholder::before,
+.comic-tech-image-placeholder::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: #FFE135;
+  border: 3px solid #000;
+  transform: rotate(45deg);
+}
+
+.comic-tech-image-placeholder::before {
+  top: -10px;
+  left: -10px;
+}
+
+.comic-tech-image-placeholder::after {
+  bottom: -10px;
+  right: -10px;
+}
+
+@media (min-width: 768px) {
+  .comic-tech-image-placeholder::before,
+  .comic-tech-image-placeholder::after {
+    width: 25px;
+    height: 25px;
+  }
+  
+  .comic-tech-image-placeholder::before {
+    top: -12px;
+    left: -12px;
+  }
+  
+  .comic-tech-image-placeholder::after {
+    bottom: -12px;
+    right: -12px;
+  }
+}
+
+.comic-tech-image {
+  width: 160%;
+  bottom: 0;
+  height: auto;
+  object-fit: contain;
+  background: transparent;
+  position: relative;
+  z-index: 1;
+}
+
+/* Run animation and adjust position after the app is hydrated */
+.comic-tech-image-placeholder.client-ready {
+  top: 38%;
+  animation-play-state: running;
+}
+
+@keyframes comicFloat {
+  0%, 100% {
+    transform: translate3d(-50%, -50%, 0) rotate(-2deg);
+  }
+  50% {
+    transform: translate3d(-50%, -51%, 0) rotate(2deg);
+  }
+}
+
+/* Chat Bubble Container */
+.comic-tech-bubble-wrapper {
+  position: absolute;
+  transition: transform 0.3s, z-index 0.3s;
+  cursor: pointer;
+}
+
+.comic-tech-bubble-wrapper:hover {
+  z-index: 50 !important;
+}
+
+.comic-tech-bubble-wrapper:hover .comic-tech-bubble {
+  transform: scale(1.1);
+}
+
+/* Bubble Content */
+.comic-tech-bubble-content {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  position: relative;
+  z-index: 10;
+  padding-left: 0.95rem;
+  padding-right: 0.95rem;
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
+  margin-bottom: 15px !important;
+}
+
+.comic-tech-bubble-text {
+  font-size: 1.15rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  color: #000;
+  text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.7);
+  font-family: 'Bangers', cursive;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+@media (min-width: 768px) {
+  .comic-tech-bubble-text {
+    font-size: 1.35rem;
+    letter-spacing: 0.13em;
+  }
+  .comic-tech-bubble-content {
+    gap: 0.75rem;
+    padding-left: 1.15rem;
+    padding-right: 1.15rem;
+    padding-top: 0.7rem;
+    padding-bottom: 0.7rem;
+  }
+}
+
+/* Comic Bubble Component */
+.comic-tech-bubble {
+  position: relative;
+  padding: 1.15rem;
+  filter: drop-shadow(5px 5px 0 rgba(0, 0, 0, 1));
+  transition: transform 0.3s;
+}
+
+@media (min-width: 768px) {
+  .comic-tech-bubble {
+    padding: 1.35rem;
+    filter: drop-shadow(6px 6px 0 rgba(0, 0, 0, 1));
+  }
+}
+
+.comic-tech-bubble-svg-container {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.comic-tech-bubble-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.comic-tech-bubble-inner {
+  position: relative;
+  z-index: 10;
+  transform: translateY(-2px);
+}
+
+/* Action Lines Decoration */
+.comic-tech-action-lines {
+  position: absolute;
+  top: -0.5rem;
+  right: -0.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  pointer-events: none;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.comic-tech-action-lines svg {
+  fill: #000;
+  stroke: #000;
+  stroke-width: 2;
+}
+
+@media (min-width: 768px) {
+  .comic-tech-action-lines {
+    top: -0.75rem;
+    right: -0.75rem;
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Tech Icon Styles */
+.comic-tech-icon-react {
+  color: #61DAFB;
+}
+
+.comic-tech-icon-js {
+  font-weight: 700;
+  font-size: 1.1rem;
+  line-height: 1;
+  background: #F7DF1E;
+  color: #000;
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+  border: 2px solid #000;
+}
+
+@media (min-width: 768px) {
+  .comic-tech-icon-js {
+    font-size: 1.3rem;
+    padding-left: 0.3rem;
+    padding-right: 0.3rem;
+  }
+}
+
+.comic-tech-icon-python {
+  color: #3776AB;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+@media (min-width: 768px) {
+  .comic-tech-icon-python {
+    font-size: 1.15rem;
+  }
+}
+
+.comic-tech-icon-default {
+  color: #000;
+}
+
+/* ============================================
+   Mobile Responsive Styles
+   ============================================ */
+
+/* Mobile: Stack bubbles in a 2-column grid below the image */
+@media (max-width: 767px) {
+  .comic-tech-container {
+    padding: 30px 16px 60px;
+    min-height: auto;
+  }
+
+  .comic-tech-header {
+    padding-top: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .comic-tech-title {
+    font-size: 2rem;
+    text-shadow:
+      2px 2px 0px #FF1744,
+      4px 4px 0px #000;
+    letter-spacing: 1px;
+  }
+
+  .comic-tech-subtitle {
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+  }
+
+  .comic-tech-wrapper {
+    position: relative;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    min-height: auto;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* Center image at top spanning full width */
+  .comic-tech-image-placeholder {
+    position: relative !important;
+    left: auto !important;
+    top: auto !important;
+    grid-column: 1 / -1;
+    margin: 0 auto 1.5rem;
+    transform: rotate(-2deg) !important;
+    width: 60%;
+    max-width: 200px;
+    padding: 12px;
+    border: 5px solid #000;
+    box-shadow:
+      6px 6px 0px #000,
+      inset 0 0 0 3px #fff,
+      inset 0 0 0 6px #FF1744;
+    animation: none !important;
+  }
+
+  .comic-tech-image-placeholder.client-ready {
+    top: auto !important;
+  }
+
+  .comic-tech-image-placeholder::before,
+  .comic-tech-image-placeholder::after {
+    width: 16px;
+    height: 16px;
+    border: 2px solid #000;
+  }
+
+  .comic-tech-image-placeholder::before {
+    top: -8px;
+    left: -8px;
+  }
+
+  .comic-tech-image-placeholder::after {
+    bottom: -8px;
+    right: -8px;
+  }
+
+  /* 2-column grid layout for tech bubbles on mobile */
+  .comic-tech-bubble-wrapper {
+    position: relative !important;
+    left: auto !important;
+    top: auto !important;
+    transform: none !important;
+    width: 100%;
+    margin-bottom: 0;
+  }
+
+  /* Center last bubble if odd number of items */
+  .comic-tech-bubble-wrapper:nth-child(14) {
+    grid-column: 1 / -1;
+    max-width: 50%;
+    margin: 0 auto;
+  }
+
+  .comic-tech-bubble {
+    padding: 0.7rem;
+    filter: drop-shadow(3px 3px 0 rgba(0, 0, 0, 1));
+    margin: 0 auto;
+    max-width: 100%;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .comic-tech-bubble-content {
+    gap: 0.4rem;
+    padding: 0.5rem 0.6rem;
+    margin-bottom: 8px !important;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .comic-tech-bubble-text {
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    text-align: center;
+  }
+
+  .comic-tech-icon-js {
+    font-size: 0.9rem;
+    padding-left: 0.2rem;
+    padding-right: 0.2rem;
+  }
+
+  .comic-tech-icon-python {
+    font-size: 0.85rem;
+  }
+
+  /* Adjust SVG icon sizes and prevent overflow */
+  .comic-tech-bubble-content svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+
+  /* Ensure icons are contained */
+  .comic-tech-icon-react,
+  .comic-tech-icon-default {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+}
+
+/* Small Mobile Devices */
+@media (max-width: 480px) {
+  .comic-tech-container {
+    padding: 25px 12px 50px;
+  }
+
+  .comic-tech-header {
+    padding: 0.75rem 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .comic-tech-title {
+    font-size: 1.75rem;
+    text-shadow:
+      2px 2px 0px #FF1744,
+      3px 3px 0px #000;
+  }
+
+  .comic-tech-subtitle {
+    font-size: 0.8rem;
+  }
+
+  .comic-tech-wrapper {
+    gap: 0.6rem;
+    max-width: 100%;
+  }
+
+  .comic-tech-image-placeholder {
+    width: 65%;
+    max-width: 180px;
+    padding: 10px;
+    border: 4px solid #000;
+    box-shadow:
+      5px 5px 0px #000,
+      inset 0 0 0 2px #fff,
+      inset 0 0 0 5px #FF1744;
+    margin-bottom: 1.25rem !important;
+  }
+
+  .comic-tech-image-placeholder::before,
+  .comic-tech-image-placeholder::after {
+    width: 14px;
+    height: 14px;
+  }
+
+  /* Center last bubble on small mobile too */
+  .comic-tech-bubble-wrapper:nth-child(14) {
+    grid-column: 1 / -1;
+    max-width: 50%;
+    margin: 0 auto;
+  }
+
+  .comic-tech-bubble {
+    padding: 0.6rem;
+    filter: drop-shadow(3px 3px 0 rgba(0, 0, 0, 1));
+    overflow: hidden;
+  }
+
+  .comic-tech-bubble-content {
+    gap: 0.3rem;
+    padding: 0.4rem 0.5rem;
+    margin-bottom: 6px !important;
+  }
+
+  .comic-tech-bubble-text {
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+  }
+
+  .comic-tech-icon-js {
+    font-size: 0.8rem;
+  }
+
+  .comic-tech-icon-python {
+    font-size: 0.75rem;
+  }
+
+  /* Smaller SVG icons with flex-shrink */
+  .comic-tech-bubble-content svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+  }
+}
+
+/* Tablet: Improve spacing */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .comic-tech-wrapper {
+    padding: 0.75rem;
+  }
+
+  .comic-tech-image-placeholder {
+    width: 32%;
+    max-width: 240px;
+  }
+
+  .comic-tech-bubble-text {
+    font-size: 1.2rem;
+  }
+}
+
