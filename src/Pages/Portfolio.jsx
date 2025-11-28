@@ -2,7 +2,7 @@ import Hero from "../Components/Hero";
 import ProjectCards from "../Components/ProjectCards";
 import ComicTechStack from "../Components/ComicTechChaos";
 import ComicSeparator from "../Components/ComicSeparator";
-import ComicTimeline from "../Components/ComicTimeLine";
+import ComicTimeline from "../Components/ComicTimeline";
 import ComicWantedContact from "../Components/ComicWantedContact";
 import ComicNavbar from "../Components/ComicNavbar";
 
