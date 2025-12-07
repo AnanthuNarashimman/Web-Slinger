@@ -4,14 +4,38 @@ import ComicTechStack from "../Components/ComicTechChaos";
 import ComicSeparator from "../Components/ComicSeparator";
 import ComicTimeline from "../Components/ComicTimeline";
 import ComicWantedContact from "../Components/ComicWantedContact";
-import ComicNavbar from "../Components/ComicNavbar";
+import ComicSidebar from "../Components/ComicSidebar";
 
 import "../PageStyles/Portfolio.css";
 
 function Portfolio() {
+  const scrollToSection = (sectionId) => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      const offset = 80;
+      const targetPosition = section.offsetTop - offset;
+      window.scrollTo({
+        top: targetPosition,
+        behavior: 'smooth',
+      });
+    }
+  };
+
   return (
     <>
-      <ComicNavbar />
+      <ComicSidebar 
+        menuItems={['Home', 'Projects', 'Tech Stack', 'Journey', 'Contact']}
+        onNavigate={(item) => {
+          const sectionMap = {
+            'Home': 'hero',
+            'Projects': 'projects',
+            'Tech Stack': 'tech-stack',
+            'Journey': 'timeline',
+            'Contact': 'contact'
+          };
+          scrollToSection(sectionMap[item]);
+        }}
+      />
       <section id="hero">
         <Hero />
       </section>
