@@ -41,7 +41,7 @@ function ProjectCards() {
                 }
             ],
             status: "In Progress",
-            gitLink: "https://github.com/yourusername/glimpse",
+            gitLink: "https://github.com/AnanthuNarashimman/Glimpse-Edge",
             liveLink: null,
             image: Glimpse
         },
@@ -73,8 +73,8 @@ function ProjectCards() {
                 }
             ],
             status: "Live",
-            gitLink: "https://github.com/yourusername/genteach",
-            liveLink: "https://genteach-demo.com",
+            gitLink: "https://github.com/AnanthuNarashimman/GenTeach---AI",
+            liveLink: "https://gen-teach-ai-kd7v.vercel.app",
             image: GenTeach
         },
         {
@@ -104,7 +104,7 @@ function ProjectCards() {
                 }
             ],
             status: "In Progress",
-            gitLink: "https://github.com/yourusername/syntax",
+            gitLink: "https://github.com/AnanthuNarashimman/Syntax",
             liveLink: null,
             image: Syntax 
         },
@@ -136,8 +136,8 @@ function ProjectCards() {
                 }
             ],
             status: "Live",
-            gitLink: "https://github.com/yourusername/pingmyphone",
-            liveLink: "https://pingmyphone-demo.com",
+            gitLink: "https://github.com/AnanthuNarashimman/PingMyPhone",
+            liveLink: "https://ping-my-phone.vercel.app/",
             image: PingMyPhone
         }
     ];
