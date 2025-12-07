@@ -10,7 +10,10 @@ import {
 import "../ComponentStyles/ComicWantedContact.css";
 import Wanted from "../assets/Images/Wanted.png";
 
-const CONTACT_EMAIL = "hello@prasklatechnology.com";
+const CONTACT_EMAIL = "ananthu.narashimman@gmail.com";
+const LINKEDIN_URL = "https://www.linkedin.com/in/ananthunarashimman";
+const GITHUB_URL = "https://github.com/AnanthuNarashimman";
+const X_URL = "https://x.com/AnanthuN7652";
 
 function ComicWantedContact() {
   const [formData, setFormData] = useState({
@@ -79,18 +82,28 @@ function ComicWantedContact() {
 
           <div className="contact-links">
             <a
-              href="https://www.linkedin.com/in/your-profile"
+              href={LINKEDIN_URL}
               target="_blank"
               rel="noopener noreferrer"
             >
               <Linkedin size={22} /> LinkedIn
             </a>
             <a
-              href="https://github.com/yourusername"
+              href={GITHUB_URL}
               target="_blank"
               rel="noopener noreferrer"
             >
               <Github size={22} /> GitHub
+            </a>
+            <a
+              href={X_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" style={{marginRight: '8px'}}>
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+              </svg>
+              X (Twitter)
             </a>
             <a href={`mailto:${CONTACT_EMAIL}`}>
               <Mail size={22} /> Email
@@ -132,7 +145,8 @@ function ComicWantedContact() {
             </label>
 
             <button type="submit" className="wanted-send-btn">
-              Send via Gmail ✉️
+              <Mail size={20} />
+              Send via Gmail
             </button>
           </form>
         </div>
