@@ -309,7 +309,7 @@ const ComicSidebar = ({
         </nav>
 
         <div className="cs-footer">
-            © 2025 HERO INC.
+            Ananthu Narashimman
         </div>
       </aside>
     </>

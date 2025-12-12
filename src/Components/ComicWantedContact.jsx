@@ -5,7 +5,8 @@ import {
   Mail,
   Coffee,
   Award,
-  ExternalLink
+  ExternalLink,
+  Lightbulb
 } from "lucide-react";
 import "../ComponentStyles/ComicWantedContact.css";
 import Wanted from "../assets/Images/Wanted.png";
@@ -68,7 +69,7 @@ function ComicWantedContact() {
                 <Coffee size={18} /> Coffee
               </span>
               <span>
-                <Award size={18} /> Job Offer
+                <Lightbulb size={18} /> Ideas
               </span>
               <span>
                 <ExternalLink size={18} /> Collaboration
