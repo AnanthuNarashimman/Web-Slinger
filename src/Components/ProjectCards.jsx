@@ -262,7 +262,7 @@ function ProjectCards() {
                         Check out my complete collection of projects, experiments, and open-source contributions on GitHub.
                     </p>
                     <a 
-                        href="https://github.com/yourusername" 
+                        href="https://github.com/AnanthuNarashimman" 
                         className="github-profile-button"
                         target="_blank"
                         rel="noopener noreferrer"

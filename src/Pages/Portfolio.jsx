@@ -7,6 +7,7 @@ import ComicWantedContact from "../Components/ComicWantedContact";
 import ComicSidebar from "../Components/ComicSidebar";
 
 import "../PageStyles/Portfolio.css";
+import { useEffect } from "react";
 
 function Portfolio() {
   const scrollToSection = (sectionId) => {
@@ -20,6 +21,7 @@ function Portfolio() {
       });
     }
   };
+  
 
   return (
     <>
