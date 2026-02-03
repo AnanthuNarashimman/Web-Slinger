@@ -5,6 +5,7 @@ import ComicSeparator from "../Components/ComicSeparator";
 import ComicTimeline from "../Components/ComicTimeline";
 import ComicWantedContact from "../Components/ComicWantedContact";
 import ComicSidebar from "../Components/ComicSidebar";
+import ComicFooter from "../Components/ComicFooter";
 
 import "../PageStyles/Portfolio.css";
 import { useEffect } from "react";
@@ -56,6 +57,7 @@ function Portfolio() {
       <section id="contact">
         <ComicWantedContact />
       </section>
+      <ComicFooter />
     </>
   )
 }

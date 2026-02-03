@@ -1,0 +1,174 @@
+/* Comic Footer */
+.comic-footer {
+  position: relative;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  color: #fff;
+  padding: 3rem 2rem 2rem;
+  overflow: hidden;
+  border-top: 6px solid #000;
+}
+
+/* Halftone dot overlay */
+.comic-footer-halftone {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 20px 20px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Content wrapper */
+.comic-footer-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Speech bubble */
+.comic-footer-bubble {
+  position: relative;
+  width: 280px;
+  height: 80px;
+}
+
+.comic-footer-bubble-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(4px 4px 0 rgba(0, 0, 0, 0.6));
+}
+
+.comic-footer-bubble-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 10px;
+  font-family: "Bangers", cursive;
+  font-size: 1.4rem;
+  letter-spacing: 0.08em;
+  color: #000;
+  text-transform: uppercase;
+  z-index: 1;
+}
+
+/* Footer info */
+.comic-footer-info {
+  text-align: center;
+}
+
+.comic-footer-name {
+  font-family: "Bangers", cursive;
+  font-size: 2rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin: 0 0 0.3rem;
+  text-shadow:
+    3px 3px 0 #FF1744,
+    -1px -1px 0 #00E5FF;
+}
+
+.comic-footer-copy {
+  font-family: "Comic Neue", cursive;
+  font-size: 0.95rem;
+  margin: 0;
+  opacity: 0.75;
+  letter-spacing: 0.05em;
+}
+
+/* Social links */
+.comic-footer-socials {
+  display: flex;
+  gap: 1rem;
+}
+
+.comic-footer-social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background: #FFD700;
+  color: #000;
+  border: 3px solid #000;
+  border-radius: 6px;
+  box-shadow: 4px 4px 0 #000;
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-decoration: none;
+}
+
+.comic-footer-social-link:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 7px 7px 0 #000;
+  background: #FF1744;
+  color: #fff;
+}
+
+.comic-footer-social-link:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 #000;
+}
+
+/* Corner star badges */
+.comic-footer-badge {
+  position: absolute;
+  bottom: 16px;
+  width: 28px;
+  height: 28px;
+  background: #FF1744;
+  border: 3px solid #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  color: #FFD700;
+  transform: rotate(45deg);
+  z-index: 2;
+  box-shadow: 3px 3px 0 #000;
+}
+
+.comic-footer-badge-left {
+  left: 24px;
+}
+
+.comic-footer-badge-right {
+  right: 24px;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .comic-footer {
+    padding: 2.5rem 1rem 1.5rem;
+  }
+
+  .comic-footer-bubble {
+    width: 240px;
+    height: 70px;
+  }
+
+  .comic-footer-bubble-text {
+    font-size: 1.1rem;
+  }
+
+  .comic-footer-name {
+    font-size: 1.5rem;
+  }
+
+  .comic-footer-social-link {
+    width: 42px;
+    height: 42px;
+  }
+
+  .comic-footer-badge-left,
+  .comic-footer-badge-right {
+    display: none;
+  }
+}
