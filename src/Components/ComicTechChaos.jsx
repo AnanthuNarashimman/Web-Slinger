@@ -1,11 +1,32 @@
 import React, { useState, useEffect } from 'react';
-import { Cloud, Database, Code, Server, Terminal, Cpu, Globe, Layers, Zap, Box, Hash, Layout, Share2, MessageSquare, Mic, PenTool } from 'lucide-react';
+import { 
+  SiReact, 
+  SiJavascript, 
+  SiNodedotjs, 
+  SiPython, 
+  SiFlask, 
+  SiFlutter, 
+  SiHtml5, 
+  SiCss3, 
+  SiFirebase, 
+  SiGooglecloud, 
+  SiGit, 
+  SiPostman, 
+  SiFigma,
+  SiMysql,
+  SiElectron,
+  SiOpenjdk,
+  SiScikitlearn,
+  SiLangchain,
+} from 'react-icons/si';
+import { Database, Cpu, Globe, Code2, Layers, Coffee, BookOpen } from 'lucide-react';
 import '../ComponentStyles/ComicTechChaos.css';
 import Techie from '../assets/Images/techie.png';
 
 const ComicTechStack = () => {
   const [isClient, setIsClient] = useState(false);
   const [windowWidth, setWindowWidth] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     setIsClient(true);
@@ -18,6 +39,18 @@ const ComicTechStack = () => {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isModalOpen]);
 
   // Complete Tech List with specific colors/icons
   const techStack = [
@@ -35,6 +68,68 @@ const ComicTechStack = () => {
     { name: 'Postman', icon: 'postman', color: '#FF6C37' },
     { name: 'Figma', icon: 'figma', color: '#F24E1E' },
   ];
+
+  // Detailed tech categories for modal
+  const detailedTechStack = {
+    languages: {
+      title: 'Languages',
+      color: '#FF1744',
+      items: [
+        { name: 'Python', icon: 'python', color: '#3776AB' },
+        { name: 'JavaScript', icon: 'js', color: '#F7DF1E' },
+        { name: 'Java', icon: 'java', color: '#007396' },
+      ]
+    },
+    frameworks: {
+      title: 'Frameworks & Libraries',
+      color: '#FF6D00',
+      items: [
+        { name: 'React.js', icon: 'react', color: '#61DAFB' },
+        { name: 'Node.js', icon: 'node', color: '#339933' },
+        { name: 'Flask', icon: 'flask', color: '#000000' },
+      ]
+    },
+    aiml: {
+      title: 'AI & Applied ML',
+      color: '#7C4DFF',
+      items: [
+        { name: 'Gemini API', icon: 'gemini', color: '#8E75B2' },
+        { name: 'Scikit-learn', icon: 'sklearn', color: '#F7931E' },
+        { name: 'Browser-use', icon: 'automation', color: '#4285F4' },
+      ]
+    },
+    exposure: {
+      title: 'Project Exposure',
+      color: '#00BFA5',
+      items: [
+        { name: 'SQL', icon: 'sql', color: '#4479A1' },
+        { name: 'Electron.js', icon: 'electron', color: '#47848F' },
+        { name: 'LangChain', icon: 'langchain', color: '#1C3C3C' },
+        { name: 'ChromaDB', icon: 'chromadb', color: '#FF6B6B' },
+      ]
+    },
+    databases: {
+      title: 'Databases & Tools',
+      color: '#2979FF',
+      items: [
+        { name: 'Firebase', icon: 'firebase', color: '#FFCA28' },
+        { name: 'MySQL', icon: 'mysql', color: '#4479A1' },
+        { name: 'Git', icon: 'git', color: '#F05032' },
+        { name: 'Judge0', icon: 'judge0', color: '#323330' },
+        { name: 'Figma', icon: 'figma', color: '#F24E1E' },
+        { name: 'Postman', icon: 'postman', color: '#FF6C37' },
+      ]
+    },
+    concepts: {
+      title: 'Core Concepts',
+      color: '#D500F9',
+      items: [
+        { name: 'Full-Stack Design', icon: 'fullstack', color: '#FF1744' },
+        { name: 'REST APIs', icon: 'api', color: '#00BCD4' },
+        { name: 'WebSocket', icon: 'websocket', color: '#FFC107' },
+      ]
+    }
+  };
 
   // Pseudo-random generator for consistent chaos across renders
   // Positions bubbles around a center image placeholder
@@ -104,6 +199,14 @@ const ComicTechStack = () => {
           <img src={Techie} alt="Techie" className="comic-tech-image" />
         </div>
 
+        {/* Know More Button */}
+        <button 
+          className="comic-tech-know-more-btn"
+          onClick={() => setIsModalOpen(true)}
+        >
+          <BookOpen className="btn-icon" size={28} strokeWidth={2.5} />
+        </button>
+
         {/* Chat Bubbles around the center */}
         {isClient && techStack.map((tech, index) => {
           const style = generateChaos(index);
@@ -138,6 +241,14 @@ const ComicTechStack = () => {
           );
         })}
       </div>
+
+      {/* Full-Screen Tech Stack Modal */}
+      {isModalOpen && (
+        <TechStackModal 
+          detailedTechStack={detailedTechStack}
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
     </div>
   );
 };
@@ -210,30 +321,93 @@ const ComicBubble = ({ type, children, index }) => {
 };
 
 // Helper for rendering Specific Icons
-// Using Lucide for generic concepts and custom simple SVGs for brand specifics
+// Using react-icons Simple Icons for authentic brand logos
 const TechIcon = ({ type, color }) => {
-  const iconProps = { size: 24, strokeWidth: 2.5, className: "comic-tech-icon-default" };
+  const iconSize = 28;
+  const iconStyle = { 
+    color: color,
+    filter: 'drop-shadow(1px 1px 1px rgba(0,0,0,0.3))'
+  };
 
   switch (type) {
-    case 'react': return <div className="comic-tech-icon-react"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="2" /><path d="M12 2C7 2 3 7 3 12S7 22 12 22 21 17 21 12 17 2 12 2" opacity="0.2" /><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(45 12 12)" /><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(-45 12 12)" /></svg></div>;
-    case 'js': return <div className="comic-tech-icon-js">JS</div>;
-    case 'node': return <Server {...iconProps} color="#339933" />;
-    case 'python': return <div className="comic-tech-icon-python">Py</div>;
-    case 'flask': return <Zap {...iconProps} fill="black" />;
-    case 'numpy': return <Hash {...iconProps} color="#013243" />;
-    case 'flutter': return <svg width="24" height="24" viewBox="0 0 24 24" fill="#02569B"><path d="M14 2L6 10L14 18L22 10L14 2Z" /></svg>;
-    case 'html': return <Code {...iconProps} color="#E34F26" />;
-    case 'css': return <Layout {...iconProps} color="#1572B6" />;
-    case 'firebase': return <Database {...iconProps} color="#FFCA28" fill="#FFCA28" />;
-    case 'gcp': return <Cloud {...iconProps} color="#4285F4" />;
-    case 'gemini': return <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8E75B2" strokeWidth="2.5"><path d="M12 2L14 10L22 12L14 14L12 22L10 14L2 12L10 10Z" /></svg>;
-    case 'vertex': return <Cpu {...iconProps} color="#4285F4" />;
-    case 'tts': return <Mic {...iconProps} color="#EA4335" />;
-    case 'git': return <Share2 {...iconProps} color="#F05032" />;
-    case 'postman': return <MessageSquare {...iconProps} color="#FF6C37" />;
-    case 'figma': return <PenTool {...iconProps} color="#F24E1E" />;
-    default: return <Terminal {...iconProps} />;
+    case 'react': return <SiReact size={iconSize} style={iconStyle} />;
+    case 'js': return <SiJavascript size={iconSize} style={iconStyle} />;
+    case 'node': return <SiNodedotjs size={iconSize} style={iconStyle} />;
+    case 'python': return <SiPython size={iconSize} style={iconStyle} />;
+    case 'flask': return <SiFlask size={iconSize} style={iconStyle} />;
+    case 'flutter': return <SiFlutter size={iconSize} style={iconStyle} />;
+    case 'html': return <SiHtml5 size={iconSize} style={iconStyle} />;
+    case 'css': return <SiCss3 size={iconSize} style={iconStyle} />;
+    case 'firebase': return <SiFirebase size={iconSize} style={iconStyle} />;
+    case 'gcp': return <SiGooglecloud size={iconSize} style={iconStyle} />;
+    case 'git': return <SiGit size={iconSize} style={iconStyle} />;
+    case 'postman': return <SiPostman size={iconSize} style={iconStyle} />;
+    case 'figma': return <SiFigma size={iconSize} style={iconStyle} />;
+    case 'java': return <Coffee size={iconSize} style={iconStyle} />;
+    case 'mysql': return <SiMysql size={iconSize} style={iconStyle} />;
+    case 'sklearn': return <Cpu size={iconSize} style={iconStyle} />;
+    case 'electron': return <SiElectron size={iconSize} style={iconStyle} />;
+    case 'gemini': return <Cpu size={iconSize} style={iconStyle} />;
+    case 'automation': return <Globe size={iconSize} style={iconStyle} />;
+    case 'sql': return <Database size={iconSize} style={iconStyle} />;
+    case 'langchain': return <SiLangchain size={iconSize} style={iconStyle} />;
+    case 'chromadb': return <Database size={iconSize} style={iconStyle} />;
+    case 'judge0': return <Code2 size={iconSize} style={iconStyle} />;
+    case 'fullstack': return <Layers size={iconSize} style={iconStyle} />;
+    case 'api': return <Globe size={iconSize} style={iconStyle} />;
+    case 'websocket': return <Globe size={iconSize} style={iconStyle} />;
+    default: return <SiReact size={iconSize} style={iconStyle} />;
   }
+};
+
+// Full-Screen Tech Stack Modal Component
+const TechStackModal = ({ detailedTechStack, onClose }) => {
+  return (
+    <div className="tech-modal-overlay" onClick={onClose}>
+      <div className="tech-modal-content" onClick={(e) => e.stopPropagation()}>
+        {/* Comic Book Border */}
+        <div className="tech-modal-border">
+          {/* Corner Badges */}
+          <div className="tech-modal-corner tl"></div>
+          <div className="tech-modal-corner tr"></div>
+          <div className="tech-modal-corner bl"></div>
+          <div className="tech-modal-corner br"></div>
+
+          {/* Header */}
+          <div className="tech-modal-header">
+            <h2 className="tech-modal-title">COMPLETE TECH ARSENAL!</h2>
+            <button className="tech-modal-close" onClick={onClose}>
+              <span className="close-x">✕</span>
+            </button>
+          </div>
+
+          {/* Tech Categories Grid */}
+          <div className="tech-modal-grid">
+            {Object.entries(detailedTechStack).map(([key, category]) => (
+              <div key={key} className="tech-category-panel">
+                <div 
+                  className="tech-category-header"
+                  style={{ backgroundColor: category.color }}
+                >
+                  <h3 className="tech-category-title">{category.title}</h3>
+                </div>
+                <div className="tech-category-items">
+                  {category.items.map((item, index) => (
+                    <div key={index} className="tech-item">
+                      <div className="tech-item-icon">
+                        <TechIcon type={item.icon} color={item.color} />
+                      </div>
+                      <span className="tech-item-name">{item.name}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default ComicTechStack;

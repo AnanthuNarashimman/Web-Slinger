@@ -3,7 +3,7 @@ import "../ComponentStyles/ComicTimeline.css";
 const ComicTimeline = () => {
   const experiences = [
     {
-      number: '01',
+      number: '03',
       date: 'JUL 2025 – PRESENT',
       title: 'SOFTWARE ENGINEER INTERN',
       description: (
@@ -29,7 +29,7 @@ const ComicTimeline = () => {
       align: 'right'
     },
     {
-      number: '03',
+      number: '01',
       date: '2023 – 2024',
       title: 'FULL-STACK ENGINEER',
       description: 'Self-taught. Built and deployed personal projects while learning React, Node.js, Flask, and modern AI stack.',
