@@ -202,10 +202,7 @@ function ComicTV() {
     return (
         <div className="project-showcase-container">
             <div className="section-header-tv">
-                <div className="header-wrapper-tv">
-                    <div className="header-bg-tv"></div>
-                    <h2 className="header-title-tv">Featured Projects</h2>
-                </div>
+                <h2 className="header-title-tv">Featured Projects</h2>
                 <p className="header-subtitle-tv">Explore my work through this vintage TV experience</p>
             </div>
             
