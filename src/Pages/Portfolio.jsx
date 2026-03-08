@@ -1,5 +1,5 @@
 import Hero from "../Components/Hero";
-import ProjectCards from "../Components/ProjectCards";
+import ComicTV from "../Components/ComicTV";
 import ComicTechStack from "../Components/ComicTechChaos";
 import ComicSeparator from "../Components/ComicSeparator";
 import ComicTimeline from "../Components/ComicTimeline";
@@ -43,7 +43,7 @@ function Portfolio() {
         <Hero />
       </section>
       <section id="projects">
-        <ProjectCards />
+        <ComicTV />
       </section>
       <ComicSeparator />
       <section id="tech-stack">

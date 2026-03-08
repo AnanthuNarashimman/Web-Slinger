@@ -4,7 +4,7 @@ const ComicTimeline = () => {
   const experiences = [
     {
       number: '03',
-      date: 'JUL 2025 – PRESENT',
+      date: 'JUL 2025 – DEC 2025',
       title: 'SOFTWARE ENGINEER INTERN',
       description: (
         <>
