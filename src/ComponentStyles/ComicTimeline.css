@@ -199,7 +199,7 @@
     transition: transform 0.25s ease, box-shadow 0.25s ease;
     text-transform: none;
     letter-spacing: 0.1em;
-    text-shadow: 1px 1px 0 #ffeebb, 3px 3px 0 rgba(21, 34, 74, 0.25);
+    /* text-shadow: 1px 1px 0 #ffeebb, 3px 3px 0 rgba(21, 34, 74, 0.25); */
 }
 
 .timeline-item.left .item-desc {
