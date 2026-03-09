@@ -26,9 +26,6 @@ function ComicFooter() {
         {/* Main footer info */}
         <div className="comic-footer-info">
           <p className="comic-footer-name">Ananthu Narashimman</p>
-          <p className="comic-footer-copy">
-            &copy; {currentYear} &bull; All Rights Reserved
-          </p>
         </div>
 
         {/* Social links */}
