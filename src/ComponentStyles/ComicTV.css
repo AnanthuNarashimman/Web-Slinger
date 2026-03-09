@@ -1046,7 +1046,7 @@
 
 .tech-badge-comic {
     padding: 6px 14px;
-    background: var(--comic-cyan);
+    background: #FDCB6E;
     border: 2px solid var(--comic-black);
     border-radius: 20px;
     font-family: 'Comic Neue', sans-serif;
@@ -1059,14 +1059,7 @@
 }
 
 .tech-badge-comic::before {
-    content: '';
-    position: absolute;
-    top: 2px;
-    left: 4px;
-    right: 4px;
-    height: 40%;
-    background: rgba(255, 255, 255, 0.4);
-    border-radius: 20px;
+    content: none;
 }
 
 .tech-badge-comic:hover {
@@ -1235,6 +1228,59 @@
     box-shadow: 6px 6px 0 var(--comic-black);
 }
 
+/* Per-channel card colors */
+.project-selector .project-card-mini:nth-child(1) {
+    background: #FFE8E8;
+    border-color: #e74c3c;
+}
+.project-selector .project-card-mini:nth-child(1):hover {
+    box-shadow: 6px 6px 0 #c0392b;
+}
+.project-selector .project-card-mini:nth-child(1).active {
+    background: #FF6B6B;
+    border-color: #c0392b;
+    box-shadow: 6px 6px 0 #c0392b;
+}
+
+.project-selector .project-card-mini:nth-child(2) {
+    background: #E8F4FF;
+    border-color: #0984E3;
+}
+.project-selector .project-card-mini:nth-child(2):hover {
+    box-shadow: 6px 6px 0 #0652DD;
+}
+.project-selector .project-card-mini:nth-child(2).active {
+    background: #74B9FF;
+    border-color: #0652DD;
+    box-shadow: 6px 6px 0 #0652DD;
+}
+
+.project-selector .project-card-mini:nth-child(3) {
+    background: #E8FFF8;
+    border-color: #00B894;
+}
+.project-selector .project-card-mini:nth-child(3):hover {
+    box-shadow: 6px 6px 0 #00876A;
+}
+.project-selector .project-card-mini:nth-child(3).active {
+    background: #55EFC4;
+    border-color: #00876A;
+    box-shadow: 6px 6px 0 #00876A;
+}
+
+.project-selector .project-card-mini:nth-child(4) {
+    background: #EDE8FF;
+    border-color: #6C5CE7;
+}
+.project-selector .project-card-mini:nth-child(4):hover {
+    box-shadow: 6px 6px 0 #4834D4;
+}
+.project-selector .project-card-mini:nth-child(4).active {
+    background: #A29BFE;
+    border-color: #4834D4;
+    box-shadow: 6px 6px 0 #4834D4;
+}
+
 .card-pin {
     position: absolute;
     top: 8px;
@@ -1264,10 +1310,16 @@
 .project-name-mini {
     font-family: 'Bangers', cursive;
     font-size: clamp(14px, 1.8vw, 18px);
+    font-weight: 700;
     color: var(--comic-black);
     text-transform: uppercase;
     margin: 0;
-    letter-spacing: 0.5px;
+    letter-spacing: 2.5px;
+    text-shadow:
+        -1px -1px 0 rgba(255,255,255,0.8),
+         1px -1px 0 rgba(255,255,255,0.8),
+        -1px  1px 0 rgba(255,255,255,0.8),
+         1px  1px 0 rgba(255,255,255,0.8);
 }
 
 /* Responsive Design */
