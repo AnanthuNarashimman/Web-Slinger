@@ -2,11 +2,11 @@ import { useState, useEffect, useRef } from "react";
 import { Github, ExternalLink } from "lucide-react";
 import "../ComponentStyles/ComicTV.css";
 
-// Project image imports
-import Syntax from "../assets/Images/Syntax.png";
-import Glimpse from "../assets/Images/Glimpse.png";
-import GenTeach from "../assets/Images/GenTeach.png";
-import PingMyPhone from "../assets/Images/PingMyPhone.png";
+import AlgoFlowLP from "../assets/Images/AlgoFlowLP.png";
+import SyntaxLP from "../assets/Images/SyntaxLP.png";
+import DamnJsLP from "../assets/Images/DamnJsLp.png";
+import VibeAuditLP from "../assets/Images/VibeAuditLP.png";
+
 
 function ComicTV() {
     const [isOn, setIsOn] = useState(true);
@@ -26,9 +26,9 @@ function ComicTV() {
             description: "VibeAudit is an AI-powered website design auditor that replaces manual design QA with automated analysis. Using Gemini 3 Pro, it crawls your website viewport-by-viewport, evaluating CTA effectiveness, theme consistency, and intent alignment. The browser agent captures screenshots and generates scored reports (0-100) with actionable feedback, making design validation as automated as performance testing.",
             techStack: ["React", "Python Flask", "Gemini API", "Browser-use", "Playwright", "Socket.io"],
             status: "Live",
-            gitLink: "https://github.com/AnanthuNarashimman/VibeAudit",
+            gitLink: "https://github.com/AnanthuNarashimman/QAI",
             liveLink: "https://vibeaudit-delta.vercel.app",
-            image: Glimpse
+            image: VibeAuditLP
         },
         {
             id: 1,
@@ -39,7 +39,7 @@ function ComicTV() {
             status: "Live",
             gitLink: "https://github.com/AnanthuNarashimman/AlgoFlow",
             liveLink: "https://algo-flow-roan.vercel.app",
-            image: GenTeach
+            image: AlgoFlowLP
         },
         {
             id: 2,
@@ -50,7 +50,7 @@ function ComicTV() {
             status: "Live",
             gitLink: "https://github.com/AnanthuNarashimman/Syntax",
             liveLink: "https://syntax-nu.vercel.app/",
-            image: Syntax 
+            image: SyntaxLP 
         },
         {
             id: 3,
@@ -59,9 +59,9 @@ function ComicTV() {
             description: "damn.js is a Chrome DevTools extension that mirrors console errors in real time and provides AI-powered explanations plus structured debugging prompts. It hooks into console.error, window.onerror, and unhandled promise rejections, forwarding them to a custom DevTools panel. Click Explain for contextual AI analysis and documentation references, or Spell to generate a ready-to-paste prompt for Claude, Cursor, or ChatGPT.",
             techStack: ["Manifest V3", "Vanilla JS", "Node.js", "Gemini API", "Vercel"],
             status: "Live",
-            gitLink: "https://github.com/AnanthuNarashimman/damnjs",
+            gitLink: "https://github.com/AnanthuNarashimman/damn.js",
             liveLink: "https://damn-js-lp.vercel.app/",
-            image: PingMyPhone
+            image: DamnJsLP
         }
     ];
 
@@ -194,6 +194,7 @@ function ComicTV() {
                     className="project-tv-image"
                 />
                 <div className="tv-vignette"></div>
+                <div className="tv-scan-beam"></div>
                 <div className="screen-glow"></div>
             </div>
         );
