@@ -2,11 +2,11 @@ import { useState, useEffect, useRef } from "react";
 import { Github, ExternalLink } from "lucide-react";
 import "../ComponentStyles/ComicTV.css";
 
-// Project image imports
-import Syntax from "../assets/Images/Syntax.png";
-import Glimpse from "../assets/Images/Glimpse.png";
-import GenTeach from "../assets/Images/GenTeach.png";
-import PingMyPhone from "../assets/Images/PingMyPhone.png";
+import AlgoFlowLP from "../assets/Images/AlgoFlowLP.png";
+import SyntaxLP from "../assets/Images/SyntaxLP.png";
+import DamnJsLP from "../assets/Images/DamnJsLP.png";
+import VibeAuditLP from "../assets/Images/VibeAuditLP.png";
+
 
 function ComicTV() {
     const [isOn, setIsOn] = useState(true);
@@ -21,25 +21,25 @@ function ComicTV() {
     const projects = [
         {
             id: 0,
-            title: "Glimpse",
-            subtitle: "(Offline RAG)",
-            description: "Glimpse is an offline Retrieval-Augmented Generation system that provides complete control over your data. It processes documents, images, and audio files locally, transforming them into an intelligent, searchable knowledge base. Built with Electron.js and Ollama, sensitive information never leaves your device while you query your personal knowledge base using natural language.",
-            techStack: ["Electron.js", "React", "Python", "Ollama"],
-            status: "In Progress",
-            gitLink: "https://github.com/AnanthuNarashimman/Glimpse-Edge",
-            liveLink: null,
-            image: Glimpse
+            title: "VibeAudit",
+            subtitle: "(AI Design Auditor)",
+            description: "VibeAudit is an AI-powered website design auditor that replaces manual design QA with automated analysis. Using Gemini 3 Pro, it crawls your website viewport-by-viewport, evaluating CTA effectiveness, theme consistency, and intent alignment. The browser agent captures screenshots and generates scored reports (0-100) with actionable feedback, making design validation as automated as performance testing.",
+            techStack: ["React", "Python Flask", "Gemini API", "Browser-use", "Playwright", "Socket.io"],
+            status: "Live",
+            gitLink: "https://github.com/AnanthuNarashimman/QAI",
+            liveLink: "https://vibeaudit-delta.vercel.app",
+            image: VibeAuditLP
         },
         {
             id: 1,
-            title: "GenTeach",
-            subtitle: "",
-            description: "GenTeach automates educational video production by generating complete explainer videos with script, voiceover, and synchronized visuals from any topic. Using Google's Gemini API for content generation and Vertex AI for text-to-speech, it produces professional-quality videos in minutes. Firebase handles user management and storage, making it easy for educators to create engaging materials without video editing expertise.",
-            techStack: ["React", "Python Flask", "Gemini API", "Vertex API", "Firebase"],
+            title: "AlgoFlow",
+            subtitle: "(Algo Visualizer)",
+            description: "AlgoFlow transforms your Python or JavaScript code into interactive flowcharts in real-time using Google Gemini AI. It analyzes code structure, identifies conditionals, loops, and recursion, then renders an explorable visual representation. An AI tutor powered by Mem0 remembers your learning journey across sessions, providing context-aware explanations and complexity insights for every algorithm you write.",
+            techStack: ["React", "Node.js", "Gemini API", "Mem0", "React Flow"],
             status: "Live",
-            gitLink: "https://github.com/AnanthuNarashimman/GenTeach---AI",
-            liveLink: "https://gen-teach-ai-kd7v.vercel.app",
-            image: GenTeach
+            gitLink: "https://github.com/AnanthuNarashimman/AlgoFlow",
+            liveLink: "https://algo-flow-roan.vercel.app",
+            image: AlgoFlowLP
         },
         {
             id: 2,
@@ -47,21 +47,21 @@ function ComicTV() {
             subtitle: "(Contest Platform)",
             description: "Syntax is a comprehensive contest platform for educational institutions and competitive programming communities. It supports timed quizzes, coding challenges, and multi-round competitions with a multi-level admin system. Judge0 integration provides secure code execution and automatic evaluation, while Firebase ensures real-time leaderboard updates and reliable data persistence.",
             techStack: ["React", "Node.js", "Firebase", "Judge0"],
-            status: "In Progress",
+            status: "Live",
             gitLink: "https://github.com/AnanthuNarashimman/Syntax",
-            liveLink: null,
-            image: Syntax 
+            liveLink: "https://syntax-nu.vercel.app/",
+            image: SyntaxLP 
         },
         {
             id: 3,
-            title: "PingMyPhone",
-            subtitle: "",
-            description: "PingMyPhone enables users to schedule automated Telegram messages for any future date and time. Perfect for birthday reminders, motivational messages, or task check-ins. Built with Python Flask and Firebase, it uses GitHub Actions as a cron service to trigger messages at scheduled times with timezone support, ensuring delivery even when offline.",
-            techStack: ["React", "Python Flask", "Firebase", "Telegram Bot", "Github Actions"],
+            title: "damn.js",
+            subtitle: "(DevTools Extension)",
+            description: "damn.js is a Chrome DevTools extension that mirrors console errors in real time and provides AI-powered explanations plus structured debugging prompts. It hooks into console.error, window.onerror, and unhandled promise rejections, forwarding them to a custom DevTools panel. Click Explain for contextual AI analysis and documentation references, or Spell to generate a ready-to-paste prompt for Claude, Cursor, or ChatGPT.",
+            techStack: ["Manifest V3", "Vanilla JS", "Node.js", "Gemini API", "Vercel"],
             status: "Live",
-            gitLink: "https://github.com/AnanthuNarashimman/PingMyPhone",
-            liveLink: "https://ping-my-phone.vercel.app/",
-            image: PingMyPhone
+            gitLink: "https://github.com/AnanthuNarashimman/damn.js",
+            liveLink: "https://damn-js-lp.vercel.app/",
+            image: DamnJsLP
         }
     ];
 
@@ -194,6 +194,7 @@ function ComicTV() {
                     className="project-tv-image"
                 />
                 <div className="tv-vignette"></div>
+                <div className="tv-scan-beam"></div>
                 <div className="screen-glow"></div>
             </div>
         );
