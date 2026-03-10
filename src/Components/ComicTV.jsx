@@ -4,7 +4,7 @@ import "../ComponentStyles/ComicTV.css";
 
 import AlgoFlowLP from "../assets/Images/AlgoFlowLP.png";
 import SyntaxLP from "../assets/Images/SyntaxLP.png";
-import DamnJsLP from "../assets/Images/DamnJsLp.png";
+import DamnJsLP from "../assets/Images/DamnJsLP.png";
 import VibeAuditLP from "../assets/Images/VibeAuditLP.png";
 
 
