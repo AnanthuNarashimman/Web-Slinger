@@ -239,7 +239,7 @@
     box-shadow:
         inset 0 2px 8px rgba(0, 0, 0, 0.9),
         0 1px 0 rgba(255, 255, 255, 0.05);
-    display: none;
+    display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 3px;
     padding: 6px;
