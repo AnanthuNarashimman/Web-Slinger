@@ -439,9 +439,9 @@
   }
 
   /* Center last bubble if odd number of items */
-  .comic-tech-bubble-wrapper:nth-child(14) {
+  .comic-tech-bubble-wrapper:last-child {
     grid-column: 1 / -1;
-    max-width: 50%;
+    max-width: 46%;
     margin: 0 auto;
   }
 
@@ -452,6 +452,7 @@
     max-width: 100%;
     width: 100%;
     overflow: hidden;
+    margin-bottom: 15px;
   }
 
   .comic-tech-bubble-content {
@@ -542,9 +543,9 @@
   }
 
   /* Center last bubble on small mobile too */
-  .comic-tech-bubble-wrapper:nth-child(14) {
+  .comic-tech-bubble-wrapper:last-child {
     grid-column: 1 / -1;
-    max-width: 50%;
+    max-width: 46%;
     margin: 0 auto;
   }
 
