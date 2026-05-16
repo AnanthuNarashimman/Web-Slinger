@@ -1,6 +1,19 @@
 import "../ComponentStyles/Marquee.css";
 
-const Marquee = ({ items = ['React', 'Javascript', 'Python', 'NumPy', 'Node.js', 'AI', 'Google APIs'], speed = 30 }) => {
+const Marquee = ({ items = [
+  'React', 
+  'Node.js', 
+  'Python', 
+  'TypeScript',
+  'AI Agents', 
+  'LLM APIs',
+  'Browser Automation',
+  'Flask',
+  'Firebase',
+  'WebSockets',
+  'Chrome Extensions',
+  'Full-Stack'
+], speed = 30 }) => {
   const duplicatedItems = [...items, ...items, ...items];
   
   return (

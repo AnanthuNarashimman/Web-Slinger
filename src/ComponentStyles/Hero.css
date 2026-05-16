@@ -244,8 +244,15 @@
 .clients {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 20px;
   margin-top: 40px;
+  flex-wrap: wrap;
+}
+
+.client-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .client-avatars {
@@ -346,6 +353,31 @@
   border: 3px solid #000;
   border-radius: 25px;
   box-shadow: 4px 4px 0px #000;
+  white-space: nowrap;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.client-text:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px #000;
+}
+
+.client-text-1 {
+  background: #FF6B35;
+  color: #fff;
+}
+
+.client-text-1:hover {
+  transform: translate(-2px, -2px);
+}
+
+.client-text-2 {
+  background: #00E5FF;
+  color: #000;
+}
+
+.client-text-2:hover {
+  transform: translate(-2px, -2px);
 }
 
 /* Hero Image */
@@ -478,7 +510,7 @@
   background: #FF1744;
   color: #fff;
   bottom: 22%;
-  left: -15px;
+  left: -55px;
   animation: fadeInFloat 0.8s ease-out forwards, floatBadge4 5.5s ease-in-out infinite;
   animation-delay: 0.8s, 1.4s;
   transform: rotate(-5deg);
@@ -972,9 +1004,10 @@
   }
 
   .badge-4 {
-    left: -10px;
+    left: -35px;
     bottom: 18%;
   }
+}
 
   .name-text {
     font-size: 28px;
@@ -1147,7 +1180,7 @@
   }
 
   .badge-4 {
-    left: -8px;
+    left: -25px;
     bottom: 20%;
   }
 
