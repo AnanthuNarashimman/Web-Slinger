@@ -37,8 +37,7 @@ function Hero() {
                             Building Solutions That Matter
                         </h1>
                         <p className="hero-subtitle">
-                            Hi, I'm a Full-stack developer turning ideas into production-ready applications with AI and modern web tech
-                        </p>
+I build agentic AI systems, developer tools, and full-stack products - from idea to deployed in days. Always at a hackathon, always shipping.                        </p>
                         <a href="mailto:ananthu.narashimman@gmail.com" style={{textDecoration: 'none'}}>
                         <button className="cta-btn">
                             Let's Connect
@@ -66,7 +65,10 @@ function Hero() {
                                     <span className="tooltip">Glimpse</span>
                                 </div>
                             </div>
-                            <span className="client-text">5+ Projects Shipped</span>
+                            <div className="client-stats">
+                                <span className="client-text client-text-1">8+ Projects Shipped</span>
+                                <span className="client-text client-text-2">500+ Users Served</span>
+                            </div>
                         </div>
                     </div>
 
@@ -78,10 +80,10 @@ function Hero() {
                             </div>
                         </div>
 
-                        <div className="badge badge-1">React Developer</div>
-                        <div className="badge badge-2">Backend Architect</div>
-                        <div className="badge badge-3">API Integrator</div>
-                        <div className="badge badge-4">Product Builder</div>
+                        <div className="badge badge-1">AI Agent Builder</div>
+                        <div className="badge badge-2">Product Builder</div>
+                        <div className="badge badge-3">Dev Tool Maker</div>
+                        <div className="badge badge-4">Open Source Contributor</div>
 
                         <div className="name-banner">
                             <div className="name-text">Ananthu Narashimman</div>
