@@ -6,8 +6,8 @@ import {
   SiPython, 
   SiFlask, 
   SiFlutter, 
-  SiHtml5, 
-  SiCss3, 
+  SiTypescript,
+  SiNextdotjs,
   SiFirebase, 
   SiGooglecloud, 
   SiGit, 
@@ -18,6 +18,9 @@ import {
   SiOpenjdk,
   SiScikitlearn,
   SiLangchain,
+  SiHuggingface,
+  SiN8N,
+  SiOpenai,
 } from 'react-icons/si';
 import { Database, Cpu, Globe, Code2, Layers, Coffee, BookOpen } from 'lucide-react';
 import '../ComponentStyles/ComicTechChaos.css';
@@ -52,23 +55,6 @@ const ComicTechStack = () => {
     };
   }, [isModalOpen]);
 
-  // Complete Tech List with specific colors/icons
-  const techStack = [
-    { name: 'React', icon: 'react', color: '#61DAFB' },
-    { name: 'JavaScript', icon: 'js', color: '#F7DF1E' },
-    { name: 'Node.js', icon: 'node', color: '#339933' },
-    { name: 'Python', icon: 'python', color: '#3776AB' },
-    { name: 'Flask', icon: 'flask', color: '#000000' },
-    { name: 'Flutter', icon: 'flutter', color: '#02569B' },
-    { name: 'HTML5', icon: 'html', color: '#E34F26' },
-    { name: 'CSS3', icon: 'css', color: '#1572B6' },
-    { name: 'Firebase', icon: 'firebase', color: '#FFCA28' },
-    { name: 'Google Cloud', icon: 'gcp', color: '#4285F4' },
-    { name: 'Git', icon: 'git', color: '#F05032' },
-    { name: 'Postman', icon: 'postman', color: '#FF6C37' },
-    { name: 'Figma', icon: 'figma', color: '#F24E1E' },
-  ];
-
   // Detailed tech categories for modal
   const detailedTechStack = {
     languages: {
@@ -77,7 +63,9 @@ const ComicTechStack = () => {
       items: [
         { name: 'Python', icon: 'python', color: '#3776AB' },
         { name: 'JavaScript', icon: 'js', color: '#F7DF1E' },
+        { name: 'TypeScript', icon: 'typescript', color: '#3178C6' },
         { name: 'Java', icon: 'java', color: '#007396' },
+        { name: 'SQL', icon: 'sql', color: '#4479A1' },
       ]
     },
     frameworks: {
@@ -85,6 +73,7 @@ const ComicTechStack = () => {
       color: '#FF6D00',
       items: [
         { name: 'React.js', icon: 'react', color: '#61DAFB' },
+        { name: 'Next.js', icon: 'next', color: '#000000' },
         { name: 'Node.js', icon: 'node', color: '#339933' },
         { name: 'Flask', icon: 'flask', color: '#000000' },
       ]
@@ -95,6 +84,8 @@ const ComicTechStack = () => {
       items: [
         { name: 'Gemini API', icon: 'gemini', color: '#8E75B2' },
         { name: 'Scikit-learn', icon: 'sklearn', color: '#F7931E' },
+        { name: 'Transformers', icon: 'transformers', color: '#FFD21E' },
+        { name: 'LLM Internals', icon: 'llm', color: '#10A37F' },
         { name: 'Browser-use', icon: 'automation', color: '#4285F4' },
       ]
     },
@@ -102,9 +93,10 @@ const ComicTechStack = () => {
       title: 'Project Exposure',
       color: '#00BFA5',
       items: [
-        { name: 'SQL', icon: 'sql', color: '#4479A1' },
         { name: 'Electron.js', icon: 'electron', color: '#47848F' },
         { name: 'LangChain', icon: 'langchain', color: '#1C3C3C' },
+        { name: 'Pinecone', icon: 'pinecone', color: '#00BFA5' },
+        { name: 'LangGraph', icon: 'langgraph', color: '#1C3C3C' },
         { name: 'ChromaDB', icon: 'chromadb', color: '#FF6B6B' },
       ]
     },
@@ -121,15 +113,33 @@ const ComicTechStack = () => {
       ]
     },
     concepts: {
-      title: 'Core Concepts',
+      title: 'Agents & Workflow',
       color: '#D500F9',
       items: [
-        { name: 'Full-Stack Design', icon: 'fullstack', color: '#FF1744' },
-        { name: 'REST APIs', icon: 'api', color: '#00BCD4' },
-        { name: 'WebSocket', icon: 'websocket', color: '#FFC107' },
+        { name: 'Mastra', icon: 'mastra', color: '#FF1744' },
+        { name: 'CrewAI', icon: 'crewai', color: '#00BCD4' },
+        { name: 'Agnos', icon: 'agnos', color: '#FFC107' },
+        { name: 'n8n', icon: 'n8n', color: '#EA4B71' },
       ]
     }
   };
+
+  // Complete Tech List with specific colors/icons
+  const chaosTechStack = [
+    { name: 'React', icon: 'react', color: '#61DAFB' },
+    { name: 'JavaScript', icon: 'js', color: '#F7DF1E' },
+    { name: 'Node.js', icon: 'node', color: '#339933' },
+    { name: 'Python', icon: 'python', color: '#3776AB' },
+    { name: 'Flask', icon: 'flask', color: '#000000' },
+    { name: 'Flutter', icon: 'flutter', color: '#02569B' },
+    { name: 'TypeScript', icon: 'typescript', color: '#3178C6' },
+    { name: 'Next.js', icon: 'next', color: '#000000' },
+    { name: 'Firebase', icon: 'firebase', color: '#FFCA28' },
+    { name: 'Google Cloud', icon: 'gcp', color: '#4285F4' },
+    { name: 'Git', icon: 'git', color: '#F05032' },
+    { name: 'Postman', icon: 'postman', color: '#FF6C37' },
+    { name: 'Figma', icon: 'figma', color: '#F24E1E' },
+  ];
 
   // Pseudo-random generator for consistent chaos across renders
   // Positions bubbles around a center image placeholder
@@ -140,7 +150,7 @@ const ComicTechStack = () => {
     const bubbleType = index % 3; // 0: Speech, 1: Thought, 2: Jagged
     
     // Circular/radial positioning around center
-    const totalBubbles = techStack.length;
+    const totalBubbles = chaosTechStack.length;
     const angle = (index / totalBubbles) * 2 * Math.PI; // Distribute evenly around circle
     
     // Base radius
@@ -207,8 +217,8 @@ const ComicTechStack = () => {
           <BookOpen className="btn-icon" size={28} strokeWidth={2.5} />
         </button>
 
-        {/* Chat Bubbles around the center */}
-        {isClient && techStack.map((tech, index) => {
+        {/* Comic bubbles around the center */}
+        {isClient && chaosTechStack.map((tech, index) => {
           const style = generateChaos(index);
           return (
             <div
@@ -227,7 +237,6 @@ const ComicTechStack = () => {
             >
               <ComicBubble 
                 type={style.bubbleType} 
-                color={tech.color}
                 index={index}
               >
                 <div className="comic-tech-bubble-content">
@@ -256,63 +265,52 @@ const ComicTechStack = () => {
 // --- Sub-Components ---
 
 const ComicBubble = ({ type, children, index }) => {
-  // Randomize bubble background color slightly (White, Light Yellow, Light Blue)
-  // We keep backgrounds light so bold text pops, with thick black borders.
   const bgColors = ['#FFFFFF', '#FEF3C7', '#E0F2FE', '#F3E8FF'];
   const bgColor = bgColors[index % bgColors.length];
 
   return (
     <div className="comic-tech-bubble">
-      {/* The SVG Bubble Background */}
       <div className="comic-tech-bubble-svg-container">
         {type === 0 && (
-          // Classic Speech Bubble
           <svg viewBox="0 0 200 100" preserveAspectRatio="none" className="comic-tech-bubble-svg">
-            <path 
-              d="M10,10 Q50,-5 100,10 Q150,-5 190,10 Q205,50 190,90 Q150,105 100,90 Q50,105 10,90 Q-5,50 10,10 Z" 
-              fill={bgColor} 
-              stroke="black" 
+            <path
+              d="M10,10 Q50,-5 100,10 Q150,-5 190,10 Q205,50 190,90 Q150,105 100,90 Q50,105 10,90 Q-5,50 10,10 Z"
+              fill={bgColor}
+              stroke="black"
               strokeWidth="4"
               strokeLinejoin="round"
             />
-            {/* Tail */}
             <path d="M40,90 L20,120 L70,90" fill={bgColor} stroke="black" strokeWidth="4" />
-            {/* Mask to hide stroke overlap */}
-            <path d="M42,88 L68,88" stroke={bgColor} strokeWidth="6" /> 
+            <path d="M42,88 L68,88" stroke={bgColor} strokeWidth="6" />
           </svg>
         )}
 
         {type === 1 && (
-          // Boxy/Action Bubble
           <svg viewBox="0 0 200 100" preserveAspectRatio="none" className="comic-tech-bubble-svg">
-            <path 
-              d="M5,5 L195,10 L190,95 L10,90 Z" 
-              fill={bgColor} 
-              stroke="black" 
+            <path
+              d="M5,5 L195,10 L190,95 L10,90 Z"
+              fill={bgColor}
+              stroke="black"
               strokeWidth="5"
               strokeLinejoin="round"
             />
-            {/* Tail */}
             <path d="M150,92 L180,120 L170,93" fill={bgColor} stroke="black" strokeWidth="5" />
-             <path d="M152,90 L168,96" stroke={bgColor} strokeWidth="8" /> 
+            <path d="M152,90 L168,96" stroke={bgColor} strokeWidth="8" />
           </svg>
         )}
 
         {type === 2 && (
-          // Scream/Burst Bubble
           <svg viewBox="0 0 200 100" preserveAspectRatio="none" className="comic-tech-bubble-svg">
-            <path 
-              d="M10,20 L30,5 L50,25 L80,0 L100,20 L130,5 L150,25 L180,10 L190,40 L170,60 L195,80 L160,90 L140,75 L110,95 L90,75 L60,95 L40,75 L10,90 L25,60 L5,40 Z" 
-              fill={bgColor} 
-              stroke="black" 
+            <path
+              d="M10,20 L30,5 L50,25 L80,0 L100,20 L130,5 L150,25 L180,10 L190,40 L170,60 L195,80 L160,90 L140,75 L110,95 L90,75 L60,95 L40,75 L10,90 L25,60 L5,40 Z"
+              fill={bgColor}
+              stroke="black"
               strokeWidth="4"
               strokeLinejoin="round"
             />
           </svg>
         )}
       </div>
-      
-      {/* Content Container */}
       <div className="comic-tech-bubble-inner">
         {children}
       </div>
@@ -336,8 +334,8 @@ const TechIcon = ({ type, color }) => {
     case 'python': return <SiPython size={iconSize} style={iconStyle} />;
     case 'flask': return <SiFlask size={iconSize} style={iconStyle} />;
     case 'flutter': return <SiFlutter size={iconSize} style={iconStyle} />;
-    case 'html': return <SiHtml5 size={iconSize} style={iconStyle} />;
-    case 'css': return <SiCss3 size={iconSize} style={iconStyle} />;
+    case 'typescript': return <SiTypescript size={iconSize} style={iconStyle} />;
+    case 'next': return <SiNextdotjs size={iconSize} style={iconStyle} />;
     case 'firebase': return <SiFirebase size={iconSize} style={iconStyle} />;
     case 'gcp': return <SiGooglecloud size={iconSize} style={iconStyle} />;
     case 'git': return <SiGit size={iconSize} style={iconStyle} />;
@@ -348,14 +346,22 @@ const TechIcon = ({ type, color }) => {
     case 'sklearn': return <Cpu size={iconSize} style={iconStyle} />;
     case 'electron': return <SiElectron size={iconSize} style={iconStyle} />;
     case 'gemini': return <Cpu size={iconSize} style={iconStyle} />;
+    case 'transformers': return <SiHuggingface size={iconSize} style={iconStyle} />;
+    case 'llm': return <SiOpenai size={iconSize} style={iconStyle} />;
     case 'automation': return <Globe size={iconSize} style={iconStyle} />;
     case 'sql': return <Database size={iconSize} style={iconStyle} />;
     case 'langchain': return <SiLangchain size={iconSize} style={iconStyle} />;
+    case 'pinecone': return <Database size={iconSize} style={iconStyle} />;
+    case 'langgraph': return <SiLangchain size={iconSize} style={iconStyle} />;
     case 'chromadb': return <Database size={iconSize} style={iconStyle} />;
     case 'judge0': return <Code2 size={iconSize} style={iconStyle} />;
     case 'fullstack': return <Layers size={iconSize} style={iconStyle} />;
     case 'api': return <Globe size={iconSize} style={iconStyle} />;
     case 'websocket': return <Globe size={iconSize} style={iconStyle} />;
+    case 'mastra': return <Layers size={iconSize} style={iconStyle} />;
+    case 'crewai': return <Cpu size={iconSize} style={iconStyle} />;
+    case 'agnos': return <SiOpenai size={iconSize} style={iconStyle} />;
+    case 'n8n': return <SiN8N size={iconSize} style={iconStyle} />;
     default: return <SiReact size={iconSize} style={iconStyle} />;
   }
 };
