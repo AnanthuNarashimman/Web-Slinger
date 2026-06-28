@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Github, ExternalLink } from "lucide-react";
+import { Github, ExternalLink, ChevronDown } from "lucide-react";
 import "../ComponentStyles/ComicTV.css";
 
 import AlgoFlowLP from "../assets/Images/AlgoFlowLP.png";
@@ -352,10 +352,20 @@ function ComicTV() {
                                 
                                 <div className="placeholder-content">
                                     <h2 className="placeholder-title">PROJECT SHOWCASE</h2>
-                                    <p className="placeholder-text">
-                                        Choose a channel below to explore amazing projects!
+                                    <span className="placeholder-channel-tag">SELECT A CHANNEL</span>
+                                    <p className="placeholder-hero-text">
+                                        I build AI agents, developer tools, and full-stack products that real people use. <strong>Pick a channel</strong> to see what I've been working on.
                                     </p>
-                                    <div className="arrow-down-comic">↓ Select Channel ↓</div>
+                                    <p className="placeholder-sub-text">
+                                        I jump into new projects pretty often. Follow me on socials to keep up.
+                                    </p>
+                                    <button 
+                                        className="placeholder-contact-btn"
+                                        onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                                    >
+                                        <ChevronDown size={18} />
+                                        Get in Touch
+                                    </button>
                                 </div>
                             </div>
                         )}
