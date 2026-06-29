@@ -200,7 +200,7 @@ const ComicSidebar = ({
         .cs-close-btn {
           position: absolute;
           top: 1rem;
-          right: 1rem;
+          right: 1.5rem;
           background: #FF1744;
           border: 4px solid #000;
           box-shadow: 4px 4px 0 #000;
@@ -219,13 +219,13 @@ const ComicSidebar = ({
           z-index: 2;
         }
         .cs-close-btn:hover {
-          transform: rotateY(180deg) scale(1.1);
+          transform: scale(1.08);
           background: #000;
           color: #FFD700;
           box-shadow: 6px 6px 0 #FF1744;
         }
         .cs-close-btn:active {
-          transform: rotateY(180deg) translate(2px, 2px);
+          transform: scale(0.95);
           box-shadow: 2px 2px 0 #FF1744;
         }
         
