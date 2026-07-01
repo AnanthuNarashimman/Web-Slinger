@@ -50,6 +50,7 @@ function ComicWantedContact() {
       );
       setStatus("success");
       setFormData({ name: "", email: "", message: "" });
+      setTimeout(() => setStatus(null), 5000);
     } catch {
       setStatus("error");
     } finally {
