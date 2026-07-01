@@ -1,4 +1,5 @@
 import { useState } from "react";
+import emailjs from "@emailjs/browser";
 import {
   Linkedin,
   Github,
@@ -22,24 +23,38 @@ function ComicWantedContact() {
     email: "",
     message: ""
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [status, setStatus] = useState(null); // "success" | "error" | null
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSend = (event) => {
+  const handleSend = async (event) => {
     event.preventDefault();
-    const subject = encodeURIComponent(
-      `Wanted Poster Contact - ${formData.name || "Mysterious Admirer"}`
-    );
-    const body = encodeURIComponent(
-      `Name: ${formData.name || "N/A"}\nEmail: ${formData.email || "N/A"}\n\nMessage:\n${
-        formData.message || "No message included."
-      }`
-    );
-    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${CONTACT_EMAIL}&su=${subject}&body=${body}`;
-    window.open(gmailUrl, "_blank", "noopener,noreferrer");
+    setIsSubmitting(true);
+    setStatus(null);
+
+    try {
+      await emailjs.send(
+        "service_cqrlbzl",
+        "template_i0pwg2d",
+        {
+          from_name: formData.name || "Mysterious Admirer",
+          from_email: formData.email || "N/A",
+          message: formData.message || "No message included.",
+          to_email: CONTACT_EMAIL,
+        },
+        "oeh2q_ffQz-LApW7T"
+      );
+      setStatus("success");
+      setFormData({ name: "", email: "", message: "" });
+    } catch {
+      setStatus("error");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -145,9 +160,19 @@ function ComicWantedContact() {
               />
             </label>
 
-            <button type="submit" className="wanted-send-btn">
+            {status === "success" && (
+              <div className="wanted-status wanted-status--success">
+                Message delivered! I&apos;ll be in touch.
+              </div>
+            )}
+            {status === "error" && (
+              <div className="wanted-status wanted-status--error">
+                Something went wrong. Try again or email me directly.
+              </div>
+            )}
+            <button type="submit" className="wanted-send-btn" disabled={isSubmitting}>
               <Mail size={20} />
-              Send via Gmail
+              {isSubmitting ? "Sending..." : "Send Message"}
             </button>
           </form>
         </div>
