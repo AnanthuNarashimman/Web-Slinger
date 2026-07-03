@@ -1,15 +1,19 @@
 .comic-footer {
     position: relative;
+    width: 100%;
+    max-width: 100%;
     min-height: 60vh;
     border-top: 4px solid #000;
     background-image: url("../assets/Images/footer.png");
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
-    overflow: hidden;
+    background-color: #0b0f1a;
+    overflow: hidden; /* clips anything that would bleed out */
+    box-sizing: border-box;
 }
 
-/* Quote — top right */
+/* Quote — top right on desktop */
 .footer-quote {
     position: absolute;
     top: 10%;
@@ -28,7 +32,7 @@
         -1px 1px 0 #000;
 }
 
-/* Nav + socials — bottom right */
+/* Nav + socials — bottom right on desktop */
 .footer-bottom {
     position: absolute;
     bottom: 2rem;
@@ -84,17 +88,48 @@
     transform: translateY(-3px);
 }
 
+/* ── Mobile ─────────────────────────────────────────── */
 @media (max-width: 768px) {
+    .comic-footer {
+        min-height: 380px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 1.5rem 1rem 1.5rem;
+        background-position: left center;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* quote: pull out of absolute, stack at top */
     .footer-quote {
-        top: 8%;
-        right: 50%;
-        transform: translateX(50%);
+        position: static;
         text-align: center;
+        font-size: clamp(1rem, 4.5vw, 1.4rem);
+        max-width: 100%;
+        word-break: break-word;
+        overflow-wrap: break-word;
+    }
+
+    /* nav+socials: pull out of absolute, sit at bottom */
+    .footer-bottom {
+        position: static;
+        align-items: center;
+        width: 100%;
+        box-sizing: border-box;
     }
 
     .footer-nav {
         flex-wrap: wrap;
         justify-content: center;
-        gap: 0.75rem 1.25rem;
+        gap: 0.4rem 0.8rem;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .footer-nav-link {
+        font-size: 0.75rem;
+        letter-spacing: 0.08em;
+        white-space: nowrap;
     }
 }
