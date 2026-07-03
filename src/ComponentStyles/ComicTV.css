@@ -16,11 +16,17 @@
     width: 100%;
     padding: 60px 40px 40px;
     position: relative;
+    background: #fcc303;
+    background-image: url("../assets/Images/tv_bg.png");
+    background-repeat: no-repeat;
+    background-position: center top -20px;
+    background-size: cover;
 }
 
 /* Section Header */
 .section-header-tv {
     text-align: center;
+    margin-top: 1.5rem;
     margin-bottom: 3rem;
     position: relative;
     padding: 0 1.5rem;
@@ -29,12 +35,13 @@
 .header-title-tv {
     font-size: 2.5rem;
     font-weight: 400;
-    color: #000;
-    font-family: "Bangers", cursive;
+    color: #fff;
+    /* font-family: "Bangers", cursive; */
+    font-family: "Luckiest Guy";
     text-transform: uppercase;
-    text-shadow:
-        3px 3px 0px #ff1744,
-        6px 6px 0px #000;
+    -webkit-text-stroke: 5.5px #000;
+    paint-order: stroke fill;
+    text-shadow: 6px 6px 0px #000;
     letter-spacing: 2px;
     margin: 0 0 0.5rem 0;
 }
@@ -48,11 +55,12 @@
 .header-subtitle-tv {
     color: #000;
     margin: 0.5rem 0 0 0;
-    font-weight: 600;
+    font-weight: 550;
     letter-spacing: 0.05em;
     text-transform: uppercase;
-    font-family: "Comic Neue", sans-serif;
-    font-size: 0.9rem;
+    /* font-family: "Comic Neue", sans-serif; */
+    font-family: "Special Elite";
+    font-size: 20px !important;
 }
 
 @media (min-width: 768px) {
@@ -98,7 +106,6 @@
         linear-gradient(180deg, #2a2a2a 0%, #1a1a1a 50%, #0f0f0f 100%);
     border-radius: 20px;
     box-shadow:
-        0 25px 80px rgba(0, 0, 0, 0.9),
         inset 0 2px 4px rgba(255, 255, 255, 0.1),
         inset 0 -4px 8px rgba(0, 0, 0, 0.5);
     border: 4px solid #0a0a0a;
@@ -528,7 +535,7 @@
     left: 50%;
     transform: translateX(-50%);
     border: 6px solid transparent;
-    border-top-color: var(--comic-black);
+    border-top-color: var(--comic-black) !important;
 }
 
 .speech-bubble::before {
@@ -1133,43 +1140,34 @@
 .project-title-comic {
     font-family: "Bangers", cursive;
     font-size: clamp(28px, 3.5vw, 42px);
-    color: var(--comic-black);
+    color: #FFD700;
     text-transform: uppercase;
-    letter-spacing: 3px;
+    letter-spacing: 4px;
     line-height: 1;
-    text-shadow:
-        4px 4px 0 var(--comic-yellow),
-        5px 5px 0 rgba(0, 0, 0, 0.2);
+    -webkit-text-stroke: 2.5px #000;
+    paint-order: stroke fill;
+    text-shadow: 6px 6px 0px #000;
     margin: 0;
     position: relative;
     padding-bottom: 10px;
 }
 
-.project-title-comic::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 3px;
-    background: repeating-linear-gradient(
-        90deg,
-        var(--comic-red) 0px,
-        var(--comic-red) 14px,
-        transparent 14px,
-        transparent 18px
-    );
-}
+
 
 .project-subtitle {
     display: block;
-    font-family: "Comic Neue", sans-serif;
-    font-size: clamp(13px, 1.6vw, 15px);
-    font-style: italic;
-    font-weight: 700;
-    margin-top: 6px;
-    color: #e67e22;
-    letter-spacing: 0.5px;
+    font-family: "Bangers", cursive;
+    font-size: clamp(11px, 1.4vw, 14px);
+    font-style: normal;
+    font-weight: 400;
+    margin-top: 8px;
+    color: #fff;
+    background: #FF1744;
+    padding: 2px 10px;
+    border: 2px solid #000;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    width: fit-content;
     text-shadow: none;
 }
 
@@ -1234,62 +1232,67 @@
 }
 
 .project-description-comic p {
-    font-family: "Comic Neue", sans-serif;
-    font-size: clamp(12.5px, 1.45vw, 14px);
+    font-size: clamp(17px, 1.45vw, 14px);
+    font-weight: 550;
     line-height: 1.7;
     color: #1a1a1a;
     margin: 0;
     text-align: left;
     position: relative;
     z-index: 1;
+    font-family: "Special Elite";
 }
 
 .tech-stack-comic {
-    margin: 12px 0 0;
-    padding: 12px 14px;
-    background: rgba(255, 253, 235, 0.9);
-    border: 2.5px solid var(--comic-black);
-    border-radius: 4px;
+    margin: 16px 0 0;
+    padding: 14px 14px 12px;
+    background: #fcf6ec;
+    border: 3px solid var(--comic-black);
     position: relative;
-    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.15);
+    box-shadow: 5px 5px 0 var(--comic-black);
+    transform: rotate(-0.5deg);
 }
 
 .tech-stack-comic::before {
-    content: none;
+    content: "";
+    position: absolute;
+    top: -6px;
+    left: 15%;
+    width: 50px;
+    height: 16px;
+    background: rgba(200, 190, 160, 0.6);
+    border: 1.5px solid rgba(160, 140, 100, 0.4);
+    border-radius: 2px;
+    transform: rotate(-2deg);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.tech-stack-comic::after {
+    content: "";
+    position: absolute;
+    top: -6px;
+    right: 15%;
+    width: 50px;
+    height: 16px;
+    background: rgba(200, 190, 160, 0.6);
+    border: 1.5px solid rgba(160, 140, 100, 0.4);
+    border-radius: 2px;
+    transform: rotate(2deg);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .section-title-comic {
     font-family: "Bangers", cursive;
     font-size: clamp(16px, 2vw, 19px);
-    color: var(--comic-black);
+    color: #FFD700;
     text-transform: uppercase;
-    margin-bottom: 10px;
-    letter-spacing: 2px;
+    margin-bottom: 12px;
+    letter-spacing: 3px;
     position: relative;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.section-title-comic::before {
-    content: "▶";
-    font-size: 10px;
-    color: var(--comic-red);
-}
-
-.section-title-comic::after {
-    content: "";
-    position: absolute;
-    bottom: -3px;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: linear-gradient(
-        90deg,
-        var(--comic-red),
-        var(--comic-yellow),
-        transparent
-    );
+    display: inline-block;
+    -webkit-text-stroke: 2px #000;
+    paint-order: stroke fill;
+    text-shadow: 3px 3px 0 #000;
 }
 
 .tech-badges-comic {
@@ -1299,18 +1302,19 @@
 }
 
 .tech-badge-comic {
-    padding: 4px 11px;
+    padding: 5px 12px;
     background: #fff;
     border: 2px solid var(--comic-black);
-    border-radius: 3px;
-    font-family: "Comic Neue", sans-serif;
-    font-size: clamp(10.5px, 1.3vw, 12.5px);
-    font-weight: 700;
+    border-radius: 0;
+    font-family: "Bangers", cursive;
+    font-size: clamp(11px, 1.3vw, 13px);
+    font-weight: 400;
     color: var(--comic-black);
-    box-shadow: 2px 2px 0 var(--comic-black);
+    box-shadow: 3px 3px 0 var(--comic-black);
     transition: all 0.15s ease;
     position: relative;
-    letter-spacing: 0.3px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
 }
 
 .tech-badge-comic::before {
@@ -1318,8 +1322,8 @@
 }
 
 .tech-badge-comic:hover {
-    transform: translate(-1px, -2px);
-    box-shadow: 3px 4px 0 var(--comic-black);
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0 var(--comic-black);
     background: var(--comic-yellow);
 }
 
@@ -1402,7 +1406,7 @@
     cursor: not-allowed;
 }
 
-/* Placeholder State */
+/*  State */
 .project-details.placeholder {
     display: flex;
     align-items: center;
@@ -1417,10 +1421,13 @@
 .placeholder-title {
     font-family: "Bangers", cursive;
     font-size: clamp(32px, 5vw, 48px);
-    color: var(--comic-black);
+    color: #FFD700;
     text-transform: uppercase;
+    letter-spacing: 4px;
     margin-bottom: 20px;
-    text-shadow: 4px 4px 0 rgba(255, 215, 0, 0.4);
+    -webkit-text-stroke: 2.5px #000;
+    paint-order: stroke fill;
+    text-shadow: 6px 6px 0px #000;
 }
 
 .placeholder-text {
@@ -1462,16 +1469,20 @@
 .placeholder-title {
     font-family: "Bangers", cursive;
     font-size: clamp(28px, 4vw, 40px);
-    color: var(--comic-black);
+    color: #FFD700;
     text-transform: uppercase;
+    letter-spacing: 4px;
     margin: 0 0 10px;
-    text-shadow: 3px 3px 0 rgba(255, 215, 0, 0.4);
+    -webkit-text-stroke: 2.5px #000;
+    paint-order: stroke fill;
+    text-shadow: 6px 6px 0px #000;
 }
 
 .placeholder-hero-text {
-    font-family: "Comic Neue", sans-serif;
-    font-size: clamp(18px, 2.6vw, 26px);
-    font-weight: 700;
+    /* font-family: "Comic Neue", sans-serif; */
+    font-family: "Special Elite";
+    font-size: clamp(17px, 2.6vw, 26px);
+    font-weight: 500;
     color: var(--comic-black);
     line-height: 1.6;
     margin: 0 auto 14px;
@@ -1484,8 +1495,10 @@
 }
 
 .placeholder-sub-text {
-    font-family: "Comic Neue", sans-serif;
-    font-size: clamp(15px, 1.8vw, 19px);
+    /* font-family: "Comic Neue", sans-serif; */
+    font-family: "Special Elite";
+    /* font-size: clamp(13px, 1.8vw, 19px); */
+    font-size: 18px !important;
     color: #666;
     line-height: 1.5;
     margin: 0 0 32px;
@@ -1548,14 +1561,20 @@
 .project-card-mini {
     background: var(--paper-beige);
     border: 3px solid var(--comic-black);
-    border-radius: 4px;
     padding: 14px 10px 12px;
     position: relative;
     cursor: pointer;
     box-shadow: 4px 4px 0 var(--comic-black);
-    transition: all 0.15s ease;
-    overflow: hidden;
+    transition: all 0.12s ease;
+    overflow: visible;
+    transform: rotate(var(--tilt, 0deg));
 }
+
+/* slight random-ish tilts via nth-child */
+.project-card-mini:nth-child(1) { --tilt: -1deg; }
+.project-card-mini:nth-child(2) { --tilt: 0.5deg; }
+.project-card-mini:nth-child(3) { --tilt: -0.3deg; }
+.project-card-mini:nth-child(4) { --tilt: 1deg; }
 
 /* diagonal halftone texture */
 .project-card-mini::before {
@@ -1585,12 +1604,17 @@
 }
 
 .project-card-mini:hover {
-    transform: translate(-2px, -3px);
+    transform: rotate(var(--tilt, 0deg)) translate(-2px, -3px) scale(1.03);
     box-shadow: 6px 7px 0 var(--comic-black);
 }
 
+.project-card-mini:active {
+    transform: rotate(var(--tilt, 0deg)) translate(2px, 2px);
+    box-shadow: 2px 2px 0 var(--comic-black);
+}
+
 .project-card-mini.active {
-    transform: translate(-1px, -2px);
+    transform: rotate(var(--tilt, 0deg)) translate(-1px, -2px);
     box-shadow: 5px 6px 0 var(--comic-black);
 }
 
@@ -1661,18 +1685,21 @@
 }
 
 .project-number {
-    display: block;
-    font-family: "VT323", monospace;
-    font-size: 13px;
+    display: inline-block;
+    font-family: "Bangers", cursive;
+    font-size: 11px;
     color: inherit;
-    opacity: 0.7;
-    margin-bottom: 6px;
-    letter-spacing: 1px;
+    opacity: 0.8;
+    margin-bottom: 4px;
+    letter-spacing: 2px;
+    background: #fff;
+    padding: 0 6px;
+    border: 1.5px solid #000;
 }
 
 .project-name-mini {
     font-family: "Bangers", cursive;
-    font-size: clamp(13px, 1.7vw, 17px);
+    font-size: clamp(14px, 1.8vw, 18px);
     color: var(--comic-black);
     text-transform: uppercase;
     margin: 0;
@@ -1680,12 +1707,12 @@
     line-height: 1.1;
 }
 
-/* active state — name goes white on saturated bg */
+/* active state */
 .project-card-mini.active .project-name-mini {
-    color: var(--comic-black);
-    text-shadow:
-        -1px -1px 0 rgba(255, 255, 255, 0.6),
-        1px 1px 0 rgba(255, 255, 255, 0.6);
+    color: #FFD700;
+    -webkit-text-stroke: 2px #000;
+    paint-order: stroke fill;
+    text-shadow: 3px 3px 0 #000;
 }
 
 /* Responsive Design */
@@ -1858,9 +1885,8 @@
 
     .header-title-tv {
         font-size: 2rem;
-        text-shadow:
-            2px 2px 0px #ff1744,
-            4px 4px 0px #000;
+        -webkit-text-stroke: 3px #000;
+        text-shadow: 3px 3px 0px #000;
     }
 
     .header-subtitle-tv {
@@ -1979,11 +2005,6 @@
 
     .project-title-comic {
         font-size: 24px;
-    }
-
-    .project-title-comic::after {
-        width: 50px;
-        height: 3px;
     }
 
     .project-subtitle {

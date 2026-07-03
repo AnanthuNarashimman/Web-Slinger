@@ -1,9 +1,8 @@
 import "../ComponentStyles/Hero.css";
-import Marquee from "./Marquee";
 
 import Profile from "../assets/Images/comic_sprofile.png";
 
-import { Send } from 'lucide-react';
+import { Send, Rocket, Users, Bot, Globe, Terminal, Layout } from 'lucide-react';
 
 
 function Hero() {
@@ -34,10 +33,12 @@ function Hero() {
                 <div className="hero">
                     <div className="hero-content">
                         <h1 className="hero-title">
-                            Building Solutions That Matter
+                            <span className="title-line title-line-1">Building Solutions</span>
+                            <span className="title-line title-line-2">That Matter</span>
                         </h1>
                         <p className="hero-subtitle">
-I build agentic AI systems, developer tools, and full-stack products - from idea to deployed in days. Always at a hackathon, always shipping.                        </p>
+                            I build agentic AI systems, developer tools, and full-stack products &ndash; from idea to deployed in days. Always at a hackathon, <span className="highlight">always shipping.</span>
+                        </p>
                         <a href="mailto:ananthu.narashimman@gmail.com" style={{textDecoration: 'none'}}>
                         <button className="cta-btn">
                             Let's Connect
@@ -47,27 +48,23 @@ I build agentic AI systems, developer tools, and full-stack products - from idea
                         </button>
                         </a>
                         <div className="clients">
-                            <div className="client-avatars">
-                                <div className="avatar" data-tooltip="GenTeach">
-                                    G
-                                    <span className="tooltip">GenTeach</span>
+                            <div className="stat-card">
+                                <div className="stat-icon stat-icon-pink">
+                                    <Rocket size={20} strokeWidth={2.5} />
                                 </div>
-                                <div className="avatar" data-tooltip="Syntax">
-                                    S
-                                    <span className="tooltip">Syntax</span>
-                                </div>
-                                <div className="avatar" data-tooltip="PingMyPhone">
-                                    P
-                                    <span className="tooltip">PingMyPhone</span>
-                                </div>
-                                <div className="avatar" data-tooltip="Glimpse">
-                                    G
-                                    <span className="tooltip">Glimpse</span>
+                                <div className="stat-info">
+                                    <span className="stat-number">8+</span>
+                                    <span className="stat-label">Projects<br />Shipped</span>
                                 </div>
                             </div>
-                            <div className="client-stats">
-                                <span className="client-text client-text-1">8+ Projects Shipped</span>
-                                <span className="client-text client-text-2">500+ Users Served</span>
+                            <div className="stat-card">
+                                <div className="stat-icon stat-icon-green">
+                                    <Users size={20} strokeWidth={2.5} />
+                                </div>
+                                <div className="stat-info">
+                                    <span className="stat-number">500+</span>
+                                    <span className="stat-label">Users<br />Served</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -80,10 +77,26 @@ I build agentic AI systems, developer tools, and full-stack products - from idea
                             </div>
                         </div>
 
-                        <div className="badge badge-1">AI Agent Builder</div>
-                        <div className="badge badge-2">Product Builder</div>
-                        <div className="badge badge-3">Dev Tool Maker</div>
-                        <div className="badge badge-4">Open Source Contributor</div>
+
+                        <div className="badge badge-1">
+                            <span className="badge-icon"><Bot size={16} strokeWidth={2.5} /></span>
+                            <span className="badge-text">Agentic Systems</span>
+                        </div>
+
+                        <div className="badge badge-2">
+                            <span className="badge-icon"><Globe size={16} strokeWidth={2.5} /></span>
+                            <span className="badge-text">Browser Automation</span>
+                        </div>
+
+                        <div className="badge badge-3">
+                            <span className="badge-icon"><Terminal size={16} strokeWidth={2.5} /></span>
+                            <span className="badge-text">CLI &amp; DevTools</span>
+                        </div>
+
+                        <div className="badge badge-4">
+                            <span className="badge-icon"><Layout size={16} strokeWidth={2.5} /></span>
+                            <span className="badge-text">Web Development</span>
+                        </div>
 
                         <div className="name-banner">
                             <div className="name-text">Ananthu Narashimman</div>
@@ -91,9 +104,6 @@ I build agentic AI systems, developer tools, and full-stack products - from idea
                     </div>
                 </div>
             </div>
-
-            {/* Bottom Ticker */}
-            <Marquee />
         </div>
     )
 }

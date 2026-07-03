@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Menu } from 'lucide-react';
 
 const ComicSidebar = ({ 
   menuItems = ['Home', 'About', 'Projects', 'Contact', 'Blog'],
@@ -19,14 +20,18 @@ const ComicSidebar = ({
           top: 1.5rem;
           left: 1.5rem;
           z-index: 1000;
-          background-color: #FFD700;
+          display: flex;
+          align-items: center;
+          gap: 0.6rem;
+          background-color: #fff;
           color: #000;
           font-family: 'Bangers', cursive;
-          font-size: 1.5rem;
+          font-size: 1.4rem;
           letter-spacing: 2px;
-          padding: 0.75rem 1.5rem;
+          padding: 0.65rem 1.3rem 0.65rem 1.5rem;
           border: 5px solid #000;
-          box-shadow: 8px 8px 0px #000;
+          border-radius: 50px;
+          box-shadow: 4px 4px 0px #000;
           cursor: pointer;
           transform: rotate(-2deg);
           transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
@@ -34,23 +39,47 @@ const ComicSidebar = ({
           opacity: 1;
           pointer-events: auto;
         }
-        
+
+        .cs-menu-btn::before {
+          content: '';
+          position: absolute;
+          bottom: -40%;
+          left: 26px;
+          width: 0;
+          height: 0;
+          border-left: 6px solid transparent;
+          border-right: 20px solid transparent;
+          border-top: 18px solid #000;
+        }
+
+        .cs-menu-btn::after {
+          content: '';
+          position: absolute;
+          bottom: -23%;
+          left: 23%;
+          width: 0;
+          height: 0;
+          border-left: 4px solid transparent;
+          border-right: 15px solid transparent;
+          border-top: 13px solid #fff;
+        }
+
         .cs-menu-btn.hidden {
           opacity: 0;
           pointer-events: none;
         }
-        
+
         @keyframes menuPulse {
           0%, 100% { transform: rotate(-2deg) scale(1); }
           50% { transform: rotate(-2deg) scale(1.05); }
         }
-        
+
         .cs-menu-btn:hover {
           transform: rotate(0deg) scale(1.1);
-          box-shadow: 12px 12px 0px #000;
+          box-shadow: 8px 8px 0px #000;
           animation: none;
         }
-        
+
         .cs-menu-btn:active {
           transform: translate(4px, 4px) rotate(0deg);
           box-shadow: 4px 4px 0px #000;
@@ -267,12 +296,13 @@ const ComicSidebar = ({
       `}</style>
 
       {/* Trigger Button */}
-      <button 
+      <button
         className={`cs-menu-btn ${isOpen ? 'hidden' : ''}`}
         onClick={() => setIsOpen(true)}
         aria-label="Open Menu"
       >
         MENU
+        <Menu size={20} strokeWidth={3} />
       </button>
 
       {/* Backdrop */}

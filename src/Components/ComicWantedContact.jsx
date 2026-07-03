@@ -7,7 +7,7 @@ import {
   Coffee,
   Award,
   ExternalLink,
-  Lightbulb
+  Lightbulb,
 } from "lucide-react";
 import "../ComponentStyles/ComicWantedContact.css";
 import Wanted from "../assets/Images/Wanted.png";
@@ -21,7 +21,7 @@ function ComicWantedContact() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    message: ""
+    message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [status, setStatus] = useState(null); // "success" | "error" | null
@@ -46,7 +46,7 @@ function ComicWantedContact() {
           message: formData.message || "No message included.",
           to_email: CONTACT_EMAIL,
         },
-        "oeh2q_ffQz-LApW7T"
+        "oeh2q_ffQz-LApW7T",
       );
       setStatus("success");
       setFormData({ name: "", email: "", message: "" });
@@ -64,32 +64,38 @@ function ComicWantedContact() {
 
       <div className="wanted-content">
         <div className="wanted-poster">
-          <div className="poster-header">
-            <span className="poster-ribbon">Commit or Alive</span>
-            <p className="poster-subtitle">Bounty No. 0110</p>
-          </div>
+          <div className="poster-paper">
+            <div className="poster-header">
+              <span className="poster-ribbon">Commit or Alive</span>
+              <p className="poster-subtitle">Bounty No. 0110</p>
+            </div>
 
-          <h2 className="poster-title">WANTED</h2>
-          <p className="poster-tagline">FOR BUILDING COOL TUFFS</p>
+            <h2 className="poster-title">WANTED</h2>
+            <p className="poster-tagline">FOR BUILDING COOL TUFFS</p>
 
-          <div className="poster-image-frame">
-            <img src={Wanted} alt="Wanted silhouette" className="poster-image" />
-            <div className="poster-tape tape-top-left" />
-            <div className="poster-tape tape-bottom-right" />
-          </div>
+            <div className="poster-image-frame">
+              <img
+                src={Wanted}
+                alt="Wanted silhouette"
+                className="poster-image"
+              />
+              <div className="poster-tape tape-top-left" />
+              <div className="poster-tape tape-bottom-right" />
+            </div>
 
-          <div className="poster-reward">
-            <h3>Reward</h3>
-            <div className="reward-badges">
-              <span>
-                <Coffee size={18} /> Coffee
-              </span>
-              <span>
-                <Lightbulb size={18} /> Ideas
-              </span>
-              <span>
-                <ExternalLink size={18} /> Collaboration
-              </span>
+            <div className="poster-reward">
+              <h3>Reward</h3>
+              <div className="reward-badges">
+                <span>
+                  <Coffee size={18} /> Coffee
+                </span>
+                <span>
+                  <Lightbulb size={18} /> Ideas
+                </span>
+                <span>
+                  <ExternalLink size={18} /> Collaboration
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -98,26 +104,20 @@ function ComicWantedContact() {
           <div className="torn-strip">Drop me a line on the dusty trail</div>
 
           <div className="contact-links">
-            <a
-              href={LINKEDIN_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer">
               <Linkedin size={22} /> LinkedIn
             </a>
-            <a
-              href={GITHUB_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer">
               <Github size={22} /> GitHub
             </a>
-            <a
-              href={X_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" style={{marginRight: '8px'}}>
+            <a href={X_URL} target="_blank" rel="noopener noreferrer">
+              <svg
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                style={{ marginRight: "8px" }}
+              >
                 <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
               </svg>
               X (Twitter)
@@ -171,7 +171,11 @@ function ComicWantedContact() {
                 Something went wrong. Try again or email me directly.
               </div>
             )}
-            <button type="submit" className="wanted-send-btn" disabled={isSubmitting}>
+            <button
+              type="submit"
+              className="wanted-send-btn"
+              disabled={isSubmitting}
+            >
               <Mail size={20} />
               {isSubmitting ? "Sending..." : "Send Message"}
             </button>

@@ -6,33 +6,21 @@ const ComicTimeline = () => {
       number: '03',
       date: 'JUL 2025 – DEC 2025',
       title: 'SOFTWARE ENGINEER INTERN',
-      description: (
-        <>
-          Building internal tools and full-stack features as a software engineer intern at{" "}
-          <a
-            href="https://www.prasklatechnology.com"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Praskla Technologies
-          </a>
-          .
-        </>
-      ),
+      description: "Worked across multiple production projects, shipping features, migrating an Electron application's routing architecture, and rebuilding the company's public website with React and Tailwind as part of a six-person engineering team.",
       align: 'left'
     },
     {
       number: '02',
       date: '2024 – PRESENT',
-      title: 'INDEPENDENT PRODUCT DEV',
-      description: 'Shipped web applications (GenTeach, Glimpse RAG, contest platforms) used by students.',
+      title: 'INDEPENDENT PRODUCT DEVELOPER',
+      description: "Building AI products and developer tools focused on real-world problems. Shipped browser agents, autonomous website auditors, and developer extensions like VibeAudit, AlgoFlow, and damn.js—all public, actively used, and built from idea to deployment.",
       align: 'right'
     },
     {
       number: '01',
       date: '2023 – 2024',
       title: 'FULL-STACK ENGINEER',
-      description: 'Self-taught. Built and deployed personal projects while learning React, Node.js, Flask, and modern AI stack.',
+      description: 'Started from scratch and learned by building. Shipped CRMs, coding platforms, and full-stack web applications with React, Node.js, and Flask instead of spending months following tutorials.',
       align: 'left'
     }
   ];
@@ -40,9 +28,6 @@ const ComicTimeline = () => {
   return (
     <div className="comic-container">
 
-      {/* Halftone Pattern */}
-      <div className="halftone-bg"></div>
-      
       {/* Corners */}
       <div className="corner-tri corner-tl"></div>
       <div className="corner-tri corner-br"></div>

@@ -204,7 +204,7 @@ function ComicTV() {
         <div className="project-showcase-container">
             <div className="section-header-tv">
                 <h2 className="header-title-tv">Featured Projects</h2>
-                <p className="header-subtitle-tv">Explore my work through this vintage TV experience</p>
+                <p className="header-subtitle-tv">Your friendly neighborhood dev's work, live on air</p>
             </div>
             
             <div className={`ambient-glow ${isOn ? 'on' : ''}`}></div>

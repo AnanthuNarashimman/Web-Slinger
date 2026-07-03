@@ -1,11 +1,11 @@
 import Hero from "../Components/Hero";
 import ComicTV from "../Components/ComicTV";
 import ComicTechStack from "../Components/ComicTechChaos";
-import ComicSeparator from "../Components/ComicSeparator";
 import ComicTimeline from "../Components/ComicTimeline";
 import ComicWantedContact from "../Components/ComicWantedContact";
 import ComicSidebar from "../Components/ComicSidebar";
 import ComicFooter from "../Components/ComicFooter";
+import ComicSeparator from "../Components/ComicSeparator";
 
 import "../PageStyles/Portfolio.css";
 import { useEffect } from "react";
@@ -45,15 +45,15 @@ function Portfolio() {
       <section id="projects">
         <ComicTV />
       </section>
-      <ComicSeparator />
+      <ComicSeparator topColor="#fcc303" bottomColor="#fcc303" />
       <section id="tech-stack">
         <ComicTechStack />
       </section>
-      <ComicSeparator />
+      <ComicSeparator topColor="#fcc303" bottomColor="#fcc303" />
       <section id="timeline">
         <ComicTimeline />
       </section>
-      <ComicSeparator />
+      <ComicSeparator topColor="#fcc303" bottomColor="#fcc303" />
       <section id="contact">
         <ComicWantedContact />
       </section>

@@ -4,11 +4,13 @@
 body {
   padding-top: 0;
   margin: 0;
+  background: #fcc303;
 }
 
 /* Section spacing to account for navbar */
 section {
   scroll-margin-top: 80px; /* Offset for fixed navbar */
+  background: #fcc303;
 }
 
 /* Smooth scrolling */

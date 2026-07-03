@@ -210,11 +210,12 @@ const ComicTechStack = () => {
         </div>
 
         {/* Know More Button */}
-        <button 
+        <button
           className="comic-tech-know-more-btn"
           onClick={() => setIsModalOpen(true)}
         >
-          <BookOpen className="btn-icon" size={28} strokeWidth={2.5} />
+          <BookOpen className="btn-icon" size={20} strokeWidth={2.5} />
+          <span className="comic-tech-know-more-text-main">KNOW MORE</span>
         </button>
 
         {/* Comic bubbles around the center */}
