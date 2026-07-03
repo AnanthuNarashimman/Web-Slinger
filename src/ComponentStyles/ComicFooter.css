@@ -16,7 +16,7 @@
 /* Quote — top right on desktop */
 .footer-quote {
     position: absolute;
-    top: 10%;
+    top: 55%;
     right: 5%;
     font-family: "Bangers", cursive;
     font-size: clamp(1.4rem, 2.6vw, 2rem);
