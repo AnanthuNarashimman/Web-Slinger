@@ -3,7 +3,7 @@
     width: 100%;
     max-width: 100%;
     min-height: 60vh;
-    border-top: 4px solid #000;
+    /* border-top: 4px solid #000; */
     background-image: url("../assets/Images/footer.png");
     background-repeat: no-repeat;
     background-position: center center;
@@ -91,7 +91,8 @@
 /* ── Mobile ─────────────────────────────────────────── */
 @media (max-width: 768px) {
     .comic-footer {
-        min-height: 380px;
+        /* let content determine height on small screens to avoid background bands */
+        min-height: auto;
         display: flex;
         flex-direction: column;
         justify-content: space-between;

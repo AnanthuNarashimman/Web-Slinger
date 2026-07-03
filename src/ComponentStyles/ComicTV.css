@@ -458,11 +458,10 @@
 
 .ambient-glow {
     position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100vw;
-    height: 100vh;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background: radial-gradient(
         circle at 50% 50%,
         rgba(255, 215, 0, 0.08) 0%,
@@ -997,13 +996,6 @@
     50% {
         opacity: 1;
     }
-}
-
-/* CRT phosphor colour-fringe on the bezel ambient */
-.ambient-glow.on {
-    box-shadow:
-        0 0 40px 10px rgba(100, 220, 255, 0.18),
-        0 0 80px 20px rgba(80, 180, 255, 0.08);
 }
 
 /* Details Section - Right */

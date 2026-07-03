@@ -116,13 +116,7 @@ const ComicSidebar = ({
           max-width: 85vw;
           background-color: #FFD700;
           z-index: 999;
-          border-right: 8px solid #000;
-          box-shadow: 
-            inset -8px 0 0 #FF1744,
-            inset 0 8px 0 #00E5FF,
-            inset 0 -8px 0 #00E5FF,
-            16px 0 0 #000,
-            20px 0 40px rgba(0,0,0,0.5);
+          box-shadow: none;
           transform: translateX(-105%);
           transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
           display: flex;
@@ -156,9 +150,6 @@ const ComicSidebar = ({
           margin-bottom: 2.5rem;
           text-align: center;
           color: #000;
-          text-shadow: 
-            4px 4px 0 #FF1744,
-            -2px -2px 0 #00E5FF;
           border: 5px solid #000;
           border-radius: 0;
           padding: 1rem;
@@ -187,7 +178,6 @@ const ComicSidebar = ({
           background: #000;
           padding: 0.75rem 1.25rem;
           border: 5px solid #000;
-          box-shadow: 6px 6px 0px #00E5FF;
           text-align: center;
           transform: skewX(-5deg);
           transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
@@ -222,7 +212,6 @@ const ComicSidebar = ({
         
         .cs-nav-item:active {
           transform: skewX(-5deg) translate(3px, 3px);
-          box-shadow: 3px 3px 0px #00E5FF;
         }
 
         /* Close Button inside Sidebar */

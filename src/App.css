@@ -8,14 +8,6 @@
 }
 
 body {
-    background: #ffe135;
-    background-image: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 2px,
-        rgba(0, 0, 0, 0.03) 2px,
-        rgba(0, 0, 0, 0.03) 4px
-    );
     min-height: 100vh;
     overflow-x: hidden !important;
     width: 100%;
