@@ -5,7 +5,7 @@ const ComicTimeline = () => {
     {
       number: '03',
       date: 'JUL 2025 – DEC 2025',
-      title: 'SOFTWARE ENGINEER INTERN',
+      title: 'SDE INTERN',
       description: "Worked across multiple production projects, shipping features, migrating an Electron application's routing architecture, and rebuilding the company's public website with React and Tailwind as part of a six-person engineering team.",
       align: 'left'
     },
@@ -18,7 +18,7 @@ const ComicTimeline = () => {
     },
     {
       number: '01',
-      date: '2023 – 2024',
+      date: '2023 – PRESENT',
       title: 'FULL-STACK ENGINEER',
       description: 'Started from scratch and learned by building. Shipped CRMs, coding platforms, and full-stack web applications with React, Node.js, and Flask instead of spending months following tutorials.',
       align: 'left'
