@@ -25,14 +25,32 @@ function ComicWantedContact() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [status, setStatus] = useState(null); // "success" | "error" | null
+  const [errors, setErrors] = useState({});
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    if (errors[name]) {
+      setErrors((prev) => ({ ...prev, [name]: "" }));
+    }
+  };
+
+  const validate = () => {
+    const newErrors = {};
+    if (!formData.name.trim()) newErrors.name = "Alias is required";
+    if (!formData.email.trim()) {
+      newErrors.email = "Contact signal is required";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = "Invalid email format";
+    }
+    if (!formData.message.trim()) newErrors.message = "Message is required";
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSend = async (event) => {
     event.preventDefault();
+    if (!validate()) return;
     setIsSubmitting(true);
     setStatus(null);
 
@@ -41,15 +59,16 @@ function ComicWantedContact() {
         "service_cqrlbzl",
         "template_i0pwg2d",
         {
-          from_name: formData.name || "Mysterious Admirer",
-          from_email: formData.email || "N/A",
-          message: formData.message || "No message included.",
+          from_name: formData.name,
+          from_email: formData.email,
+          message: formData.message,
           to_email: CONTACT_EMAIL,
         },
         "oeh2q_ffQz-LApW7T",
       );
       setStatus("success");
       setFormData({ name: "", email: "", message: "" });
+      setErrors({});
       setTimeout(() => setStatus(null), 5000);
     } catch {
       setStatus("error");
@@ -137,6 +156,7 @@ function ComicWantedContact() {
                 value={formData.name}
                 onChange={handleChange}
               />
+              {errors.name && <span className="wanted-error">{errors.name}</span>}
             </label>
 
             <label className="input-strip">
@@ -148,6 +168,7 @@ function ComicWantedContact() {
                 value={formData.email}
                 onChange={handleChange}
               />
+              {errors.email && <span className="wanted-error">{errors.email}</span>}
             </label>
 
             <label className="message-bubble">
@@ -159,6 +180,7 @@ function ComicWantedContact() {
                 onChange={handleChange}
                 rows={4}
               />
+              {errors.message && <span className="wanted-error">{errors.message}</span>}
             </label>
 
             {status === "success" && (

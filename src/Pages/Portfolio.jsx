@@ -9,20 +9,38 @@ import ComicSeparator from "../Components/ComicSeparator";
 
 import "../PageStyles/Portfolio.css";
 import { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function Portfolio() {
-  const scrollToSection = (sectionId) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const scrollToSection = (sectionId, behavior = 'smooth') => {
     const section = document.getElementById(sectionId);
     if (section) {
       const offset = 80;
       const targetPosition = section.offsetTop - offset;
       window.scrollTo({
         top: targetPosition,
-        behavior: 'smooth',
+        behavior,
       });
     }
   };
-  
+
+  // Coming back from another page (e.g. /arsenal) lands on the section we left
+  useEffect(() => {
+    const target = location.state?.scrollTo;
+    if (!target) return;
+
+    // Wait a frame so sections have their final heights before measuring
+    const frame = requestAnimationFrame(() => scrollToSection(target, 'auto'));
+
+    // Clear the state so a refresh doesn't re-trigger the jump
+    navigate(location.pathname, { replace: true, state: null });
+
+    return () => cancelAnimationFrame(frame);
+  }, [location.state, location.pathname, navigate]);
+
 
   return (
     <>

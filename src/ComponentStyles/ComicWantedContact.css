@@ -374,7 +374,15 @@
         letter-spacing: 0.15em;
     }
 
-    .bubble-tail {
+.wanted-error {
+    color: #c1121f;
+    font-family: "Bangers", cursive;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    margin-top: 0.15rem;
+}
+
+.bubble-tail {
         display: none;
     }
 
