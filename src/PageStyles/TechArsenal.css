@@ -5,7 +5,10 @@
   min-height: 100vh;
   background-color: #fcc303;
   padding: 2.5rem 1.5rem 4rem;
-  overflow-x: hidden;
+  /* clip rather than hidden — see Hero.css: hidden on one axis makes the other
+     axis `auto` and turns this into a nested scroll container. */
+  overflow-x: hidden; /* fallback for pre-2022 browsers */
+  overflow-x: clip;
   font-family: 'Roboto', sans-serif;
 }
 

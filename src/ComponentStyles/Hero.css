@@ -7,7 +7,11 @@
     background-size: cover;
     font-family: "Roboto", sans-serif;
     position: relative;
-    overflow-x: hidden;
+    /* `clip`, not `hidden`: an axis set to `hidden` forces the other axis from
+       `visible` to `auto`, which turned this into its own scroll container and
+       made the hero scroll independently of the page on mobile. */
+    overflow-x: hidden; /* fallback for pre-2022 browsers */
+    overflow-x: clip;
     display: flex;
     flex-direction: column;
     padding-top: 30px;
@@ -17,7 +21,8 @@
 .social-bar {
     position: absolute;
     bottom: 10%;
-    right: 30px;
+    /* clears the floating comic scrollbar on the right edge */
+    right: 64px;
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -952,9 +957,29 @@ a:has(.cta-btn):focus {
         height: 30px;
     }
 
+    /* Keep the two count pills side by side, npm drops to its own full row */
     .clients {
         margin-top: 30px;
-        gap: 12px;
+        gap: 10px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: stretch;
+        justify-content: center;
+    }
+
+    .clients > .stat-card {
+        flex: 1 1 0;
+        min-width: 0;
+        justify-content: center;
+    }
+
+    .clients > .npm-stat-wrapper {
+        flex: 1 0 100%;
+    }
+
+    .clients > .npm-stat-wrapper .npm-stat-card {
+        width: 100%;
+        justify-content: center;
     }
 
     .stat-card {
@@ -1110,18 +1135,28 @@ a:has(.cta-btn):focus {
         text-align: center;
     }
 
+    /* Still a row at the smallest sizes — tightened rather than stacked */
     .clients {
         margin-top: 25px;
-        gap: 10px;
-        flex-direction: column;
-        align-items: center;
+        gap: 8px;
     }
 
     .stat-card {
-        padding: 8px 14px;
-        gap: 8px;
+        padding: 8px 10px;
+        gap: 7px;
         border: 2px solid #000;
         box-shadow: 3px 3px 0px #000;
+    }
+
+    .stat-icon {
+        width: 30px;
+        height: 30px;
+        min-width: 30px;
+        border-width: 2px;
+    }
+
+    .stat-info {
+        gap: 6px;
     }
 
     .stat-number {

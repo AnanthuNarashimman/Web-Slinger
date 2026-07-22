@@ -4,6 +4,8 @@ import Profile from "../assets/Images/comic_sprofile.png";
 
 import { Send, Rocket, Users, Bot, Globe, Terminal, Layout } from 'lucide-react';
 
+import NpmStatCard from './NpmStatCard';
+
 
 function Hero() {
     return (
@@ -66,6 +68,7 @@ function Hero() {
                                     <span className="stat-label">Users<br />Served</span>
                                 </div>
                             </div>
+                            <NpmStatCard />
                         </div>
                     </div>
 

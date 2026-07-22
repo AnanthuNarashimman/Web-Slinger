@@ -13,9 +13,16 @@ section {
   background: #fcc303;
 }
 
-/* Smooth scrolling */
+/* Native fallback for when Lenis is inactive (touch / reduced motion).
+   Lenis' own stylesheet forces scroll-behavior:auto while it is driving. */
 html {
   scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 /* Prevent horizontal scroll */

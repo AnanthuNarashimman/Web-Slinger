@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import TechIcon from '../Components/TechIcon';
 import { detailedTechStack } from '../data/techStack';
+import { scrollTo } from '../lib/smoothScroll';
 import '../PageStyles/TechArsenal.css';
 
 const TechArsenal = () => {
@@ -10,7 +11,7 @@ const TechArsenal = () => {
 
   // Land at the top of the page, and let Esc walk back to the portfolio
   useEffect(() => {
-    window.scrollTo(0, 0);
+    scrollTo(0, { immediate: true });
 
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') {

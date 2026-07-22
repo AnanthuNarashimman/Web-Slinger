@@ -10,20 +10,17 @@ import ComicSeparator from "../Components/ComicSeparator";
 import "../PageStyles/Portfolio.css";
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { scrollTo } from "../lib/smoothScroll";
 
 function Portfolio() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const scrollToSection = (sectionId, behavior = 'smooth') => {
+  // Routed through Lenis so it eases instead of fighting the momentum engine
+  const scrollToSection = (sectionId, immediate = false) => {
     const section = document.getElementById(sectionId);
     if (section) {
-      const offset = 80;
-      const targetPosition = section.offsetTop - offset;
-      window.scrollTo({
-        top: targetPosition,
-        behavior,
-      });
+      scrollTo(section, { offset: -80, immediate });
     }
   };
 
@@ -33,7 +30,7 @@ function Portfolio() {
     if (!target) return;
 
     // Wait a frame so sections have their final heights before measuring
-    const frame = requestAnimationFrame(() => scrollToSection(target, 'auto'));
+    const frame = requestAnimationFrame(() => scrollToSection(target, true));
 
     // Clear the state so a refresh doesn't re-trigger the jump
     navigate(location.pathname, { replace: true, state: null });

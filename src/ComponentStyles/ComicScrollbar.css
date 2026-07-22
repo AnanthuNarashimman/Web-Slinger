@@ -1,0 +1,101 @@
+/* Floating comic scrollbar — laptop and up only.
+   The component adds .has-comic-scrollbar to <html> only while it's active,
+   so the native bar is never hidden on touch/narrow screens. */
+
+.has-comic-scrollbar {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* legacy Edge */
+}
+
+.has-comic-scrollbar::-webkit-scrollbar,
+.has-comic-scrollbar body::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none;
+}
+
+.comic-scrollbar-track {
+    position: fixed;
+    right: 14px;
+    top: 15%;
+    height: 70%;
+    width: 14px;
+    z-index: 9998;
+    border: 3px solid #000;
+    border-radius: 10px;
+    background: rgba(255, 248, 225, 0.72);
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.55);
+    /* No backdrop-filter here on purpose: a blurred fixed element forces a
+       full recomposite on every scroll frame and micro-stutters the page. */
+    /* Halftone speckle so it reads as part of the comic, not a browser chrome */
+    background-image: radial-gradient(
+        rgba(0, 0, 0, 0.16) 1px,
+        transparent 1px
+    );
+    background-size: 6px 6px;
+    transition:
+        opacity 0.25s ease,
+        transform 0.25s ease;
+}
+
+/* Nothing to scroll yet — fade out but keep layout stable */
+.comic-scrollbar-track.is-idle {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(8px);
+}
+
+.comic-scrollbar-thumb {
+    position: absolute;
+    left: -3px;
+    top: 0;
+    width: 14px;
+    border: 3px solid #000;
+    border-radius: 8px;
+    background: #d4a017; /* dark yellow */
+    box-shadow:
+        inset 0 2px 0 rgba(255, 255, 255, 0.45),
+        2px 2px 0 rgba(0, 0, 0, 0.6);
+    cursor: grab;
+    touch-action: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Promote to its own layer so per-frame transforms never repaint the track */
+    will-change: transform;
+    /* Only the colour transitions — transform is written every frame and must
+       land instantly, or the thumb visibly lags the page. */
+    transition: background-color 0.18s ease;
+}
+
+.comic-scrollbar-thumb:hover {
+    background: #f0b90b;
+}
+
+.comic-scrollbar-thumb.is-dragging {
+    background: #ffc800;
+    cursor: grabbing;
+}
+
+/* Three little grip notches, like a comic panel handle */
+.comic-scrollbar-grip {
+    width: 6px;
+    height: 10px;
+    background-image: linear-gradient(
+        to bottom,
+        #000 0 2px,
+        transparent 2px 4px,
+        #000 4px 6px,
+        transparent 6px 8px,
+        #000 8px 10px
+    );
+    opacity: 0.55;
+    pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .comic-scrollbar-track,
+    .comic-scrollbar-thumb {
+        transition: none;
+    }
+}
