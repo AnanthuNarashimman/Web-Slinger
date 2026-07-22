@@ -5,9 +5,9 @@ import {
   Github,
   Mail,
   Coffee,
-  Award,
   ExternalLink,
   Lightbulb,
+  Send,
 } from "lucide-react";
 import "../ComponentStyles/ComicWantedContact.css";
 import Wanted from "../assets/Images/Wanted.png";
@@ -78,24 +78,30 @@ function ComicWantedContact() {
   };
 
   return (
-    <section id="contact" className="wanted-contact-section">
+    <div className="wanted-contact-section">
       <div className="wanted-background" aria-hidden="true"></div>
+      <div className="wanted-speedlines" aria-hidden="true"></div>
 
       <div className="wanted-content">
         <div className="wanted-poster">
           <div className="poster-paper">
+            {/* Aged "case closed" stamp, angled over the paper */}
+            <span className="poster-stamp" aria-hidden="true">
+              Open Case
+            </span>
+
             <div className="poster-header">
               <span className="poster-ribbon">Commit or Alive</span>
               <p className="poster-subtitle">Bounty No. 0110</p>
             </div>
 
             <h2 className="poster-title">WANTED</h2>
-            <p className="poster-tagline">FOR BUILDING COOL TUFFS</p>
+            <p className="poster-tagline">FOR BUILDING COOL STUFF</p>
 
             <div className="poster-image-frame">
               <img
                 src={Wanted}
-                alt="Wanted silhouette"
+                alt="Wanted poster portrait"
                 className="poster-image"
               />
               <div className="poster-tape tape-top-left" />
@@ -116,6 +122,10 @@ function ComicWantedContact() {
                 </span>
               </div>
             </div>
+
+            <p className="poster-fineprint">
+              Last seen shipping code at 3 A.M. Approach with snacks.
+            </p>
           </div>
         </div>
 
@@ -123,30 +133,48 @@ function ComicWantedContact() {
           <div className="torn-strip">Drop me a line on the dusty trail</div>
 
           <div className="contact-links">
-            <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer">
+            <a
+              href={LINKEDIN_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="contact-link contact-link--linkedin"
+            >
               <Linkedin size={22} /> LinkedIn
             </a>
-            <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer">
+            <a
+              href={GITHUB_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="contact-link contact-link--github"
+            >
               <Github size={22} /> GitHub
             </a>
-            <a href={X_URL} target="_blank" rel="noopener noreferrer">
+            <a
+              href={X_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="contact-link contact-link--x"
+            >
               <svg
                 width="22"
                 height="22"
                 viewBox="0 0 24 24"
                 fill="currentColor"
-                style={{ marginRight: "8px" }}
+                aria-hidden="true"
               >
                 <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
               </svg>
               X (Twitter)
             </a>
-            <a href={`mailto:${CONTACT_EMAIL}`}>
+            <a
+              href={`mailto:${CONTACT_EMAIL}`}
+              className="contact-link contact-link--mail"
+            >
               <Mail size={22} /> Email
             </a>
           </div>
 
-          <form className="wanted-form" onSubmit={handleSend}>
+          <form className="wanted-form" onSubmit={handleSend} noValidate>
             <label className="input-strip">
               <span>Alias</span>
               <input
@@ -155,8 +183,11 @@ function ComicWantedContact() {
                 placeholder="Code Name"
                 value={formData.name}
                 onChange={handleChange}
+                aria-invalid={Boolean(errors.name)}
               />
-              {errors.name && <span className="wanted-error">{errors.name}</span>}
+              {errors.name && (
+                <span className="wanted-error">{errors.name}</span>
+              )}
             </label>
 
             <label className="input-strip">
@@ -167,8 +198,11 @@ function ComicWantedContact() {
                 placeholder="email@domain.com"
                 value={formData.email}
                 onChange={handleChange}
+                aria-invalid={Boolean(errors.email)}
               />
-              {errors.email && <span className="wanted-error">{errors.email}</span>}
+              {errors.email && (
+                <span className="wanted-error">{errors.email}</span>
+              )}
             </label>
 
             <label className="message-bubble">
@@ -179,32 +213,43 @@ function ComicWantedContact() {
                 value={formData.message}
                 onChange={handleChange}
                 rows={4}
+                aria-invalid={Boolean(errors.message)}
               />
-              {errors.message && <span className="wanted-error">{errors.message}</span>}
+              {errors.message && (
+                <span className="wanted-error">{errors.message}</span>
+              )}
+              <span className="bubble-tail" aria-hidden="true" />
             </label>
 
-            {status === "success" && (
-              <div className="wanted-status wanted-status--success">
-                Message delivered! I&apos;ll be in touch.
-              </div>
-            )}
-            {status === "error" && (
-              <div className="wanted-status wanted-status--error">
-                Something went wrong. Try again or email me directly.
-              </div>
-            )}
+            <div className="wanted-status-slot" aria-live="polite">
+              {status === "success" && (
+                <div className="wanted-status wanted-status--success">
+                  <strong>BAM!</strong> Message delivered — I&apos;ll be in touch.
+                </div>
+              )}
+              {status === "error" && (
+                <div className="wanted-status wanted-status--error">
+                  <strong>OOF!</strong> Something went wrong. Try again or email
+                  me directly.
+                </div>
+              )}
+            </div>
+
             <button
               type="submit"
               className="wanted-send-btn"
               disabled={isSubmitting}
             >
-              <Mail size={20} />
+              <Send size={20} className="send-icon" />
               {isSubmitting ? "Sending..." : "Send Message"}
+              <span className="send-sfx" aria-hidden="true">
+                THWIP!
+              </span>
             </button>
           </form>
         </div>
       </div>
-    </section>
+    </div>
   );
 }
 

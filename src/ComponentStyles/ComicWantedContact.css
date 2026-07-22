@@ -5,6 +5,7 @@
     overflow: hidden;
 }
 
+/* Halftone dots */
 .wanted-background {
     position: absolute;
     inset: 0;
@@ -18,16 +19,40 @@
     pointer-events: none;
 }
 
+/* Radial speed lines, faded out behind the content */
+.wanted-speedlines {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-conic-gradient(
+        from 0deg at 50% 40%,
+        rgba(0, 0, 0, 0.06) 0deg 2deg,
+        transparent 2deg 10deg
+    );
+    mask-image: radial-gradient(ellipse at 50% 40%, transparent 35%, #000 95%);
+    -webkit-mask-image: radial-gradient(
+        ellipse at 50% 40%,
+        transparent 35%,
+        #000 95%
+    );
+}
+
 .wanted-content {
     position: relative;
     z-index: 5;
     max-width: 1200px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    /* min() stops the track from overflowing viewports narrower than 320px */
+    grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
     gap: 2.5rem;
     align-items: start;
     padding-top: 2rem; /* extra room for the nail + string */
+}
+
+.wanted-contact-section ::selection {
+    background: #000;
+    color: #ffe135;
 }
 
 /* ── Wall-hung poster wrapper ── */
@@ -41,6 +66,61 @@
     transform-origin: top center;
     filter: drop-shadow(6px 18px 24px rgba(0, 0, 0, 0.45));
     font-family: "Bangers", cursive;
+}
+
+/* Lift the paper, not the wrapper: transforming the hover target itself makes
+   it slide out from under the cursor near the edges and flicker.
+   Gated on real pointers so it never sticks after a tap. */
+@media (hover: hover) {
+    .wanted-poster:hover .poster-paper {
+        transform: rotate(0.8deg) translateY(-5px);
+    }
+
+    .wanted-poster:hover .poster-image {
+        filter: grayscale(0.35) contrast(1.15);
+    }
+
+    .reward-badges span:hover {
+        background: #ffe135;
+        transform: translate(-2px, -2px) rotate(-2deg);
+    }
+
+    .contact-link:hover {
+        transform: translate(-3px, -3px);
+        box-shadow: 7px 7px 0 rgba(0, 0, 0, 0.85);
+        color: #fff;
+    }
+
+    .contact-link--linkedin:hover {
+        background: #0a66c2;
+    }
+
+    .contact-link--github:hover {
+        background: #24292e;
+    }
+
+    .contact-link--x:hover {
+        background: #000;
+    }
+
+    .contact-link--mail:hover {
+        background: #c1121f;
+    }
+
+    .wanted-send-btn:hover:not(:disabled) {
+        background: #c1121f;
+        transform: translate(-3px, -3px);
+        box-shadow: 11px 11px 0 rgba(0, 0, 0, 0.85);
+    }
+
+    .wanted-send-btn:hover:not(:disabled) .send-icon {
+        transform: translateX(4px) rotate(-12deg);
+    }
+
+    .wanted-send-btn:hover:not(:disabled) .send-sfx {
+        opacity: 1;
+        transform: scale(1) rotate(-8deg);
+    }
 }
 
 /* Nail head */
@@ -80,6 +160,8 @@
     text-align: center;
     position: relative;
     width: 100%;
+    overflow: hidden;
+    transition: transform 0.3s ease;
     /* aged paper inner shadow */
     box-shadow:
         inset 0 0 40px rgba(180, 140, 60, 0.18),
@@ -90,9 +172,30 @@
         linear-gradient(160deg, #fffcf0 0%, #fff3cc 100%);
 }
 
+/* Angled rubber stamp */
+.poster-stamp {
+    position: absolute;
+    top: 4.5rem;
+    right: -2.2rem;
+    z-index: 6;
+    font-family: "Special Elite", "Bangers", cursive;
+    font-size: 1.05rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(193, 18, 31, 0.75);
+    border: 4px double rgba(193, 18, 31, 0.75);
+    border-radius: 6px;
+    padding: 0.3rem 2.4rem;
+    transform: rotate(-14deg);
+    opacity: 0.85;
+    pointer-events: none;
+}
+
 .poster-header {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
     text-transform: uppercase;
     font-size: 1rem;
 }
@@ -109,12 +212,15 @@
 .poster-subtitle {
     margin: 0;
     letter-spacing: 0.2em;
+    font-family: "Special Elite", monospace;
 }
 
 .poster-title {
-    font-size: 4.5rem;
+    font-size: clamp(2.8rem, 9vw, 4.5rem);
     margin: 0.75rem 0 0;
     letter-spacing: 0.1em;
+    color: #1f1b15;
+    text-shadow: 4px 4px 0 rgba(193, 18, 31, 0.25);
 }
 
 .poster-tagline {
@@ -140,6 +246,7 @@
     width: 140%;
     object-fit: contain;
     filter: grayscale(1) contrast(1.2);
+    transition: filter 0.3s ease;
 }
 
 .poster-tape {
@@ -189,8 +296,24 @@
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
+    transition:
+        transform 0.18s ease,
+        background-color 0.18s ease;
 }
 
+/* Typewriter fine print at the poster's foot */
+.poster-fineprint {
+    margin: 1.5rem 0 0;
+    padding-top: 1rem;
+    border-top: 2px dashed rgba(31, 27, 21, 0.35);
+    font-family: "Special Elite", monospace;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    letter-spacing: 0.05em;
+    color: #5a4a32;
+}
+
+/* ── Contact panel ── */
 .wanted-contact-panel {
     background: #fffef8;
     border: 4px solid #000;
@@ -218,7 +341,7 @@
     margin-bottom: 1.5rem;
 }
 
-.contact-links a {
+.contact-link {
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
@@ -229,11 +352,11 @@
     text-decoration: none;
     color: #000;
     box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.8);
-    transition: transform 0.2s ease;
-}
-
-.contact-links a:hover {
-    transform: translate(-2px, -2px);
+    transition:
+        transform 0.18s ease,
+        box-shadow 0.18s ease,
+        background-color 0.18s ease,
+        color 0.18s ease;
 }
 
 .wanted-form {
@@ -251,6 +374,16 @@
     background: #fffcf1;
     box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.7);
     font-weight: 700;
+    transition:
+        transform 0.18s ease,
+        box-shadow 0.18s ease,
+        background-color 0.18s ease;
+}
+
+.input-strip:focus-within {
+    background: #fff;
+    transform: translate(-2px, -2px);
+    box-shadow: 8px 8px 0 #c1121f;
 }
 
 .input-strip span {
@@ -262,11 +395,20 @@
     border: none;
     background: transparent;
     font-size: 1rem;
-    font-family: "Comic Neue", sans-serif;
+    font-family: "Titillium Web", sans-serif;
+    color: #000;
+    width: 100%;
+    min-width: 0;
 }
 
 .input-strip input:focus {
     outline: none;
+}
+
+.input-strip input::placeholder,
+.message-bubble textarea::placeholder {
+    color: #9a8f7a;
+    font-style: italic;
 }
 
 .message-bubble {
@@ -279,7 +421,15 @@
     flex-direction: column;
     gap: 0.35rem;
     font-weight: 700;
-    font-family: "Comic Neue", sans-serif;
+    font-family: "Titillium Web", sans-serif;
+    transition:
+        transform 0.18s ease,
+        box-shadow 0.18s ease;
+}
+
+.message-bubble:focus-within {
+    transform: translate(-2px, -2px);
+    box-shadow: 10px 10px 0 #c1121f;
 }
 
 .message-bubble span {
@@ -293,46 +443,94 @@
     resize: none;
     font-size: 1rem;
     font-family: inherit;
+    color: #000;
+    width: 100%;
+    min-width: 0;
 }
 
 .message-bubble textarea:focus {
     outline: none;
 }
 
+/* Speech-bubble tail hanging off the message box */
 .bubble-tail {
     position: absolute;
-    bottom: -30px;
-    left: 35px;
-    width: 40px;
-    height: 40px;
+    bottom: -11px;
+    left: 32px;
+    width: 26px;
+    height: 26px;
     background: #e0f2ff;
     border: 4px solid #000;
     border-top: none;
     border-right: none;
-    transform: rotate(45deg);
-    box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.75);
+    transform: rotate(-45deg);
+    pointer-events: none;
+}
+
+/* Reserve nothing until a status exists, so the layout doesn't jump twice */
+.wanted-status-slot:empty {
+    display: none;
+}
+
+.wanted-error {
+    color: #c1121f;
+    font-family: "Bangers", cursive;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    margin-top: 0.15rem;
 }
 
 .wanted-send-btn {
+    position: relative;
     border: 4px solid #000;
     background: #ff5d73;
     color: #fff;
-    font-weight: 900;
+    font-family: "Bangers", cursive;
+    font-weight: 400;
     text-transform: uppercase;
     padding: 0.9rem 1.2rem;
-    font-size: 1rem;
+    font-size: 1.25rem;
     letter-spacing: 0.15em;
     cursor: pointer;
     box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.8);
-    transition: transform 0.2s ease;
+    transition:
+        transform 0.18s ease,
+        box-shadow 0.18s ease,
+        background-color 0.18s ease;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
 }
 
-.wanted-send-btn:hover {
-    transform: translate(-3px, -3px);
+.wanted-send-btn:active:not(:disabled) {
+    transform: translate(2px, 2px);
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.85);
+}
+
+.send-icon {
+    transition: transform 0.18s ease;
+}
+
+/* Sound-effect pop on hover */
+.send-sfx {
+    position: absolute;
+    top: -14px;
+    right: -10px;
+    font-family: "Bangers", cursive;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    color: #000;
+    background: #ffe135;
+    border: 2px solid #000;
+    border-radius: 4px;
+    padding: 0 8px;
+    opacity: 0;
+    transform: scale(0.5) rotate(6deg);
+    transition:
+        opacity 0.15s ease,
+        transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+    pointer-events: none;
 }
 
 .wanted-send-btn:disabled {
@@ -344,9 +542,27 @@
 .wanted-status {
     padding: 0.75rem 1rem;
     font-weight: 700;
-    font-family: "Comic Neue", sans-serif;
+    font-family: "Titillium Web", sans-serif;
     border: 3px solid #000;
     text-align: center;
+    animation: statusPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.wanted-status strong {
+    font-family: "Bangers", cursive;
+    letter-spacing: 0.1em;
+    margin-right: 0.35rem;
+}
+
+@keyframes statusPop {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
 }
 
 .wanted-status--success {
@@ -363,30 +579,180 @@
 
 @media (max-width: 768px) {
     .wanted-contact-section {
-        padding: 4rem 1rem;
+        padding: 3.5rem 1rem 4rem;
+    }
+
+    .wanted-content {
+        gap: 3rem;
+        padding-top: 1.5rem;
+    }
+
+    /* Straighten the poster so the tilt + offset shadow can't crowd the edges */
+    .wanted-poster {
+        transform: rotate(0deg);
+        filter: drop-shadow(4px 10px 16px rgba(0, 0, 0, 0.4));
+    }
+
+    .poster-paper {
+        padding: 3rem 1.25rem 1.5rem;
+        border-width: 5px;
+        box-shadow:
+            inset 0 0 30px rgba(180, 140, 60, 0.18),
+            6px 6px 0 #1f1b15;
+    }
+
+    .poster-header {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .poster-ribbon {
+        box-shadow: 4px 4px 0 #1f1b15;
+    }
+
+    /* Decorative only — too cramped to read on small screens */
+    .poster-stamp {
+        display: none;
     }
 
     .poster-title {
-        font-size: 3.2rem;
+        margin-top: 1.25rem;
     }
 
     .poster-tagline {
         letter-spacing: 0.15em;
+        font-size: 1rem;
     }
 
-.wanted-error {
-    color: #c1121f;
-    font-family: "Bangers", cursive;
-    font-size: 0.85rem;
-    letter-spacing: 0.1em;
-    margin-top: 0.15rem;
-}
+    /* Frame + image are sized together so the 140% blow-up can't spill out */
+    .poster-image-frame {
+        width: min(240px, 88%);
+        padding: 0.75rem;
+        border-width: 5px;
+        overflow: hidden;
+    }
 
-.bubble-tail {
-        display: none;
+    .poster-image {
+        width: 118%;
+    }
+
+    .reward-badges {
+        gap: 0.5rem;
+    }
+
+    .reward-badges span {
+        font-size: 0.85rem;
+        padding: 0.3rem 0.7rem;
+        box-shadow: 3px 3px 0 #1f1b15;
+    }
+
+    .wanted-contact-panel {
+        padding: 1.5rem 1.1rem;
+        box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.8);
+    }
+
+    .torn-strip {
+        font-size: 0.95rem;
+        letter-spacing: 0.12em;
+        padding: 0.45rem 1rem;
+        box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.7);
     }
 
     .contact-links {
-        flex-direction: column;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.7rem;
+    }
+
+    .contact-link {
+        justify-content: center;
+        padding: 0.6rem 0.5rem;
+        font-size: 0.9rem;
+        min-height: 46px; /* comfortable touch target */
+        box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.8);
+    }
+
+    .input-strip,
+    .message-bubble {
+        box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.7);
+    }
+
+    /* 16px keeps iOS Safari from zooming in on focus */
+    .input-strip input,
+    .message-bubble textarea {
+        font-size: 16px;
+    }
+
+    .bubble-tail {
+        display: none;
+    }
+
+    .wanted-send-btn {
+        min-height: 52px;
+        box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.8);
+    }
+
+    .send-sfx {
+        display: none;
+    }
+}
+
+@media (max-width: 430px) {
+    .wanted-contact-section {
+        padding: 3rem 0.75rem 3.5rem;
+    }
+
+    .poster-paper {
+        padding: 2.5rem 0.9rem 1.25rem;
+    }
+
+    .poster-tagline {
+        font-size: 0.9rem;
+        letter-spacing: 0.1em;
+    }
+
+    .poster-fineprint {
+        font-size: 0.75rem;
+    }
+
+    .wanted-contact-panel {
+        padding: 1.25rem 0.9rem;
+    }
+
+    .contact-links {
+        grid-template-columns: 1fr;
+    }
+
+    .input-strip,
+    .message-bubble {
+        padding: 0.7rem 0.8rem;
+    }
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    .poster-paper,
+    .poster-image,
+    .reward-badges span,
+    .contact-link,
+    .input-strip,
+    .message-bubble,
+    .wanted-send-btn,
+    .send-icon,
+    .send-sfx {
+        transition: none;
+    }
+
+    .wanted-poster:hover .poster-paper,
+    .reward-badges span:hover,
+    .contact-link:hover,
+    .wanted-send-btn:hover:not(:disabled),
+    .input-strip:focus-within,
+    .message-bubble:focus-within {
+        transform: none;
+    }
+
+    .wanted-status {
+        animation: none;
     }
 }
