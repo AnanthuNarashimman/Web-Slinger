@@ -6,6 +6,8 @@ const ComicTimeline = () => {
       number: '03',
       date: 'JUL 2025 – DEC 2025',
       title: 'SDE INTERN',
+      company: 'Praskla Technology',
+      companyLink: 'https://www.prasklatechnology.com/',
       description: "Worked across multiple production projects, shipping features, migrating an Electron application's routing architecture, and rebuilding the company's public website with React and Tailwind as part of a six-person engineering team.",
       align: 'left'
     },
@@ -54,6 +56,16 @@ const ComicTimeline = () => {
               <div className="content-side">
                 <div className="connector"></div>
                 <h3 className="item-title">{exp.title}</h3>
+                {exp.company && (
+                  <a
+                    href={exp.companyLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="item-company"
+                  >
+                    @ {exp.company}
+                  </a>
+                )}
                 <div className="item-date">{exp.date}</div>
                 <p className="item-desc">{exp.description}</p>
               </div>
