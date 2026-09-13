@@ -248,6 +248,7 @@
     transition: transform 0.25s ease, box-shadow 0.25s ease;
     text-transform: none;
     letter-spacing: 0.1em;
+    text-align: left;
 }
 
 .item-desc::before {

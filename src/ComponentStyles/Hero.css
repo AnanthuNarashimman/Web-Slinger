@@ -151,7 +151,7 @@
 }
 
 .hero-title {
-    font-size: 84px;
+    font-size: 64px;
     font-weight: 400;
     line-height: 1.05;
     margin-bottom: 24px;
@@ -165,9 +165,9 @@
 
 .title-line {
     display: block;
-    -webkit-text-stroke: 5.5px #000;
+    -webkit-text-stroke: 4px #000;
     paint-order: stroke fill;
-    text-shadow: 6px 6px 0px #000;
+    text-shadow: 4.5px 4.5px 0px #000;
 }
 
 .title-line-1 {
