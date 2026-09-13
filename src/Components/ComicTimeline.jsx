@@ -1,4 +1,5 @@
 import "../ComponentStyles/ComicTimeline.css";
+import { ExternalLink } from 'lucide-react';
 
 const ComicTimeline = () => {
   const experiences = [
@@ -65,18 +66,20 @@ const ComicTimeline = () => {
                 <div className="connector"></div>
                 <h3 className="item-title">{exp.title}</h3>
                 {exp.company && (
-                  exp.companyLink ? (
-                    <a
-                      href={exp.companyLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="item-company"
-                    >
-                      @ {exp.company}
-                    </a>
-                  ) : (
+                  <div className="item-company-row">
                     <span className="item-company">@ {exp.company}</span>
-                  )
+                    {exp.companyLink && (
+                      <a
+                        href={exp.companyLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="item-link-btn"
+                        aria-label={`Visit ${exp.company} website`}
+                      >
+                        <ExternalLink size={14} strokeWidth={2.5} />
+                      </a>
+                    )}
+                  </div>
                 )}
                 <div className="item-date">{exp.date}</div>
                 <p className="item-desc">{exp.description}</p>
