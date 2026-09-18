@@ -54,7 +54,9 @@ function ComicGithubHackathons() {
   const [inviteOpen, setInviteOpen] = useState(false);
   const [activeCard, setActiveCard] = useState(0);
   const [railHeight, setRailHeight] = useState(null);
+  const [stepPx, setStepPx] = useState(0);
   const heatRef = useRef(null);
+  const railRef = useRef(null);
   const slideRefs = useRef([]);
 
   // Live fetch on mount (cached in sessionStorage for 30 min — see lib/github)
@@ -106,23 +108,99 @@ function ComicGithubHackathons() {
     return () => observer.disconnect();
   }, [activeCard]);
 
-  const step = (dir) =>
-    setActiveCard((prev) => Math.min(lastIndex, Math.max(0, prev + dir)));
+  // One slide plus the rail gap, in pixels. The rail moves in px rather than
+  // percentages so a drag in progress and the settle afterwards share units.
+  useLayoutEffect(() => {
+    const rail = railRef.current;
+    if (!rail) return undefined;
+
+    const measure = () => {
+      const gap = parseFloat(getComputedStyle(rail).columnGap) || 0;
+      setStepPx(rail.getBoundingClientRect().width + gap);
+    };
+    measure();
+
+    const observer = new ResizeObserver(measure);
+    observer.observe(rail);
+    return () => observer.disconnect();
+  }, []);
+
+  const clamp = (index) => Math.min(lastIndex, Math.max(0, index));
+
+  const step = (dir) => setActiveCard((prev) => clamp(prev + dir));
 
   const jumpTo = (index) => setActiveCard(index);
 
-  // Swipe, since there is no native scrolling left to do it for us
-  const swipeStart = useRef(null);
+  // ── Swipe ──────────────────────────────────────────────────────────
+  // The rail follows the finger instead of waiting for the lift: writing the
+  // transform straight onto the node keeps the drag off React's render path,
+  // so a move costs one style write rather than a re-render of eight cards.
+  const drag = useRef({ active: false, axis: null, x: 0, y: 0, dx: 0, at: 0, prevDx: 0, prevAt: 0 });
 
   const handleTouchStart = (event) => {
-    swipeStart.current = event.touches[0].clientX;
+    if (event.touches.length !== 1) return;
+    const touch = event.touches[0];
+    drag.current = {
+      active: true,
+      axis: null,
+      x: touch.clientX,
+      y: touch.clientY,
+      dx: 0,
+      at: event.timeStamp,
+      prevDx: 0,
+      prevAt: event.timeStamp,
+    };
+  };
+
+  const handleTouchMove = (event) => {
+    const d = drag.current;
+    const rail = railRef.current;
+    if (!d.active || !rail) return;
+
+    const touch = event.touches[0];
+    const dx = touch.clientX - d.x;
+    const dy = touch.clientY - d.y;
+
+    // Lock to an axis once the finger has committed, so a vertical flick
+    // through the strip scrolls the page instead of nudging the rail.
+    if (!d.axis) {
+      if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
+      d.axis = Math.abs(dx) > Math.abs(dy) ? "x" : "y";
+      if (d.axis === "x") rail.style.transition = "none";
+    }
+    if (d.axis !== "x") return;
+
+    // Half-speed past either end: the rail gives, but tells you it is the end
+    const overscroll =
+      (activeCard === 0 && dx > 0) || (activeCard === lastIndex && dx < 0);
+    // Velocity is read from the last leg only, so a slow drag that ends in a
+    // flick still throws — an average over the whole gesture would swallow it.
+    d.prevDx = d.dx;
+    d.prevAt = d.at;
+    d.dx = overscroll ? dx * 0.35 : dx;
+    d.at = event.timeStamp;
+    rail.style.transform = `translate3d(${-activeCard * stepPx + d.dx}px, 0, 0)`;
   };
 
   const handleTouchEnd = (event) => {
-    if (swipeStart.current === null) return;
-    const dx = event.changedTouches[0].clientX - swipeStart.current;
-    swipeStart.current = null;
-    if (Math.abs(dx) > 50) step(dx < 0 ? 1 : -1);
+    const d = drag.current;
+    const rail = railRef.current;
+    d.active = false;
+    if (d.axis !== "x" || !rail) return;
+
+    // A short flick counts as much as a long drag
+    const elapsed = Math.max(1, d.at - d.prevAt);
+    const held = event.timeStamp - d.at > 100; // finger parked before lifting
+    const flick = !held && Math.abs((d.dx - d.prevDx) / elapsed) > 0.35;
+    const next =
+      flick || Math.abs(d.dx) > stepPx * 0.2
+        ? clamp(activeCard + (d.dx < 0 ? 1 : -1))
+        : activeCard;
+
+    // Hand the transform back to the stylesheet's easing for the settle
+    rail.style.transition = "";
+    rail.style.transform = `translate3d(${-next * stepPx}px, 0, 0)`;
+    if (next !== activeCard) setActiveCard(next);
   };
 
   const closeInvite = useCallback(() => setInviteOpen(false), []);
@@ -291,12 +369,15 @@ function ComicGithubHackathons() {
           <div
             className="hack-viewport"
             onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
+            onTouchCancel={handleTouchEnd}
           >
             <div
               className="hack-rail"
+              ref={railRef}
               style={{
-                transform: `translate3d(calc(${-activeCard} * (100% + 24px)), 0, 0)`,
+                transform: `translate3d(${-activeCard * stepPx}px, 0, 0)`,
                 height: railHeight ? `${railHeight}px` : undefined,
               }}
             >

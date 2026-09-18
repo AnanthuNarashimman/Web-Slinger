@@ -490,6 +490,11 @@
 .hack-viewport {
   overflow: hidden;
   padding: 5px 16px 22px 4px;
+  /* Claims the horizontal axis for the drag up front. Without it the browser
+     spends the first frames deciding whether this is a page scroll, which is
+     what made the swipe feel like it was resisting the finger. */
+  touch-action: pan-y;
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* `flex-start`, not `stretch`: each card keeps its natural height and the rail
@@ -500,9 +505,11 @@
   align-items: flex-start;
   gap: 24px;
   will-change: transform;
+  /* Settle, not a glide: long easings read as lag once the card has been
+     tracking the finger 1:1 up to the moment of release. */
   transition:
-    transform 0.52s cubic-bezier(0.4, 0.02, 0.15, 1),
-    height 0.42s cubic-bezier(0.4, 0.02, 0.15, 1);
+    transform 0.34s cubic-bezier(0.22, 0.61, 0.36, 1),
+    height 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 /* Basis is 100% of the rail, which is exactly one viewport-width — so each
@@ -734,6 +741,115 @@
   font-size: 0.94rem;
   line-height: 1.6;
   color: #2a2a2a;
+}
+
+/* ─── Phones: the notes live behind this button ────────────────────── */
+
+.hack-info-btn {
+  position: relative;
+  z-index: 1;
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 1.1rem 0 0;
+  padding: 0.5rem 0.95rem;
+  border: 3px solid #000;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 3px 3px 0 #000;
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #000;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    transform 0.14s ease,
+    box-shadow 0.14s ease,
+    background-color 0.14s ease;
+}
+
+.hack-info-btn svg {
+  color: var(--hack-accent);
+}
+
+.hack-info-btn:active {
+  transform: translate(3px, 3px);
+  box-shadow: 0 0 0 #000;
+  background: var(--hack-accent);
+  color: #fff;
+}
+
+.hack-info-btn:active svg {
+  color: #fff;
+}
+
+/* Sits over the card rather than inside the flow, so the strip keeps its
+   height and the card underneath never jumps while the notes are open. */
+.hack-notes-sheet {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  padding: 1rem 1.1rem 1.1rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  animation: hackNotesIn 0.18s ease-out;
+}
+
+@keyframes hackNotesIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+.hack-notes-sheet-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 0.7rem;
+  margin-bottom: 1rem;
+  border-bottom: 3px dashed rgba(0, 0, 0, 0.25);
+}
+
+.hack-notes-sheet-title {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 1.35rem;
+  letter-spacing: 0.04em;
+  line-height: 1.1;
+  color: #000;
+}
+
+.hack-notes-close {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 3px solid #000;
+  border-radius: 50%;
+  background: var(--hack-accent);
+  color: #fff;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.hack-notes-close:active {
+  transform: scale(0.92);
+}
+
+.hack-notes-sheet-body {
+  display: grid;
+  gap: 1.2rem;
+  align-content: start;
 }
 
 /* Three tracks so the place sits dead centre in the card whether or not
@@ -1453,6 +1569,7 @@
 @media (prefers-reduced-motion: reduce) {
   .hack-modal,
   .hack-modal-backdrop,
+  .hack-notes-sheet,
   .gh-live svg {
     animation: none;
   }

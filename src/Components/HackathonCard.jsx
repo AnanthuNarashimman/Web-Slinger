@@ -4,8 +4,8 @@
 //
 // A `variant` on the data (currently "ethglobal" and "monad") swaps the card
 // into that event's own colours and adds a standout flag.
-import { useMemo } from "react";
-import { Calendar, Github, ExternalLink, Star } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { Calendar, Github, ExternalLink, Star, Info, X } from "lucide-react";
 
 // Same colour ramp as the contribution heatmap, reused as corner confetti.
 const HEAT_DOTS = ["#efe8d2", "#ffe135", "#ffb300", "#ff6d00", "#ff1744"];
@@ -26,6 +26,27 @@ function dotColors(seed, count) {
     out.push(HEAT_DOTS[h % HEAT_DOTS.length]);
   }
   return out;
+}
+
+// Phones get the notes behind a button instead of inline: the card stays short
+// enough to read at a glance and light enough to swipe. Tracked in JS rather
+// than hidden in CSS so the markup is genuinely absent on small screens.
+const NOTES_BREAKPOINT = "(max-width: 700px)";
+
+function useCompact() {
+  const [compact, setCompact] = useState(
+    () => typeof window !== "undefined" && window.matchMedia(NOTES_BREAKPOINT).matches,
+  );
+
+  useEffect(() => {
+    const query = window.matchMedia(NOTES_BREAKPOINT);
+    const sync = () => setCompact(query.matches);
+    sync();
+    query.addEventListener("change", sync);
+    return () => query.removeEventListener("change", sync);
+  }, []);
+
+  return compact;
 }
 
 function DotGrid({ seed, corner, cols, rows }) {
@@ -63,6 +84,14 @@ function HackathonCard({ hackathon, full = false }) {
     links,
   } = hackathon;
 
+  const compact = useCompact();
+  const [notesOpen, setNotesOpen] = useState(false);
+
+  // Rotating back to a wide screen puts the notes inline again — drop the sheet
+  useEffect(() => {
+    if (!compact) setNotesOpen(false);
+  }, [compact]);
+
   const className = [
     "hack-card",
     full ? "hack-card--full" : "",
@@ -98,17 +127,28 @@ function HackathonCard({ hackathon, full = false }) {
 
       <p className="hack-card-summary">{summary}</p>
 
-      <div className="hack-card-notes">
-        <div className="hack-note">
-          <span className="hack-note-label">What I built</span>
-          <p>{built}</p>
+      {compact ? (
+        <button
+          type="button"
+          className="hack-info-btn"
+          onClick={() => setNotesOpen(true)}
+          aria-expanded={notesOpen}
+        >
+          <Info size={16} strokeWidth={2.75} />
+          What I built &amp; learnt
+        </button>
+      ) : (
+        <div className="hack-card-notes">
+          <div className="hack-note">
+            <span className="hack-note-label">What I built</span>
+            <p>{built}</p>
+          </div>
+          <div className="hack-note">
+            <span className="hack-note-label">What I learnt</span>
+            <p>{learnt}</p>
+          </div>
         </div>
-        <div className="hack-note">
-          <span className="hack-note-label">What I learnt</span>
-          <p>{learnt}</p>
-        </div>
-      </div>
-
+      )}
 
       <footer className="hack-card-foot">
         {/* Scrawled place name — the "I was there" signature on the page */}
@@ -151,6 +191,39 @@ function HackathonCard({ hackathon, full = false }) {
           </div>
         )}
       </footer>
+
+      {/* Covers the card rather than growing it, so opening the notes never
+          reflows the strip or shifts the card under the reader thumb. */}
+      {compact && notesOpen && (
+        <div
+          className="hack-notes-sheet"
+          role="dialog"
+          aria-label={`${name} — build notes`}
+        >
+          <div className="hack-notes-sheet-head">
+            <span className="hack-notes-sheet-title">{name}</span>
+            <button
+              type="button"
+              className="hack-notes-close"
+              onClick={() => setNotesOpen(false)}
+              aria-label="Close notes"
+            >
+              <X size={18} strokeWidth={3} />
+            </button>
+          </div>
+
+          <div className="hack-notes-sheet-body">
+            <div className="hack-note">
+              <span className="hack-note-label">What I built</span>
+              <p>{built}</p>
+            </div>
+            <div className="hack-note">
+              <span className="hack-note-label">What I learnt</span>
+              <p>{learnt}</p>
+            </div>
+          </div>
+        </div>
+      )}
     </article>
   );
 }
