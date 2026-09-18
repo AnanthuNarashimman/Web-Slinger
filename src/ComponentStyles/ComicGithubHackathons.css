@@ -1,0 +1,1464 @@
+/* Build Log — GitHub heatmap + hackathon diaries.
+   Flat comic panels: white paper, thick black borders, hard offset shadows.
+   No glows, no gradients.
+
+   Type system for this section:
+     Bungee      — display: section/card names, buttons, handle
+     Bebas Neue  — condensed numerals and small caps labels
+     Figtree     — all running text, meta and chips
+   All three are already loaded by the global @import in App.css. */
+
+.buildlog {
+  position: relative;
+  background: transparent;
+  font-family: "Figtree", "Inter", sans-serif;
+  color: #000;
+  overflow-x: clip;
+  padding: 5rem 1.5rem 4.5rem;
+}
+
+/* Same faded grid gutters as the timeline so the two sections read as one book */
+.buildlog::before,
+.buildlog::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 420px;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.1) 1.5px, transparent 1.5px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.1) 1.5px, transparent 1.5px);
+  background-size: 14px 14px;
+}
+
+.buildlog::before {
+  left: 0;
+  mask-image:
+    linear-gradient(to right, #000 0%, rgba(0, 0, 0, 0.8) 40%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, #000 12%, #000 88%, transparent 100%);
+  mask-composite: intersect;
+  -webkit-mask-image:
+    linear-gradient(to right, #000 0%, rgba(0, 0, 0, 0.8) 40%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, #000 12%, #000 88%, transparent 100%);
+  -webkit-mask-composite: source-in;
+}
+
+.buildlog::after {
+  right: 0;
+  mask-image:
+    linear-gradient(to left, #000 0%, rgba(0, 0, 0, 0.8) 40%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, #000 12%, #000 88%, transparent 100%);
+  mask-composite: intersect;
+  -webkit-mask-image:
+    linear-gradient(to left, #000 0%, rgba(0, 0, 0, 0.8) 40%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, #000 12%, #000 88%, transparent 100%);
+  -webkit-mask-composite: source-in;
+}
+
+.buildlog-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ─── Header — title stacked above the caption ───────────────────── */
+
+.buildlog-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.buildlog-title-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+.buildlog-title-bg {
+  position: absolute;
+  inset: 0;
+  background-color: #ff1744;
+  transform: skewY(2deg) translate(8px, 8px);
+  border: 2px solid #000;
+}
+
+.buildlog-title {
+  position: relative;
+  font-family: "Bangers", cursive;
+  font-weight: 400;
+  font-size: 3rem;
+  letter-spacing: 0.04em;
+  background: #fff;
+  border: 2px solid #000;
+  padding: 0.5rem 2rem;
+  transform: skewY(-2deg);
+  text-transform: uppercase;
+  box-shadow: 4px 4px 0 #000;
+  margin: 0;
+}
+
+.buildlog-caption {
+  margin: 1.8rem 0 0;
+  max-width: 640px;
+  font-family: "Figtree", sans-serif;
+  font-style: italic;
+  font-weight: 600;
+  font-size: 1.02rem;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  background: #fff;
+  border: 3px solid #000;
+  padding: 8px 18px;
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.5);
+  transform: rotate(-0.6deg);
+}
+
+/* ─── GitHub panel ────────────────────────────────────────────────── */
+
+.gh-panel {
+  background: #fff;
+  border: 4px solid #000;
+  border-radius: 18px;
+  box-shadow: 10px 10px 0 #000;
+  padding: 1.4rem 1.6rem 1.5rem;
+  margin-bottom: 3.5rem;
+}
+
+.gh-panel-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.2rem;
+}
+
+.gh-handle {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: "Bungee", cursive;
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
+  color: #000;
+  text-decoration: none;
+  border-bottom: 3px solid transparent;
+  transition: border-color 0.15s ease;
+}
+
+.gh-handle:hover {
+  border-bottom-color: #ff1744;
+}
+
+.gh-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: "Figtree", sans-serif;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: #000;
+  color: #ffe135;
+  border-radius: 999px;
+  padding: 5px 12px;
+}
+
+.gh-live svg {
+  animation: gh-spin 1.6s linear infinite;
+}
+
+.gh-live.is-live svg {
+  animation: none;
+}
+
+.gh-live.is-live {
+  background: #76ff03;
+  color: #000;
+  border: 2px solid #000;
+  padding: 3px 10px;
+}
+
+@keyframes gh-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Heatmap sits in a parchment inset; scrolls sideways when narrower than a year */
+.gh-heatmap {
+  background: #fff8dc;
+  border: 3px solid #000;
+  border-radius: 12px;
+  padding: 1rem 1.1rem 0.8rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: #000 transparent;
+}
+
+.gh-heatmap::-webkit-scrollbar {
+  height: 8px;
+}
+
+.gh-heatmap::-webkit-scrollbar-thumb {
+  background: #000;
+  border-radius: 4px;
+}
+
+.gh-heatmap .react-activity-calendar {
+  margin: 0 auto;
+  font-family: "Figtree", sans-serif;
+  font-weight: 700;
+  color: #000;
+}
+
+.gh-heatmap .react-activity-calendar__footer {
+  font-weight: 700;
+  color: #000;
+}
+
+.gh-heatmap .react-activity-calendar__legend-colors rect,
+.gh-heatmap .react-activity-calendar__calendar rect {
+  stroke: rgba(0, 0, 0, 0.18);
+  stroke-width: 1;
+}
+
+/* Tooltip in the site's flat style rather than the library's grey */
+.react-activity-calendar__tooltip {
+  background-color: #000 !important;
+  color: #ffe135 !important;
+  font-family: "Figtree", sans-serif;
+  font-weight: 700;
+  font-size: 12px !important;
+  border-radius: 6px !important;
+  padding: 5px 9px !important;
+}
+
+.react-activity-calendar__tooltip .react-activity-calendar__tooltip-arrow {
+  fill: #000 !important;
+}
+
+.gh-error {
+  margin: 0;
+  padding: 2rem 1rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+.gh-error a {
+  color: #ff1744;
+  font-weight: 800;
+}
+
+/* Stat tiles — same DNA as the hero .stat-card */
+.gh-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.9rem;
+  margin-top: 1.3rem;
+}
+
+.gh-stat {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #fff;
+  border: 3px solid #000;
+  border-radius: 14px;
+  padding: 10px 14px;
+  box-shadow: 4px 4px 0 #000;
+  min-width: 0;
+}
+
+.gh-stat-icon {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  border-radius: 50%;
+  border: 3px solid #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+.gh-stat-icon--red {
+  background: #ff1744;
+}
+.gh-stat-icon--orange {
+  background: #ff6d00;
+}
+.gh-stat-icon--yellow {
+  background: #ffe135;
+  color: #000;
+}
+.gh-stat-icon--blue {
+  background: #3b82f6;
+}
+.gh-stat-icon--green {
+  background: #76ff03;
+  color: #000;
+}
+.gh-stat-icon--cyan {
+  background: #00e5ff;
+  color: #000;
+}
+
+.gh-stat-body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.gh-stat-value {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 2rem;
+  line-height: 0.95;
+  letter-spacing: 0.02em;
+}
+
+.gh-stat-label {
+  font-family: "Figtree", sans-serif;
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  line-height: 1.25;
+  margin-top: 4px;
+  color: #333;
+}
+
+.gh-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1.2rem;
+  padding-top: 1rem;
+  border-top: 3px dashed rgba(0, 0, 0, 0.35);
+  font-size: 0.92rem;
+  font-weight: 500;
+}
+
+.gh-footer-fact strong {
+  font-weight: 800;
+}
+
+.gh-langs {
+  list-style: none;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+}
+
+.gh-langs li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  border: 2px solid #000;
+  border-radius: 999px;
+  padding: 3px 10px;
+  background: #ffe135;
+}
+
+.gh-langs em {
+  font-style: normal;
+  background: #000;
+  color: #ffe135;
+  border-radius: 999px;
+  padding: 0 6px;
+  font-size: 0.68rem;
+}
+
+/* ─── Hackathon strip ─────────────────────────────────────────────── */
+
+/* This is a <section>, so it picks up the global `section { background }`
+   rule in Portfolio.css. Override it back to transparent. */
+.hack-strip {
+  background: transparent;
+}
+
+.hack-strip-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.2rem;
+}
+
+.hack-strip-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hack-strip-heading h3 {
+  font-family: "Bungee", cursive;
+  font-weight: 400;
+  font-size: 1.6rem;
+  letter-spacing: 0.01em;
+  margin: 0;
+  text-shadow: 2px 2px 0 #fff;
+}
+
+.hack-strip-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hack-nav {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #000;
+  border-radius: 10px;
+  background: #fff;
+  color: #000;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 3px 3px 0 #000;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.hack-nav:hover:not(:disabled) {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 #000;
+}
+
+.hack-nav:active:not(:disabled) {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 #000;
+}
+
+.hack-nav:disabled {
+  opacity: 0.35;
+  cursor: default;
+  transform: none;
+  box-shadow: 3px 3px 0 #000;
+}
+
+.hack-all-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 6px;
+  font-family: "Bungee", cursive;
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+  color: #ffe135;
+  background: #000;
+  border: 3px solid #000;
+  border-radius: 10px;
+  padding: 0.55rem 0.95rem;
+  text-decoration: none;
+  box-shadow: 3px 3px 0 #ff1744;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.hack-all-link:hover {
+  background: #ff1744;
+  color: #fff;
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 #000;
+}
+
+/* One card per view, carried on a transform-driven rail.
+   The viewport clips at its PADDING edge, so the side and bottom padding is
+   exactly the room the cards' hard shadows need — they render in full while
+   the neighbouring card (a 24px gap away) stays out of sight until it slides. */
+.hack-viewport {
+  overflow: hidden;
+  padding: 5px 16px 22px 4px;
+}
+
+/* `flex-start`, not `stretch`: each card keeps its natural height and the rail
+   is sized in JS to whichever one is showing, so short cards don't inherit the
+   longest card's height and gain a gap above the place badge. */
+.hack-rail {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  will-change: transform;
+  transition:
+    transform 0.52s cubic-bezier(0.4, 0.02, 0.15, 1),
+    height 0.42s cubic-bezier(0.4, 0.02, 0.15, 1);
+}
+
+/* Basis is 100% of the rail, which is exactly one viewport-width — so each
+   slide is one full card and the rail steps by `100% + gap`. */
+.hack-slide {
+  flex: 0 0 100%;
+  display: flex;
+}
+
+.hack-slide > .hack-card {
+  flex: 1 1 auto;
+}
+
+.hack-pips {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 0.2rem;
+}
+
+.hack-pip {
+  --hack-accent: #ff1744;
+  width: 12px;
+  height: 12px;
+  padding: 0;
+  border: 2.5px solid #000;
+  border-radius: 50%;
+  background: #fff;
+  cursor: pointer;
+  transition:
+    width 0.2s ease,
+    border-radius 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.hack-pip.is-active {
+  width: 30px;
+  border-radius: 999px;
+  background: var(--hack-accent);
+}
+
+/* ─── Hackathon card (shared with /hackathons page) ────────────────── */
+
+.hack-card {
+  --hack-accent: #ff1744;
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 4px solid #000;
+  border-radius: 18px;
+  box-shadow: 8px 8px 0 #000;
+  padding: 1.5rem 1.7rem 1.4rem;
+  overflow: hidden;
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.hack-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 11px 11px 0 #000;
+}
+
+/* Heat-ramp confetti in opposite corners */
+.hack-dots {
+  position: absolute;
+  z-index: 0;
+  display: grid;
+  grid-template-columns: repeat(var(--dot-cols), 9px);
+  gap: 6px;
+  pointer-events: none;
+}
+
+.hack-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(0, 0, 0, 0.7);
+}
+
+.hack-dots--tr {
+  top: 18px;
+  right: 20px;
+}
+
+.hack-dots--bl {
+  bottom: 20px;
+  left: 20px;
+}
+
+.hack-card-head {
+  position: relative;
+  z-index: 1;
+  /* clears the top-right dot grid: 6 cols × 9px + 5 gaps × 6px + offset */
+  padding-right: 8.5rem;
+}
+
+.hack-card-badges {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 0.9rem;
+}
+
+.hack-card-result {
+  display: inline-block;
+  font-family: "Bungee", cursive;
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: var(--hack-accent);
+  color: #fff;
+  border: 3px solid #000;
+  border-radius: 8px;
+  padding: 4px 12px;
+  transform: rotate(-1.5deg);
+  box-shadow: 3px 3px 0 #000;
+  -webkit-text-stroke: 0.4px #000;
+  paint-order: stroke fill;
+}
+
+/* Only on the standout events — understated, in the event's own colour */
+.hack-card-epic {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: "Figtree", sans-serif;
+  font-size: 0.63rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--hack-accent);
+  background: #fff;
+  border: 2px solid var(--hack-accent);
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+
+.hack-card-name {
+  font-family: "Bungee", cursive;
+  font-weight: 400;
+  font-size: 1.9rem;
+  letter-spacing: -0.005em;
+  line-height: 1.08;
+  margin: 0;
+  color: #000;
+}
+
+.hack-card-tagline {
+  display: block;
+  font-family: "Figtree", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: #555;
+  margin-top: 6px;
+}
+
+.hack-card-meta {
+  list-style: none;
+  margin: 0.9rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+}
+
+.hack-card-meta li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: "Figtree", sans-serif;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #111;
+  background: #f3f0e4;
+  border: 2px solid #000;
+  border-radius: 999px;
+  padding: 3px 11px;
+}
+
+.hack-card-summary {
+  position: relative;
+  z-index: 1;
+  margin: 1.1rem 0 0;
+  font-family: "Figtree", sans-serif;
+  font-weight: 500;
+  font-size: 1.04rem;
+  line-height: 1.55;
+  letter-spacing: -0.005em;
+  color: #1a1a1a;
+  max-width: 62ch;
+}
+
+.hack-card-notes {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.4rem;
+  margin: 1.3rem 0 0;
+  padding-top: 1.2rem;
+  border-top: 3px dashed rgba(0, 0, 0, 0.25);
+}
+
+.hack-note {
+  border-left: 5px solid var(--hack-accent);
+  padding-left: 14px;
+}
+
+.hack-note-label {
+  display: block;
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 1.05rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #000;
+  margin-bottom: 5px;
+}
+
+.hack-note p {
+  margin: 0;
+  font-family: "Figtree", sans-serif;
+  font-weight: 450;
+  font-size: 0.94rem;
+  line-height: 1.6;
+  color: #2a2a2a;
+}
+
+/* Three tracks so the place sits dead centre in the card whether or not
+   this entry has links to show on the right. */
+.hack-card-foot {
+  position: relative;
+  z-index: 1;
+  margin-top: auto;
+  padding-top: 1.6rem;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: end;
+  gap: 16px;
+}
+
+/* Scrawled place name, underlined by hand — the card's centrepiece signature */
+.hack-card-place {
+  position: relative;
+  grid-column: 2;
+  justify-self: center;
+  display: inline-block;
+  font-family: "Story Script", cursive;
+  font-size: 3.1rem;
+  line-height: 1;
+  color: #141414;
+  padding: 0 8px 18px;
+  transform: rotate(-2deg);
+  white-space: nowrap;
+}
+
+.hack-card-underline {
+  position: absolute;
+  left: -8px;
+  bottom: 2px;
+  width: calc(100% + 16px);
+  height: 15px;
+  fill: none;
+  stroke: var(--hack-accent);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.hack-card-links {
+  grid-column: 3;
+  justify-self: end;
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.hack-card-links a {
+  width: 36px;
+  height: 36px;
+  border: 3px solid #000;
+  border-radius: 9px;
+  background: #fff;
+  color: #000;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 3px 3px 0 #000;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.hack-card-links a:hover {
+  background: var(--hack-accent);
+  color: #fff;
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 #000;
+}
+
+/* Full variant (the /hackathons page) — one notch up in scale */
+.hack-card--full {
+  flex: 1 1 auto;
+  width: 100%;
+  padding: 1.8rem 2rem 1.6rem;
+}
+
+.hack-card--full .hack-card-name {
+  font-size: 2.3rem;
+}
+
+.hack-card--full .hack-card-summary {
+  font-size: 1.1rem;
+}
+
+.hack-card--full .hack-note p {
+  font-size: 1rem;
+}
+
+.hack-card--full .hack-card-place {
+  font-size: 3.5rem;
+}
+
+/* ─── Standout events ──────────────────────────────────────────────
+   Same white paper as every other card. The only difference is a
+   faint tint of the event's colour, a matching drop shadow and a
+   thin rule along the top edge. Quiet, not loud. */
+
+.hack-card--ethglobal,
+.hack-card--monad {
+  box-shadow: 8px 8px 0 var(--hack-accent);
+}
+
+.hack-card--ethglobal:hover,
+.hack-card--monad:hover {
+  box-shadow: 11px 11px 0 var(--hack-accent);
+}
+
+.hack-card--ethglobal::before,
+.hack-card--monad::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 7px;
+  background: var(--hack-accent);
+  z-index: 2;
+}
+
+.hack-card--ethglobal {
+  background-color: #fafbff;
+}
+
+.hack-card--monad {
+  background-color: #fcfaff;
+}
+
+/* ─── CTA ─────────────────────────────────────────────────────────── */
+
+.buildlog-cta {
+  margin-top: 3.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem 2.2rem;
+  flex-wrap: wrap;
+  background: #fff;
+  border: 4px solid #000;
+  border-radius: 18px;
+  box-shadow: 10px 10px 0 #000;
+  padding: 1.7rem 1.9rem;
+}
+
+.buildlog-cta-copy {
+  flex: 1 1 340px;
+  min-width: 0;
+}
+
+.buildlog-cta-kicker {
+  display: inline-block;
+  font-family: "Figtree", sans-serif;
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #ffe135;
+  background: #000;
+  border-radius: 4px;
+  padding: 4px 11px;
+}
+
+.buildlog-cta-title {
+  font-family: "Bungee", cursive;
+  font-weight: 400;
+  font-size: 1.6rem;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  margin: 0.75rem 0 0.45rem;
+}
+
+.buildlog-cta-text {
+  margin: 0;
+  font-family: "Figtree", sans-serif;
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1.55;
+  color: #333;
+  max-width: 54ch;
+}
+
+/* Also used standalone in the /hackathons page footer */
+.buildlog-cta-btn {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 13px;
+  background: #00e5ff;
+  color: #000;
+  border: 4px solid #000;
+  border-radius: 14px;
+  padding: 0.75rem 1.5rem 0.75rem 0.75rem;
+  font-family: "Bungee", cursive;
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 7px 7px 0 #000;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.buildlog-cta-btn-icon {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  border-radius: 50%;
+  background: #ff1744;
+  color: #fff;
+  border: 3px solid #000;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.25s ease;
+}
+
+.buildlog-cta-btn:hover {
+  background: #5cf0ff;
+  transform: translate(-3px, -3px);
+  box-shadow: 10px 10px 0 #000;
+}
+
+.buildlog-cta-btn:hover .buildlog-cta-btn-icon {
+  transform: rotate(-12deg) scale(1.08);
+}
+
+.buildlog-cta-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 3px 3px 0 #000;
+}
+
+/* ─── Invite modal ────────────────────────────────────────────────── */
+
+.hack-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(0, 0, 0, 0.72);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  animation: hack-fade 0.18s ease-out;
+}
+
+@keyframes hack-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.hack-modal {
+  position: relative;
+  width: min(600px, 100%);
+  max-height: calc(100vh - 2rem);
+  overflow-y: auto;
+  background: #fff;
+  border: 4px solid #000;
+  border-radius: 18px;
+  box-shadow: 10px 10px 0 #ff1744;
+  padding: 1.6rem 1.6rem 1.4rem;
+  font-family: "Figtree", sans-serif;
+  color: #000;
+  animation: hack-pop 0.22s cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+
+@keyframes hack-pop {
+  from {
+    transform: translateY(14px) scale(0.97);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+.hack-modal-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  border: 3px solid #000;
+  border-radius: 50%;
+  background: #fff;
+  color: #000;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 2px 2px 0 #000;
+}
+
+.hack-modal-close:hover {
+  background: #ff1744;
+  color: #fff;
+}
+
+.hack-modal-head {
+  margin-bottom: 1.2rem;
+  padding-right: 2.5rem;
+}
+
+.hack-modal-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  background: #000;
+  color: #ffe135;
+  padding: 4px 10px;
+  border-radius: 4px;
+  transform: rotate(-1.5deg);
+}
+
+.hack-modal-title {
+  font-family: "Bungee", cursive;
+  font-weight: 400;
+  font-size: 1.55rem;
+  letter-spacing: -0.01em;
+  margin: 0.7rem 0 0.4rem;
+  line-height: 1.12;
+}
+
+.hack-modal-sub {
+  margin: 0;
+  font-family: "Figtree", sans-serif;
+  font-weight: 500;
+  font-size: 0.97rem;
+  line-height: 1.5;
+  color: #444;
+}
+
+.hack-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.hack-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.9rem;
+}
+
+.hack-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+
+.hack-field > span {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.hack-field small {
+  font-family: "Figtree", sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 0;
+  color: #666;
+}
+
+.hack-field input,
+.hack-field textarea {
+  width: 100%;
+  font-family: "Figtree", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 0.6rem 0.75rem;
+  border: 3px solid #000;
+  border-radius: 10px;
+  background: #fff8dc;
+  color: #000;
+  outline: none;
+  transition:
+    box-shadow 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.hack-field textarea {
+  resize: vertical;
+  min-height: 100px;
+  line-height: 1.55;
+}
+
+.hack-field input:focus,
+.hack-field textarea:focus {
+  background: #fff;
+  box-shadow: 3px 3px 0 #000;
+}
+
+.hack-field input[aria-invalid="true"],
+.hack-field textarea[aria-invalid="true"] {
+  border-color: #ff1744;
+}
+
+.hack-error {
+  font-style: normal;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: #ff1744;
+}
+
+.hack-form-error {
+  margin: 0;
+  font-size: 0.88rem;
+  font-weight: 600;
+  background: #ffe1e6;
+  border: 3px solid #ff1744;
+  border-radius: 10px;
+  padding: 0.6rem 0.8rem;
+}
+
+.hack-form-error a {
+  color: #ff1744;
+  font-weight: 800;
+}
+
+.hack-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 0.3rem;
+}
+
+.hack-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "Bungee", cursive;
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  border: 3px solid #000;
+  border-radius: 10px;
+  padding: 0.7rem 1.2rem;
+  cursor: pointer;
+  box-shadow: 4px 4px 0 #000;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.hack-btn:hover:not(:disabled) {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 #000;
+}
+
+.hack-btn:active:not(:disabled) {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 #000;
+}
+
+.hack-btn:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
+.hack-btn--primary {
+  background: #ff1744;
+  color: #fff;
+}
+
+.hack-btn--ghost {
+  background: #fff;
+  color: #000;
+}
+
+.hack-modal-done {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+  font-family: "Figtree", sans-serif;
+  font-weight: 600;
+  font-size: 1.05rem;
+  background: #e6ffd1;
+  border: 3px solid #000;
+  border-radius: 12px;
+  padding: 1rem 1.1rem;
+}
+
+.hack-modal-done strong {
+  font-family: "Bungee", cursive;
+  font-weight: 400;
+  font-size: 1.1rem;
+  letter-spacing: 0.02em;
+  color: #ff1744;
+  margin-right: 6px;
+}
+
+/* ─── Responsive ──────────────────────────────────────────────────── */
+
+@media (max-width: 900px) {
+  .gh-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .hack-card-notes {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 700px) {
+  /* Dots move out of the text's way: header clears only a small grid,
+     and the footer stacks instead of reserving a left gutter. */
+  .hack-dots--tr {
+    top: 14px;
+    right: 14px;
+  }
+
+  .hack-dots--bl {
+    display: none;
+  }
+
+  .hack-card-head {
+    padding-right: 5.5rem;
+  }
+
+  .hack-dots--tr {
+    grid-template-columns: repeat(3, 8px);
+    gap: 5px;
+  }
+
+  .hack-dots--tr .hack-dot:nth-child(n + 10) {
+    display: none;
+  }
+
+  /* Too narrow for side tracks: the place takes its own centred row
+     with the links tucked underneath it. */
+  .hack-card-foot {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 14px;
+  }
+
+  .hack-card-place,
+  .hack-card-links {
+    grid-column: 1;
+    justify-self: center;
+  }
+
+  .hack-card-place,
+  .hack-card--full .hack-card-place {
+    font-size: 2.4rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .buildlog {
+    padding: 3.5rem 1rem 3.5rem;
+  }
+
+  .buildlog-title {
+    font-size: 2.2rem;
+    padding: 0.4rem 1.2rem;
+  }
+
+  .buildlog-caption {
+    font-size: 0.9rem;
+    margin-top: 1.4rem;
+  }
+
+  .gh-panel {
+    padding: 1rem 1rem 1.1rem;
+    border-width: 3px;
+    box-shadow: 6px 6px 0 #000;
+    border-radius: 14px;
+  }
+
+  .gh-handle {
+    font-size: 0.85rem;
+  }
+
+  .gh-heatmap {
+    padding: 0.8rem 0.8rem 0.6rem;
+  }
+
+  .gh-stat {
+    padding: 8px 10px;
+    gap: 9px;
+    box-shadow: 3px 3px 0 #000;
+  }
+
+  .gh-stat-icon {
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+  }
+
+  .gh-stat-value {
+    font-size: 1.6rem;
+  }
+
+  .gh-stat-label {
+    font-size: 0.6rem;
+  }
+
+  .hack-strip-heading h3 {
+    font-size: 1.25rem;
+  }
+
+  .hack-nav {
+    display: none;
+  }
+
+  .hack-all-link {
+    margin-left: 0;
+  }
+
+  .hack-card {
+    padding: 1.2rem 1.1rem 1.1rem;
+    border-width: 3px;
+    box-shadow: 5px 5px 0 #000;
+  }
+
+  .hack-card-name {
+    font-size: 1.35rem;
+  }
+
+  .hack-card-summary {
+    font-size: 0.95rem;
+  }
+
+  .hack-card-place,
+  .hack-card--full .hack-card-place {
+    font-size: 2rem;
+  }
+
+  .hack-card--full {
+    padding: 1.2rem 1.1rem 1.1rem;
+  }
+
+  .hack-card--full .hack-card-name {
+    font-size: 1.5rem;
+  }
+
+  .hack-card--full .hack-card-summary,
+  .hack-card--full .hack-note p {
+    font-size: 0.95rem;
+  }
+
+  .buildlog-cta {
+    padding: 1.3rem 1.2rem;
+    border-width: 3px;
+    box-shadow: 6px 6px 0 #000;
+    border-radius: 14px;
+  }
+
+  .buildlog-cta-title {
+    font-size: 1.3rem;
+  }
+
+  .buildlog-cta-text {
+    font-size: 0.93rem;
+  }
+
+  .buildlog-cta-btn {
+    width: 100%;
+    justify-content: center;
+    font-size: 0.82rem;
+    padding: 0.65rem 1.1rem 0.65rem 0.65rem;
+    box-shadow: 5px 5px 0 #000;
+  }
+
+  .buildlog-cta-btn-icon {
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+  }
+
+  .hack-modal {
+    padding: 1.3rem 1.1rem 1.2rem;
+    border-radius: 14px;
+    box-shadow: 6px 6px 0 #ff1744;
+  }
+
+  .hack-form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .hack-modal-title {
+    font-size: 1.3rem;
+  }
+
+  .hack-form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .hack-btn {
+    justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hack-modal,
+  .hack-modal-backdrop,
+  .gh-live svg {
+    animation: none;
+  }
+
+  /* Jump straight to the card instead of gliding to it */
+  .hack-rail {
+    transition: height 0.2s ease;
+  }
+}

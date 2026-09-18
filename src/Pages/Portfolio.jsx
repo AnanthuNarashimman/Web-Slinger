@@ -1,5 +1,6 @@
 import Hero from "../Components/Hero";
 import ComicTV from "../Components/ComicTV";
+import ComicGithubHackathons from "../Components/ComicGithubHackathons";
 import ComicTechStack from "../Components/ComicTechChaos";
 import ComicTimeline from "../Components/ComicTimeline";
 import ComicWantedContact from "../Components/ComicWantedContact";
@@ -42,10 +43,11 @@ function Portfolio() {
   return (
     <>
       <ComicSidebar 
-        menuItems={['Home', 'Projects', 'Tech Stack', 'Journey', 'Contact']}
+        menuItems={['Home', 'Build Log', 'Projects', 'Tech Stack', 'Journey', 'Contact']}
         onNavigate={(item) => {
           const sectionMap = {
             'Home': 'hero',
+            'Build Log': 'github',
             'Projects': 'projects',
             'Tech Stack': 'tech-stack',
             'Journey': 'timeline',
@@ -56,6 +58,9 @@ function Portfolio() {
       />
       <section id="hero">
         <Hero />
+      </section>
+      <section id="github">
+        <ComicGithubHackathons />
       </section>
       <section id="projects">
         <ComicTV />
