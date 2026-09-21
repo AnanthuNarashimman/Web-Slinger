@@ -186,12 +186,15 @@
    column is wide. */
 .hero-subtitle {
     font-family: "Figtree", "Inter", sans-serif;
-    font-size: 19px;
+    font-size: 17px;
     font-weight: 500;
-    line-height: 1.68;
+    line-height: 1.62;
     letter-spacing: 0.005em;
     color: #14161a;
-    max-width: 56ch;
+    /* Narrower than the column so the bubble stays a bubble. At this measure
+       the copy breaks to four or five short lines, which is what makes it
+       read as a message rather than a paragraph. */
+    max-width: 44ch;
     margin-bottom: 40px;
     background-color: #fff;
     /* Same printed-paper treatment as the buttons: fine grain and a face lit
@@ -206,38 +209,46 @@
     background-size: 3px 3px, 3px 3px, auto;
     background-position: 0 0, 1.5px 1.5px, 0 0;
     background-repeat: repeat, repeat, no-repeat;
-    padding: 26px 30px;
+    padding: 20px 24px;
     border: 4px solid #000;
-    border-radius: 20px;
+    /* A real message bubble: three corners generously rounded, and the fourth
+       pulled almost square where the tail comes out, so the tail and the body
+       read as one shape rather than a triangle stuck to a rounded box.
+       Order is top-left, top-right, bottom-right, bottom-left. */
+    border-radius: 28px 28px 6px 28px;
     box-shadow:
         inset 0 2px 0 rgba(255, 255, 255, 0.9),
         inset 0 -3px 6px rgba(0, 0, 0, 0.05),
-        8px 8px 0px #000;
+        7px 7px 0px #000;
     position: relative;
 }
 
+/* Tail, in two layers: the black one is the outline, the white one sits
+   inside it and reopens the bubble's face. Both are scaled-down versions of
+   the originals and moved in tight to the squared corner. The 4px offsets
+   between them are the border width. */
 .hero-subtitle::before {
     content: "";
     position: absolute;
-    right: 60px;
-    bottom: -25px;
+    right: 16px;
+    bottom: -19px;
     width: 0;
     height: 0;
-    border-left: 15px solid transparent;
-    border-right: 15px solid transparent;
-    border-top: 25px solid #000;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-top: 19px solid #000;
 }
 
 .hero-subtitle::after {
     content: "";
     position: absolute;
-    right: 64px;
-    bottom: -16px;
+    right: 20px;
+    bottom: -12px;
     width: 0;
     height: 0;
-    border-left: 11px solid transparent;
-    border-right: 11px solid transparent;
-    border-top: 17px solid #fff;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 13px solid #fff;
 }
 
 /* Marker swipe rather than only a colour change, so the emphasis survives
@@ -497,13 +508,22 @@ a:has(.cta-btn):focus {
     /* The tilt lives on the `rotate` property rather than inside `transform`.
        It used to be declared as transform: rotate(...) and was then silently
        wiped by the float keyframes, which reset transform wholesale — so none
-       of the intended tilts ever showed. Keeping them on a separate property
-       means an animation that only touches translate, scale and opacity can
-       never overwrite them. */
+       of the intended tilts ever showed. On its own property the tilt is the
+       resting value, and the drift below opts into it explicitly rather than
+       flattening it by accident. */
     rotate: var(--badge-tilt, 0deg);
 
-    animation: badgeIn 0.5s cubic-bezier(0.2, 0.75, 0.35, 1)
-        var(--badge-delay, 0s) backwards;
+    /* Two animations in sequence. badgeIn runs once, then badgeFloat takes
+       over: its delay is set to end of the entrance, and until a delay
+       elapses an animation contributes nothing, so the handover is seamless.
+       The float drives `translate` and `rotate` only, and its rotation is
+       expressed relative to this badge's own tilt, so the sway happens around
+       the angle the badge is pinned at rather than flattening it. */
+    animation:
+        badgeIn 0.5s cubic-bezier(0.2, 0.75, 0.35, 1) var(--badge-delay, 0s)
+            backwards,
+        badgeFloat var(--badge-float-dur, 6s) ease-in-out
+            var(--badge-float-delay, 0.7s) infinite;
     transition:
         transform 0.22s ease,
         box-shadow 0.22s ease,
@@ -520,7 +540,13 @@ a:has(.cta-btn):focus {
     box-shadow: var(--tb-bevel);
 }
 
+/* Hovering catches the badge: the drift stops where it is and the card lifts
+   under the pointer, rather than continuing to slide out from under it. */
 .badge:hover {
+    /* One value per animation, in the order they are declared: the entrance
+       keeps running, only the drift stops. Pausing both would freeze a badge
+       half-faded-in if the pointer landed on it during the first second. */
+    animation-play-state: running, paused;
     transform: translate(-2px, -2px) scale(1.03);
     box-shadow: 7px 7px 0px #000;
     filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.2));
@@ -559,6 +585,9 @@ a:has(.cta-btn):focus {
     left: -2%;
     --badge-tilt: -5deg;
     --badge-delay: 0.15s;
+    --badge-float-dur: 7s;
+    --badge-float-delay: 0.65s;
+    --badge-float-rise: -7px;
 }
 
 .arrow-1 {
@@ -573,6 +602,9 @@ a:has(.cta-btn):focus {
     right: 0%;
     --badge-tilt: 4deg;
     --badge-delay: 0.28s;
+    --badge-float-dur: 8.5s;
+    --badge-float-delay: 0.78s;
+    --badge-float-rise: -5px;
 }
 
 .arrow-2 {
@@ -587,6 +619,9 @@ a:has(.cta-btn):focus {
     right: -5%;
     --badge-tilt: 6deg;
     --badge-delay: 0.41s;
+    --badge-float-dur: 6.5s;
+    --badge-float-delay: 0.91s;
+    --badge-float-rise: -6px;
 }
 
 .badge-4 {
@@ -596,6 +631,9 @@ a:has(.cta-btn):focus {
     left: -10%;
     --badge-tilt: -4deg;
     --badge-delay: 0.54s;
+    --badge-float-dur: 9s;
+    --badge-float-delay: 1.04s;
+    --badge-float-rise: -8px;
 }
 
 .arrow-4 {
@@ -642,30 +680,40 @@ a:has(.cta-btn):focus {
     pointer-events: none;
 }
 
+/* The name plate.
+   The old card wore three concentric rings — red, then black, then the drop
+   shadow — which crowded the outline and turned the edge to mud. This trades
+   them for one idea borrowed from actual comic printing: the colour plate and
+   the black plate slightly out of register, stepping away from the card at
+   7px and 13px. It gives the same weight with a much cleaner edge, and the
+   red now reads as ink rather than as a border. */
 .name-text {
     pointer-events: auto;
     font-family: "Bangers", cursive;
-    font-size: 42px;
-    color: #000;
+    font-size: 44px;
+    line-height: 1;
+    color: #111;
     text-transform: uppercase;
-    letter-spacing: 3px;
-    padding: 15px 40px;
+    letter-spacing: 3.5px;
+    padding: 17px 44px 14px;
     background-color: #fff;
     background-image: var(--tb-tooth-light), var(--tb-tooth-dark), var(--tb-face);
     background-size: 3px 3px, 3px 3px, auto;
     background-position: 0 0, 1.5px 1.5px, 0 0;
     background-repeat: repeat, repeat, no-repeat;
-    border: 6px solid #000;
-    border-radius: 15px;
-    /* Red keyline, black outer rule, then the hard drop. The two insets give
-       the card a moulded lip; both pseudo-element slots are already spoken
-       for here, so the bevel rides in the shadow stack instead. */
+    border: 5px solid #000;
+    border-radius: 14px;
     box-shadow:
-        inset 0 2px 0 rgba(255, 255, 255, 0.85),
-        inset 0 -3px 5px rgba(0, 0, 0, 0.07),
-        0 0 0 3px #ff1744,
-        0 0 0 9px #000,
-        12px 12px 0px #000;
+        /* red keyline hugging the inside of the ink outline */
+        inset 0 0 0 3px #ff1744,
+        /* the moulded lip; both pseudo-element slots are spoken for here,
+           so this rides in the shadow stack instead of on a layer */
+        inset 0 -7px 12px rgba(0, 0, 0, 0.07),
+        /* the two misregistered plates */
+        7px 7px 0px #ff1744,
+        13px 13px 0px #000;
+    /* Just enough to give the letters printed weight without bolding them. */
+    text-shadow: 1.5px 1.5px 0 rgba(0, 0, 0, 0.13);
     /* On `rotate`, not inside `transform`, so the entrance animation cannot
        flatten the tilt on its way past. */
     rotate: -2deg;
@@ -675,34 +723,30 @@ a:has(.cta-btn):focus {
     white-space: nowrap;
 }
 
-/* The tab above the card. Static now: it was wiggling on a two-second loop. */
+/* The black triangle tab that used to sit on the top edge is gone. It pointed
+   at nothing, and with the stepped plates below it the card no longer needs a
+   second thing competing for the eye. */
 .name-text::before {
-    content: "";
-    position: absolute;
-    top: -15px;
-    left: 20px;
-    width: 0;
-    height: 0;
-    border-left: 20px solid transparent;
-    border-right: 20px solid transparent;
-    border-bottom: 15px solid #000;
+    content: none;
 }
 
-/* Corner star. Parked at a fixed angle instead of spinning forever. */
+/* Corner star, tucked over the top-right corner so it overlaps the outline
+   and reads as pinned to the card rather than floating beside it. */
 .name-text::after {
     content: "★";
     position: absolute;
-    top: -12px;
-    right: -16px;
-    font-size: 40px;
+    top: -14px;
+    right: -14px;
+    font-size: 34px;
     line-height: 1;
     color: #ffd700;
-    rotate: 12deg;
+    rotate: 14deg;
     text-shadow:
         -2px -2px 0 #000,
         2px -2px 0 #000,
         -2px 2px 0 #000,
-        2px 2px 0 #000;
+        2px 2px 0 #000,
+        0 3px 0 rgba(0, 0, 0, 0.25);
 }
 
 .name-subtitle {
@@ -795,6 +839,22 @@ a:has(.cta-btn):focus {
     }
 }
 
+/* The resting drift. Small amplitude, long period, and the four badges run on
+   near-prime durations so they never settle into a visible shared pulse.
+   The sway is written as the badge's own tilt plus a degree and a bit, so it
+   rocks around the angle it is pinned at instead of rotating back to square. */
+@keyframes badgeFloat {
+    0%,
+    100% {
+        translate: 0 0;
+        rotate: var(--badge-tilt, 0deg);
+    }
+    50% {
+        translate: 0 var(--badge-float-rise, -6px);
+        rotate: calc(var(--badge-tilt, 0deg) + 1.2deg);
+    }
+}
+
 @keyframes subtitlePulse {
     0%,
     100% {
@@ -879,8 +939,9 @@ a:has(.cta-btn):focus {
     }
 
     .hero-subtitle {
-        font-size: 18px;
-        padding: 18px;
+        font-size: 16px;
+        padding: 18px 20px;
+        max-width: none;
     }
 
     .hero-image {
@@ -953,10 +1014,32 @@ a:has(.cta-btn):focus {
     }
 
     .hero-subtitle {
-        font-size: 16px;
-        padding: 16px;
+        font-size: 15px;
+        padding: 15px 17px;
         border: 3px solid #000;
-        box-shadow: 4px 4px 0px #000;
+        border-radius: 22px 22px 5px 22px;
+        /* keeps the moulded lip that the plain override was dropping */
+        box-shadow:
+            inset 0 2px 0 rgba(255, 255, 255, 0.9),
+            inset 0 -3px 6px rgba(0, 0, 0, 0.05),
+            5px 5px 0px #000;
+    }
+
+    /* Tail scaled to the thinner border. */
+    .hero-subtitle::before {
+        right: 13px;
+        bottom: -15px;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-top: 15px solid #000;
+    }
+
+    .hero-subtitle::after {
+        right: 16px;
+        bottom: -10px;
+        border-left: 7px solid transparent;
+        border-right: 7px solid transparent;
+        border-top: 10px solid #fff;
     }
 
     .cta-btn {
@@ -1064,8 +1147,9 @@ a:has(.cta-btn):focus {
     }
 
     .name-text::after {
-        font-size: 30px;
-        right: -10px;
+        font-size: 28px;
+        right: -11px;
+        top: -12px;
     }
 }
 
@@ -1240,25 +1324,57 @@ a:has(.cta-btn):focus {
         padding: 8px 18px;
         letter-spacing: 1px;
         border: 4px solid #000;
-        /* Tighter rings at this size, but the moulded lip is carried over. */
+        /* Same two plates, stepped down so they stay in proportion. */
         box-shadow:
-            inset 0 2px 0 rgba(255, 255, 255, 0.85),
-            inset 0 -2px 4px rgba(0, 0, 0, 0.07),
-            0 0 0 2px #ff1744,
-            0 0 0 6px #000,
+            inset 0 0 0 2px #ff1744,
+            inset 0 -4px 7px rgba(0, 0, 0, 0.07),
+            4px 4px 0px #ff1744,
             8px 8px 0px #000;
+        text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.13);
     }
 
-    .name-text::before {
-        border-left: 15px solid transparent;
-        border-right: 15px solid transparent;
-        border-bottom: 12px solid #000;
-        left: 15px;
-    }
+    /* The ::before tab it used to size here no longer exists. */
 
     .name-text::after {
-        font-size: 25px;
-        right: -8px;
-        top: -8px;
+        font-size: 24px;
+        right: -9px;
+        top: -10px;
+    }
+}
+
+/* ---------------------------------------------------------------------------
+   Reduced motion
+   ---------------------------------------------------------------------------
+   The badges' resting drift is decoration, so it goes entirely. The entrances
+   are cut to a plain fade, which still covers the moment the Bangers webfont
+   swaps in without anything sliding.
+   ------------------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+    .badge {
+        animation:
+            badgeFade 0.01s linear var(--badge-delay, 0s) backwards;
+        rotate: var(--badge-tilt, 0deg);
+    }
+
+    .badge:hover {
+        transform: none;
+    }
+
+    .name-text {
+        animation: badgeFade 0.01s linear 0.45s backwards;
+    }
+
+    .hero-title {
+        animation: none;
+    }
+}
+
+@keyframes badgeFade {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
     }
 }
