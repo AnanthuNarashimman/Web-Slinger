@@ -115,15 +115,70 @@
 }
 
 /* Timeline Styles */
+
+/* The spine.
+   It was a flat 6px rectangle of solid black, cut off square at both ends —
+   the one element in a hand-inked section that still looked like a div. It
+   now reads as a drawn stroke: a rounded cord lit from the left like every
+   other surface on the page, ruled with faint ticks so it has some measure to
+   it, and terminated deliberately at both ends rather than just stopping.
+
+   Ends rather than a fade on purpose. Comics do not fade out; a stroke has a
+   start and a finish. The pen touches down at the top and the line arrives at
+   an arrowhead aimed at the badge that closes the section, which also points
+   the eye in the direction the entries actually run: most recent at the top,
+   the beginning at the foot. */
 .central-line {
     position: absolute;
     left: 50%;
     top: 8rem;
-    bottom: 5rem;
-    width: 6px;
-    background-color: black;
+    bottom: 5.5rem;
+    width: 8px;
     transform: translateX(-50%);
     z-index: 0;
+    border-radius: 4px;
+    background-color: #000;
+    background-image:
+        /* ruled ticks down the length */
+        repeating-linear-gradient(
+            to bottom,
+            rgba(255, 255, 255, 0.18) 0 2px,
+            transparent 2px 24px
+        ),
+        /* cord roundness, lit from the left to match everything else */
+        linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.34) 0%,
+            rgba(255, 255, 255, 0.07) 42%,
+            rgba(0, 0, 0, 0.4) 100%
+        );
+}
+
+/* Where the pen touches down */
+.central-line::before {
+    content: "";
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background-color: #000;
+    transform: translateX(-50%);
+}
+
+/* Arrowhead at the foot */
+.central-line::after {
+    content: "";
+    position: absolute;
+    bottom: -19px;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-left: 11px solid transparent;
+    border-right: 11px solid transparent;
+    border-top: 19px solid #000;
+    transform: translateX(-50%);
 }
 
 .timeline-item {
@@ -456,11 +511,28 @@
         margin-bottom: 0;
     }
 
+    /* Thinner cord, with both terminals scaled to match. The ticks keep their
+       spacing: rescaling them here would squash the pattern rather than
+       repeat it more often. */
     .central-line {
         left: 50%;
-        width: 3px;
+        width: 5px;
         top: 6rem;
-        bottom: 4rem;
+        bottom: 4.5rem;
+        border-radius: 2.5px;
+    }
+
+    .central-line::before {
+        top: -6px;
+        width: 13px;
+        height: 13px;
+    }
+
+    .central-line::after {
+        bottom: -14px;
+        border-left-width: 8px;
+        border-right-width: 8px;
+        border-top-width: 14px;
     }
 
     .bubble-container {
