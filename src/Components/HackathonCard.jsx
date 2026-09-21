@@ -5,7 +5,16 @@
 // A `variant` on the data (currently "ethglobal" and "monad") swaps the card
 // into that event's own colours and adds a standout flag.
 import { useEffect, useMemo, useState } from "react";
-import { Calendar, Github, ExternalLink, Star, Info, X } from "lucide-react";
+import {
+  Calendar,
+  Github,
+  ExternalLink,
+  Star,
+  Info,
+  X,
+  MapPin,
+  Globe,
+} from "lucide-react";
 
 // Same colour ramp as the contribution heatmap, reused as corner confetti.
 const HEAT_DOTS = ["#efe8d2", "#ffe135", "#ffb300", "#ff6d00", "#ff1744"];
@@ -153,6 +162,16 @@ function HackathonCard({ hackathon, full = false }) {
       <footer className="hack-card-foot">
         {/* Scrawled place name — the "I was there" signature on the page */}
         <span className="hack-card-place">
+          {/* Decorative: the place itself is already read out as text beside
+              it. A globe rather than a pin for the one remote event, since
+              dropping a map pin on "Online" would be nonsense. */}
+          <span className="hack-card-pin" aria-hidden="true">
+            {location.toLowerCase() === "online" ? (
+              <Globe strokeWidth={2.75} />
+            ) : (
+              <MapPin strokeWidth={2.75} />
+            )}
+          </span>
           {location}
           <svg
             className="hack-card-underline"

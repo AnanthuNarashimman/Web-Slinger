@@ -880,6 +880,40 @@
   white-space: nowrap;
 }
 
+/* Small pin beside the scrawl, so the signature reads as a place rather than
+   just a word.
+
+   Sized and positioned in em, so it tracks the place name through all three
+   of its breakpoints instead of needing an override at each. Sat outside the
+   name's own box on purpose: the hand-drawn underline below spans the full
+   width of that box, so putting the pin inside would have stretched the
+   underline out under the badge as well. */
+.hack-card-pin {
+  position: absolute;
+  top: 0.26em;
+  left: -0.7em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 0.5em;
+  height: 0.5em;
+  border-radius: 50%;
+  background-color: var(--hack-accent);
+  background-image: var(--tb-dome);
+  background-repeat: no-repeat;
+  border: 2px solid #000;
+  color: #fff;
+  box-shadow: var(--tb-dome-bevel), 2px 2px 0 #000;
+  transform: rotate(-8deg);
+}
+
+/* Overrides whatever size the icon component asks for, so the glyph scales
+   with the badge rather than staying a fixed 24px inside a shrinking circle. */
+.hack-card-pin svg {
+  width: 55%;
+  height: 55%;
+}
+
 .hack-card-underline {
   position: absolute;
   left: -8px;
