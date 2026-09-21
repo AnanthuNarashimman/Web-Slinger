@@ -1,4 +1,17 @@
 .wanted-contact-section {
+    /* One palette for the section.
+       The poster half was already built on a warm ink and aged paper, while
+       the contact half used pure #000 with four different near-whites and
+       four different shadow opacities (0.7, 0.75, 0.8, 0.85) picked ad hoc.
+       They read as two components that happened to land next to each other.
+       Both halves now draw from these, so the section reads as one case file:
+       the poster is the page on the wall, the panel is the page beside it. */
+    --wc-ink: #1f1b15;
+    --wc-paper: #fff8e6;
+    --wc-paper-light: #fffdf5;
+    --wc-red: #c1121f;
+    --wc-red-bright: #e11d2b;
+
     position: relative;
     padding: 6rem 2rem 5rem;
     background: #fcc303;
@@ -87,30 +100,32 @@
 
     .contact-link:hover {
         transform: translate(-3px, -3px);
-        box-shadow: 7px 7px 0 rgba(0, 0, 0, 0.85);
+        box-shadow: 7px 7px 0 var(--wc-ink);
         color: #fff;
     }
 
+    /* background-color, not the shorthand, so the printed face the shared
+       button layer puts on these survives the colour change. */
     .contact-link--linkedin:hover {
-        background: #0a66c2;
+        background-color: #0a66c2;
     }
 
     .contact-link--github:hover {
-        background: #24292e;
+        background-color: #24292e;
     }
 
     .contact-link--x:hover {
-        background: #000;
+        background-color: #14100b;
     }
 
     .contact-link--mail:hover {
-        background: #c1121f;
+        background-color: var(--wc-red);
     }
 
     .wanted-send-btn:hover:not(:disabled) {
-        background: #c1121f;
+        background-color: var(--wc-red-bright);
         transform: translate(-3px, -3px);
-        box-shadow: 11px 11px 0 rgba(0, 0, 0, 0.85);
+        box-shadow: 10px 10px 0 var(--wc-ink);
     }
 
     .wanted-send-btn:hover:not(:disabled) .send-icon {
@@ -154,8 +169,8 @@
 
 /* The actual paper */
 .poster-paper {
-    background: #fff8e6;
-    border: 6px solid #1f1b15;
+    background: var(--wc-paper);
+    border: 6px solid var(--wc-ink);
     padding: 4rem 2rem 2rem;
     text-align: center;
     position: relative;
@@ -165,7 +180,7 @@
     /* aged paper inner shadow */
     box-shadow:
         inset 0 0 40px rgba(180, 140, 60, 0.18),
-        8px 8px 0 #1f1b15;
+        8px 8px 0 var(--wc-ink);
     /* subtle paper grain */
     background-image:
         url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"),
@@ -201,12 +216,12 @@
 }
 
 .poster-ribbon {
-    background: #c1121f;
+    background: var(--wc-red);
     color: #fff;
     padding: 0.25rem 1rem;
     transform: rotate(-6deg);
-    border: 3px solid #1f1b15;
-    box-shadow: 6px 6px 0 #1f1b15;
+    border: 3px solid var(--wc-ink);
+    box-shadow: 6px 6px 0 var(--wc-ink);
 }
 
 .poster-subtitle {
@@ -219,7 +234,7 @@
     font-size: clamp(2.8rem, 9vw, 4.5rem);
     margin: 0.75rem 0 0;
     letter-spacing: 0.1em;
-    color: #1f1b15;
+    color: var(--wc-ink);
     text-shadow: 4px 4px 0 rgba(193, 18, 31, 0.25);
 }
 
@@ -230,7 +245,7 @@
 }
 
 .poster-image-frame {
-    border: 6px solid #1f1b15;
+    border: 6px solid var(--wc-ink);
     padding: 1rem;
     margin: 0 auto 2rem;
     width: min(280px, 75%);
@@ -288,10 +303,10 @@
 }
 
 .reward-badges span {
-    border: 3px solid #1f1b15;
+    border: 3px solid var(--wc-ink);
     padding: 0.35rem 0.9rem;
     background: #fff;
-    box-shadow: 4px 4px 0 #1f1b15;
+    box-shadow: 4px 4px 0 var(--wc-ink);
     font-size: 0.95rem;
     display: inline-flex;
     align-items: center;
@@ -313,45 +328,66 @@
     color: #5a4a32;
 }
 
-/* ── Contact panel ── */
+/* ── Contact panel ──
+   The second page of the case file: same paper and same ink as the poster,
+   so the two halves belong together, but flat and square to the grid rather
+   than hung and tilted. */
 .wanted-contact-panel {
-    background: #fffef8;
-    border: 4px solid #000;
-    padding: 2rem;
-    box-shadow: 12px 12px 0 rgba(0, 0, 0, 0.8);
     position: relative;
+    background-color: var(--wc-paper);
+    /* Aged paper, the same recipe the poster uses, plus the printed grain
+       shared with the rest of the site. */
+    background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"),
+        linear-gradient(160deg, #fffcf0 0%, #fff3cc 100%);
+    border: 5px solid var(--wc-ink);
+    padding: 2.25rem 1.75rem 2rem;
+    box-shadow:
+        inset 0 0 40px rgba(180, 140, 60, 0.16),
+        10px 10px 0 var(--wc-ink);
 }
 
+/* The file tab. Red now, rhyming with the poster's ribbon across the gap,
+   rather than a third yellow against a yellow ground. */
 .torn-strip {
     display: inline-block;
-    background: #fde68a;
-    border: 3px solid #000;
+    background-color: var(--wc-red);
+    color: #fff;
+    border: 4px solid var(--wc-ink);
     padding: 0.5rem 1.3rem;
     font-family: "Bangers", cursive;
-    letter-spacing: 0.2em;
+    font-size: 1.05rem;
+    letter-spacing: 0.18em;
     transform: rotate(-2deg);
-    margin-bottom: 1.5rem;
-    box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.7);
+    margin-bottom: 1.75rem;
+    box-shadow: 5px 5px 0 var(--wc-ink);
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
 }
 
+/* A fixed two-up block. As a wrapping flex row the four links broke into
+   ragged rows at most widths, which made a tidy set of four look accidental. */
 .contact-links {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    margin-bottom: 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+    margin-bottom: 1.75rem;
 }
 
 .contact-link {
     display: inline-flex;
     align-items: center;
-    gap: 0.4rem;
-    border: 3px solid #000;
-    padding: 0.45rem 0.9rem;
-    background: #fff;
+    justify-content: center;
+    gap: 0.5rem;
+    border: 3px solid var(--wc-ink);
+    padding: 0.6rem 0.9rem;
+    background-color: #fff;
+    font-family: "Figtree", "Inter", sans-serif;
     font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: 0.01em;
     text-decoration: none;
-    color: #000;
-    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.8);
+    color: var(--wc-ink);
+    box-shadow: 4px 4px 0 var(--wc-ink);
     transition:
         transform 0.18s ease,
         box-shadow 0.18s ease,
@@ -365,106 +401,105 @@
     gap: 1rem;
 }
 
-.input-strip {
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
-    border: 3px solid #000;
-    padding: 0.8rem 1rem;
-    background: #fffcf1;
-    box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.7);
-    font-weight: 700;
+/* The three fields share one ink weight, one paper and one shadow, so the
+   form reads as a single object. They previously ran 3px/4px borders, two
+   different papers — one of them the only cool colour in a warm section —
+   and shadows at 0.7 and 0.75 black. */
+.input-strip,
+.message-bubble {
+    border: 3px solid var(--wc-ink);
+    background-color: var(--wc-paper-light);
+    box-shadow: 5px 5px 0 var(--wc-ink);
     transition:
         transform 0.18s ease,
         box-shadow 0.18s ease,
         background-color 0.18s ease;
 }
 
-.input-strip:focus-within {
-    background: #fff;
+.input-strip:focus-within,
+.message-bubble:focus-within {
+    background-color: #fff;
     transform: translate(-2px, -2px);
-    box-shadow: 8px 8px 0 #c1121f;
+    box-shadow: 7px 7px 0 var(--wc-red);
 }
 
-.input-strip span {
-    font-family: "Bangers", cursive;
-    letter-spacing: 0.2em;
-}
-
-.input-strip input {
-    border: none;
-    background: transparent;
-    font-size: 1rem;
-    font-family: "Titillium Web", sans-serif;
-    color: #000;
-    width: 100%;
-    min-width: 0;
-}
-
-.input-strip input:focus {
-    outline: none;
-}
-
-.input-strip input::placeholder,
-.message-bubble textarea::placeholder {
-    color: #9a8f7a;
-    font-style: italic;
-}
-
-.message-bubble {
-    position: relative;
-    border: 4px solid #000;
-    padding: 0.9rem 1rem 1.3rem;
-    background: #e0f2ff;
-    box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.75);
+.input-strip {
     display: flex;
     flex-direction: column;
-    gap: 0.35rem;
-    font-weight: 700;
-    font-family: "Titillium Web", sans-serif;
-    transition:
-        transform 0.18s ease,
-        box-shadow 0.18s ease;
+    gap: 0.3rem;
+    padding: 0.75rem 1rem;
 }
 
-.message-bubble:focus-within {
-    transform: translate(-2px, -2px);
-    box-shadow: 10px 10px 0 #c1121f;
-}
-
+/* Field labels, set small and letterspaced so they read as the printed
+   headings on a form rather than as body copy. */
+.input-strip span,
 .message-bubble span {
     font-family: "Bangers", cursive;
+    font-size: 0.95rem;
     letter-spacing: 0.2em;
+    color: var(--wc-ink);
 }
 
+.input-strip input,
 .message-bubble textarea {
     border: none;
     background: transparent;
-    resize: none;
     font-size: 1rem;
-    font-family: inherit;
-    color: #000;
+    /* Figtree, the face the hero and the build log already use for running
+       text, in place of Titillium Web, which appeared only here. */
+    font-family: "Figtree", "Inter", sans-serif;
+    font-weight: 500;
+    color: var(--wc-ink);
     width: 100%;
     min-width: 0;
 }
 
+.input-strip input:focus,
 .message-bubble textarea:focus {
     outline: none;
 }
 
-/* Speech-bubble tail hanging off the message box */
+/* Typewriter placeholders: what an unfilled field on a case file looks like. */
+.input-strip input::placeholder,
+.message-bubble textarea::placeholder {
+    font-family: "Special Elite", monospace;
+    font-style: normal;
+    letter-spacing: 0.02em;
+    color: #a0917a;
+}
+
+.message-bubble {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    padding: 0.85rem 1rem 1.2rem;
+}
+
+.message-bubble textarea {
+    resize: none;
+    line-height: 1.55;
+}
+
+/* Speech-bubble tail hanging off the message box. Follows the field's paper
+   and ink, including the lighter state on focus. */
 .bubble-tail {
     position: absolute;
-    bottom: -11px;
-    left: 32px;
-    width: 26px;
-    height: 26px;
-    background: #e0f2ff;
-    border: 4px solid #000;
+    bottom: -10px;
+    left: 30px;
+    width: 24px;
+    height: 24px;
+    background-color: var(--wc-paper-light);
+    border: 3px solid var(--wc-ink);
     border-top: none;
     border-right: none;
     transform: rotate(-45deg);
+    transition: background-color 0.18s ease;
     pointer-events: none;
+}
+
+.message-bubble:focus-within .bubble-tail {
+    background-color: #fff;
 }
 
 /* Reserve nothing until a status exists, so the layout doesn't jump twice */
@@ -473,17 +508,20 @@
 }
 
 .wanted-error {
-    color: #c1121f;
+    color: var(--wc-red);
     font-family: "Bangers", cursive;
     font-size: 0.85rem;
     letter-spacing: 0.1em;
     margin-top: 0.15rem;
 }
 
+/* Was #ff5d73, a pink that appears nowhere else in the section and turned
+   into the poster's red only on hover. It rests on that red now and
+   brightens on hover, which is the way round the rest of the site works. */
 .wanted-send-btn {
     position: relative;
-    border: 4px solid #000;
-    background: #ff5d73;
+    border: 4px solid var(--wc-ink);
+    background-color: var(--wc-red);
     color: #fff;
     font-family: "Bangers", cursive;
     font-weight: 400;
@@ -492,7 +530,7 @@
     font-size: 1.25rem;
     letter-spacing: 0.15em;
     cursor: pointer;
-    box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.8);
+    box-shadow: 7px 7px 0 var(--wc-ink);
     transition:
         transform 0.18s ease,
         box-shadow 0.18s ease,
@@ -505,7 +543,7 @@
 
 .wanted-send-btn:active:not(:disabled) {
     transform: translate(2px, 2px);
-    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.85);
+    box-shadow: 2px 2px 0 var(--wc-ink);
 }
 
 .send-icon {
@@ -520,9 +558,9 @@
     font-family: "Bangers", cursive;
     font-size: 0.85rem;
     letter-spacing: 1px;
-    color: #000;
+    color: var(--wc-ink);
     background: #ffe135;
-    border: 2px solid #000;
+    border: 2px solid var(--wc-ink);
     border-radius: 4px;
     padding: 0 8px;
     opacity: 0;
@@ -541,9 +579,9 @@
 
 .wanted-status {
     padding: 0.75rem 1rem;
-    font-weight: 700;
-    font-family: "Titillium Web", sans-serif;
-    border: 3px solid #000;
+    font-family: "Figtree", "Inter", sans-serif;
+    font-weight: 600;
+    border: 3px solid var(--wc-ink);
     text-align: center;
     animation: statusPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
@@ -566,15 +604,15 @@
 }
 
 .wanted-status--success {
-    background: #d4edda;
-    color: #155724;
-    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.7);
+    background: #d9f2c4;
+    color: #22450f;
+    box-shadow: 4px 4px 0 var(--wc-ink);
 }
 
 .wanted-status--error {
-    background: #f8d7da;
-    color: #721c24;
-    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.7);
+    background: #ffd9dc;
+    color: #6b1017;
+    box-shadow: 4px 4px 0 var(--wc-ink);
 }
 
 @media (max-width: 768px) {
@@ -598,7 +636,7 @@
         border-width: 5px;
         box-shadow:
             inset 0 0 30px rgba(180, 140, 60, 0.18),
-            6px 6px 0 #1f1b15;
+            6px 6px 0 var(--wc-ink);
     }
 
     .poster-header {
@@ -607,7 +645,7 @@
     }
 
     .poster-ribbon {
-        box-shadow: 4px 4px 0 #1f1b15;
+        box-shadow: 4px 4px 0 var(--wc-ink);
     }
 
     /* Decorative only — too cramped to read on small screens */
@@ -643,38 +681,38 @@
     .reward-badges span {
         font-size: 0.85rem;
         padding: 0.3rem 0.7rem;
-        box-shadow: 3px 3px 0 #1f1b15;
+        box-shadow: 3px 3px 0 var(--wc-ink);
     }
 
     .wanted-contact-panel {
         padding: 1.5rem 1.1rem;
-        box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.8);
+        border-width: 4px;
+        box-shadow:
+            inset 0 0 30px rgba(180, 140, 60, 0.16),
+            7px 7px 0 var(--wc-ink);
     }
 
     .torn-strip {
         font-size: 0.95rem;
         letter-spacing: 0.12em;
         padding: 0.45rem 1rem;
-        box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.7);
+        box-shadow: 4px 4px 0 var(--wc-ink);
     }
 
     .contact-links {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 0.7rem;
     }
 
     .contact-link {
-        justify-content: center;
         padding: 0.6rem 0.5rem;
         font-size: 0.9rem;
         min-height: 46px; /* comfortable touch target */
-        box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.8);
+        box-shadow: 3px 3px 0 var(--wc-ink);
     }
 
     .input-strip,
     .message-bubble {
-        box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.7);
+        box-shadow: 4px 4px 0 var(--wc-ink);
     }
 
     /* 16px keeps iOS Safari from zooming in on focus */
@@ -689,7 +727,7 @@
 
     .wanted-send-btn {
         min-height: 52px;
-        box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.8);
+        box-shadow: 5px 5px 0 var(--wc-ink);
     }
 
     .send-sfx {
