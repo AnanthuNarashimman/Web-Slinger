@@ -85,11 +85,6 @@ function ComicWantedContact() {
       <div className="wanted-content">
         <div className="wanted-poster">
           <div className="poster-paper">
-            {/* Aged "case closed" stamp, angled over the paper */}
-            <span className="poster-stamp" aria-hidden="true">
-              Open Case
-            </span>
-
             <div className="poster-header">
               <span className="poster-ribbon">Commit or Alive</span>
               <p className="poster-subtitle">Bounty No. 0110</p>

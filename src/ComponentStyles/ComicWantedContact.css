@@ -74,9 +74,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* slight tilt for that pinned-to-wall feel */
-    transform: rotate(-1.5deg);
-    transform-origin: top center;
     filter: drop-shadow(6px 18px 24px rgba(0, 0, 0, 0.45));
     font-family: "Bangers", cursive;
 }
@@ -85,8 +82,10 @@
    it slide out from under the cursor near the edges and flicker.
    Gated on real pointers so it never sticks after a tap. */
 @media (hover: hover) {
+    /* Straight up, not a rotate: the poster hangs square now, so tilting it
+       on hover would be the only thing putting it off-axis. */
     .wanted-poster:hover .poster-paper {
-        transform: rotate(0.8deg) translateY(-5px);
+        transform: translateY(-5px);
     }
 
     .wanted-poster:hover .poster-image {
@@ -110,8 +109,10 @@
         background-color: #0a66c2;
     }
 
+    /* GitHub's green rather than its near-black, which was indistinguishable
+       from the X link sitting next to it. */
     .contact-link--github:hover {
-        background-color: #24292e;
+        background-color: #2ea44f;
     }
 
     .contact-link--x:hover {
@@ -185,25 +186,6 @@
     background-image:
         url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"),
         linear-gradient(160deg, #fffcf0 0%, #fff3cc 100%);
-}
-
-/* Angled rubber stamp */
-.poster-stamp {
-    position: absolute;
-    top: 4.5rem;
-    right: -2.2rem;
-    z-index: 6;
-    font-family: "Special Elite", "Bangers", cursive;
-    font-size: 1.05rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: rgba(193, 18, 31, 0.75);
-    border: 4px double rgba(193, 18, 31, 0.75);
-    border-radius: 6px;
-    padding: 0.3rem 2.4rem;
-    transform: rotate(-14deg);
-    opacity: 0.85;
-    pointer-events: none;
 }
 
 .poster-header {
@@ -625,9 +607,8 @@
         padding-top: 1.5rem;
     }
 
-    /* Straighten the poster so the tilt + offset shadow can't crowd the edges */
+    /* Lighter cast shadow; the poster hangs straight at every size now. */
     .wanted-poster {
-        transform: rotate(0deg);
         filter: drop-shadow(4px 10px 16px rgba(0, 0, 0, 0.4));
     }
 
@@ -646,11 +627,6 @@
 
     .poster-ribbon {
         box-shadow: 4px 4px 0 var(--wc-ink);
-    }
-
-    /* Decorative only — too cramped to read on small screens */
-    .poster-stamp {
-        display: none;
     }
 
     .poster-title {
