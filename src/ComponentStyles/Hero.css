@@ -700,20 +700,13 @@ a:has(.cta-btn):focus {
 .name-text {
     pointer-events: auto;
     font-family: "Bangers", cursive;
-    font-size: 46px;
+    font-size: 44px;
     line-height: 1;
-    /* Warm cream rather than pure white: against a near-black plate, white
-       buzzes and cream sits. */
-    color: #fff1d6;
+    color: #111;
     text-transform: uppercase;
-    letter-spacing: 4px;
-    padding: 16px 46px 13px;
-    /* Inverted. As a white card it was a third white rounded rectangle in a
-       hero that already has a white speech bubble and white stat pills, so
-       the one element that should carry the most weight read as the least
-       distinct. Dark against the yellow ground it finally sits apart, and
-       the red plate behind it does far more work than it did against white. */
-    background-color: #16161a;
+    letter-spacing: 3.5px;
+    padding: 17px 44px 14px;
+    background-color: #fff;
     background-image: var(--tb-tooth-light), var(--tb-tooth-dark), var(--tb-face);
     background-size: 3px 3px, 3px 3px, auto;
     background-position: 0 0, 1.5px 1.5px, 0 0;
@@ -722,16 +715,15 @@ a:has(.cta-btn):focus {
     border-radius: 14px;
     box-shadow:
         /* red keyline hugging the inside of the ink outline */
-        inset 0 0 0 2px #ff1744,
+        inset 0 0 0 3px #ff1744,
         /* the moulded lip; both pseudo-element slots are spoken for here,
            so this rides in the shadow stack instead of on a layer */
-        inset 0 1px 0 rgba(255, 255, 255, 0.14),
-        inset 0 -12px 20px rgba(0, 0, 0, 0.5),
+        inset 0 -7px 12px rgba(0, 0, 0, 0.07),
         /* the two misregistered plates */
         7px 7px 0px #ff1744,
         13px 13px 0px #000;
-    /* Seats the letters onto the plate instead of letting them hover on it. */
-    text-shadow: 0 2px 0 rgba(0, 0, 0, 0.5);
+    /* Just enough to give the letters printed weight without bolding them. */
+    text-shadow: 1.5px 1.5px 0 rgba(0, 0, 0, 0.13);
     /* On `rotate`, not inside `transform`, so the entrance animation cannot
        flatten the tilt on its way past. */
     rotate: -2deg;
@@ -1369,11 +1361,10 @@ a:has(.cta-btn):focus {
         /* Same two plates, stepped down so they stay in proportion. */
         box-shadow:
             inset 0 0 0 2px #ff1744,
-            inset 0 1px 0 rgba(255, 255, 255, 0.14),
-            inset 0 -7px 12px rgba(0, 0, 0, 0.5),
+            inset 0 -4px 7px rgba(0, 0, 0, 0.07),
             4px 4px 0px #ff1744,
             8px 8px 0px #000;
-        text-shadow: 0 1.5px 0 rgba(0, 0, 0, 0.5);
+        text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.13);
     }
 
     /* The ::before tab it used to size here no longer exists. */
