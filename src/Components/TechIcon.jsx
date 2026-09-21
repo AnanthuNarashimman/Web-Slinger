@@ -69,6 +69,43 @@ const LangGraphMark = (props) => (
   </BrandMark>
 );
 
+/*
+ * Namesake glyphs, NOT brand marks.
+ *
+ * Pinecone and ChromaDB have no icon in Simple Icons or in the 950-icon
+ * lobe-icons set, and neither vendor publishes a usable standalone SVG, so
+ * there is no authentic mark to use. Both were falling back to the same
+ * generic database cylinder — the very same one SQL uses, so three entries on
+ * the arsenal page were rendering identically.
+ *
+ * These are drawn from what each product is named after rather than guessed
+ * at from memory: a cone of scales, and the overlapping discs of a colour
+ * mixing diagram. They read at 26px and they are unmistakably different from
+ * each other, which is the actual problem. If either vendor's real mark turns
+ * up in an icon set later, swap it in here.
+ */
+const PineconeGlyph = (props) => (
+  <BrandMark title="Pinecone" {...props}>
+    {/* stem */}
+    <path d="M11.2 1.4h1.6v2.6h-1.6z" />
+    {/* four rows of scales, widest in the middle, tapering to a point */}
+    <path d="M8.4 2.9l3 2.6-3 2.6-3-2.6zM15.6 2.9l3 2.6-3 2.6-3-2.6z" />
+    <path d="M5.5 7.4l3 2.6-3 2.6-3-2.6zM12 7.4l3 2.6-3 2.6-3-2.6zM18.5 7.4l3 2.6-3 2.6-3-2.6z" />
+    <path d="M8.4 11.9l3 2.6-3 2.6-3-2.6zM15.6 11.9l3 2.6-3 2.6-3-2.6z" />
+    <path d="M12 16.4l3 2.6-3 2.6-3-2.6z" />
+  </BrandMark>
+);
+
+const ChromaGlyph = (props) => (
+  <BrandMark title="ChromaDB" {...props}>
+    {/* three discs; the evenodd fill turns the overlaps into the classic
+        colour-mixing figure without needing more than one ink */}
+    <circle cx="12" cy="8.4" r="5.6" />
+    <circle cx="8.1" cy="15.1" r="5.6" />
+    <circle cx="15.9" cy="15.1" r="5.6" />
+  </BrandMark>
+);
+
 // Shared icon renderer used by the tech section and the arsenal page
 const TechIcon = ({ type, color, size = 28 }) => {
   const iconStyle = {
@@ -102,9 +139,9 @@ const TechIcon = ({ type, color, size = 28 }) => {
     case 'automation': return <Globe size={size} style={iconStyle} />;
     case 'sql': return <Database size={size} style={iconStyle} />;
     case 'langchain': return <SiLangchain size={size} style={iconStyle} />;
-    case 'pinecone': return <Database size={size} style={iconStyle} />;
+    case 'pinecone': return <PineconeGlyph size={size} style={iconStyle} />;
     case 'langgraph': return <LangGraphMark size={size} style={iconStyle} />;
-    case 'chromadb': return <Database size={size} style={iconStyle} />;
+    case 'chromadb': return <ChromaGlyph size={size} style={iconStyle} />;
     case 'judge0': return <Code2 size={size} style={iconStyle} />;
     case 'fullstack': return <Layers size={size} style={iconStyle} />;
     case 'api': return <Globe size={size} style={iconStyle} />;
