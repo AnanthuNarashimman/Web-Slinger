@@ -2,7 +2,7 @@ import "../ComponentStyles/Hero.css";
 
 import Profile from "../assets/Images/comic_sprofile.png";
 
-import { Send, Users, Bot, Globe, Terminal, Layout } from 'lucide-react';
+import { Send, Rocket, Users, Bot, Globe, Terminal, Layout } from 'lucide-react';
 
 import NpmStatCard from './NpmStatCard';
 
@@ -52,6 +52,18 @@ function Hero() {
                         <div className="clients">
                             {/* npm takes the lead slot the projects count used to hold */}
                             <NpmStatCard />
+                            {/* Phones only. There the row has the width for a third
+                                pill, and the count reads better than nothing beside
+                                the npm card. CSS hides this above the phone breakpoint. */}
+                            <div className="stat-card stat-card--phone">
+                                <div className="stat-icon stat-icon-pink">
+                                    <Rocket size={20} strokeWidth={2.5} />
+                                </div>
+                                <div className="stat-info">
+                                    <span className="stat-number">10+</span>
+                                    <span className="stat-label">Projects<br />Shipped</span>
+                                </div>
+                            </div>
                             <div className="stat-card">
                                 <div className="stat-icon stat-icon-green">
                                     <Users size={20} strokeWidth={2.5} />

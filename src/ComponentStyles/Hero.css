@@ -151,7 +151,7 @@
 }
 
 .hero-title {
-    font-size: 64px;
+    font-size: 76px;
     font-weight: 400;
     line-height: 1.05;
     margin-bottom: 24px;
@@ -272,30 +272,30 @@
     outline: none;
     background: #00e5ff;
     color: #000;
-    border: 5px solid #000;
-    padding: 18px 40px;
-    border-radius: 15px;
+    border: 4px solid #000;
+    padding: 12px 26px;
+    border-radius: 13px;
     font-family: "Bangers", cursive;
-    font-size: 24px;
-    letter-spacing: 2px;
+    font-size: 19px;
+    letter-spacing: 1.6px;
     font-weight: 400;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     transition: all 0.2s;
-    box-shadow: 8px 8px 0px #000;
+    box-shadow: 6px 6px 0px #000;
     text-transform: uppercase;
     transform: rotate(-1deg);
     animation: buttonBounce 2s ease-in-out infinite;
 }
 
 .send-icon {
-    width: 35px;
-    height: 35px;
+    width: 29px;
+    height: 29px;
     background: #ff1744;
     border-radius: 50%;
-    padding: 5px;
+    padding: 4px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -310,7 +310,7 @@
 
 .cta-btn:hover {
     transform: translate(-3px, -3px) rotate(-1deg);
-    box-shadow: 11px 11px 0px #000;
+    box-shadow: 9px 9px 0px #000;
 }
 
 a:has(.cta-btn):focus {
@@ -368,9 +368,19 @@ a:has(.cta-btn):focus {
     color: #fff;
 }
 
+.stat-icon-pink {
+    background: #ff1744;
+}
+
 .stat-icon-green {
     background: #76ff03;
     color: #000;
+}
+
+/* Phones only. On wider screens the row leads with the npm card instead, and
+   a third pill would push the group past the column. */
+.stat-card--phone {
+    display: none;
 }
 
 .stat-info {
@@ -690,13 +700,20 @@ a:has(.cta-btn):focus {
 .name-text {
     pointer-events: auto;
     font-family: "Bangers", cursive;
-    font-size: 44px;
+    font-size: 46px;
     line-height: 1;
-    color: #111;
+    /* Warm cream rather than pure white: against a near-black plate, white
+       buzzes and cream sits. */
+    color: #fff1d6;
     text-transform: uppercase;
-    letter-spacing: 3.5px;
-    padding: 17px 44px 14px;
-    background-color: #fff;
+    letter-spacing: 4px;
+    padding: 16px 46px 13px;
+    /* Inverted. As a white card it was a third white rounded rectangle in a
+       hero that already has a white speech bubble and white stat pills, so
+       the one element that should carry the most weight read as the least
+       distinct. Dark against the yellow ground it finally sits apart, and
+       the red plate behind it does far more work than it did against white. */
+    background-color: #16161a;
     background-image: var(--tb-tooth-light), var(--tb-tooth-dark), var(--tb-face);
     background-size: 3px 3px, 3px 3px, auto;
     background-position: 0 0, 1.5px 1.5px, 0 0;
@@ -705,15 +722,16 @@ a:has(.cta-btn):focus {
     border-radius: 14px;
     box-shadow:
         /* red keyline hugging the inside of the ink outline */
-        inset 0 0 0 3px #ff1744,
+        inset 0 0 0 2px #ff1744,
         /* the moulded lip; both pseudo-element slots are spoken for here,
            so this rides in the shadow stack instead of on a layer */
-        inset 0 -7px 12px rgba(0, 0, 0, 0.07),
+        inset 0 1px 0 rgba(255, 255, 255, 0.14),
+        inset 0 -12px 20px rgba(0, 0, 0, 0.5),
         /* the two misregistered plates */
         7px 7px 0px #ff1744,
         13px 13px 0px #000;
-    /* Just enough to give the letters printed weight without bolding them. */
-    text-shadow: 1.5px 1.5px 0 rgba(0, 0, 0, 0.13);
+    /* Seats the letters onto the plate instead of letting them hover on it. */
+    text-shadow: 0 2px 0 rgba(0, 0, 0, 0.5);
     /* On `rotate`, not inside `transform`, so the entrance animation cannot
        flatten the tilt on its way past. */
     rotate: -2deg;
@@ -943,7 +961,7 @@ a:has(.cta-btn):focus {
     }
 
     .hero-title {
-        font-size: 56px;
+        font-size: 64px;
     }
 
     .hero-subtitle {
@@ -1051,18 +1069,21 @@ a:has(.cta-btn):focus {
     }
 
     .cta-btn {
-        padding: 14px 30px;
-        font-size: 20px;
-        border: 4px solid #000;
-        box-shadow: 6px 6px 0px #000;
+        padding: 11px 22px;
+        font-size: 17px;
+        border: 3px solid #000;
+        box-shadow: 5px 5px 0px #000;
     }
 
     .send-icon {
-        width: 30px;
-        height: 30px;
+        width: 26px;
+        height: 26px;
     }
 
-    /* npm takes its own full row, the remaining count pill takes the next */
+    /* The two count pills side by side, npm on its own full row beneath.
+       The projects pill is markup-ordered after npm so the desktop row can
+       lead with npm, so the phone order is restored here explicitly rather
+       than by shuffling the JSX. */
     .clients {
         margin-top: 30px;
         gap: 10px;
@@ -1072,6 +1093,18 @@ a:has(.cta-btn):focus {
         justify-content: center;
     }
 
+    .stat-card--phone {
+        display: flex;
+    }
+
+    .clients > .stat-card--phone {
+        order: 1;
+    }
+
+    .clients > .stat-card:not(.stat-card--phone) {
+        order: 2;
+    }
+
     .clients > .stat-card {
         flex: 1 1 0;
         min-width: 0;
@@ -1079,6 +1112,7 @@ a:has(.cta-btn):focus {
     }
 
     .clients > .npm-stat-wrapper {
+        order: 3;
         flex: 1 0 100%;
     }
 
@@ -1214,18 +1248,18 @@ a:has(.cta-btn):focus {
     }
 
     .cta-btn {
-        padding: 12px 24px;
-        font-size: 18px;
+        padding: 10px 20px;
+        font-size: 16px;
         border: 3px solid #000;
-        box-shadow: 5px 5px 0px #000;
+        box-shadow: 4px 4px 0px #000;
         gap: 8px;
         margin: 0 auto;
         display: inline-flex;
     }
 
     .send-icon {
-        width: 28px;
-        height: 28px;
+        width: 24px;
+        height: 24px;
         border: 2px solid #000;
     }
 
@@ -1335,10 +1369,11 @@ a:has(.cta-btn):focus {
         /* Same two plates, stepped down so they stay in proportion. */
         box-shadow:
             inset 0 0 0 2px #ff1744,
-            inset 0 -4px 7px rgba(0, 0, 0, 0.07),
+            inset 0 1px 0 rgba(255, 255, 255, 0.14),
+            inset 0 -7px 12px rgba(0, 0, 0, 0.5),
             4px 4px 0px #ff1744,
             8px 8px 0px #000;
-        text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.13);
+        text-shadow: 0 1.5px 0 rgba(0, 0, 0, 0.5);
     }
 
     /* The ::before tab it used to size here no longer exists. */
