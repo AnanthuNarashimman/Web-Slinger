@@ -46,7 +46,7 @@ const ComicTimeline = () => {
       <div className="wrapper">
         
         {/* Header */}
-        <div className="header-container">
+        <div className="header-container" data-reveal>
           <div className="header-wrapper">
             <div className="header-bg"></div>
             <h1 className="header-title">Experience</h1>
@@ -59,7 +59,11 @@ const ComicTimeline = () => {
         {/* Timeline Items */}
         <div className="timeline-items">
           {experiences.map((exp, index) => (
-            <div key={index} className={`timeline-item ${exp.align}`}>
+            <div
+              key={index}
+              className={`timeline-item ${exp.align}`}
+              data-reveal={exp.align === "left" ? "left" : "right"}
+            >
               
               {/* Content Side */}
               <div className="content-side">
@@ -103,7 +107,7 @@ const ComicTimeline = () => {
         </div>
 
         {/* Footer */}
-        <div className="footer">
+        <div className="footer" data-reveal>
           <div className="tbc-badge">
             THE BEGINNING!
           </div>

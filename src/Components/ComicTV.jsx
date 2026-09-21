@@ -202,7 +202,7 @@ function ComicTV() {
 
     return (
         <div className="project-showcase-container">
-            <div className="section-header-tv">
+            <div className="section-header-tv" data-reveal>
                 <h2 className="header-title-tv">Featured Projects</h2>
                 <p className="header-subtitle-tv">Your friendly neighborhood dev's work, live on air</p>
             </div>
@@ -211,7 +211,7 @@ function ComicTV() {
             
             <div className="showcase-layout">
                 {/* TV Section - Left */}
-                <div className="tv-section">
+                <div className="tv-section" data-reveal="left">
                     <div className="tv-container">
                         <div className="tv-chassis">
                             <div className="screen-wrapper">
@@ -283,7 +283,7 @@ function ComicTV() {
                 </div>
 
                 {/* Project Details Section - Right */}
-                <div className="details-section">
+                <div className="details-section" data-reveal="right" data-reveal-delay="1">
                     <div className="comic-paper">
                         {selectedProject !== null && projects[selectedProject] ? (
                             <div className="project-details">

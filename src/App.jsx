@@ -9,12 +9,14 @@ import TechArsenal from "./Pages/TechArsenal"
 import HackathonLog from "./Pages/HackathonLog"
 import ComicScrollbar from "./Components/ComicScrollbar"
 import SmoothScroll from "./Components/SmoothScroll"
+import ScrollReveal from "./Components/ScrollReveal"
 import { Analytics } from "@vercel/analytics/react"
 
 function App() {
   return (
     <BrowserRouter>
       <SmoothScroll />
+      <ScrollReveal />
       <ComicScrollbar />
       <Routes>
         <Route path="/" element={<Portfolio />} />

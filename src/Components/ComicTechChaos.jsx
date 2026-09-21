@@ -92,7 +92,7 @@ const ComicTechStack = () => {
       <div className="comic-tech-bg-texture"></div>
 
       {/* Header / Context */}
-      <div className="comic-tech-header">
+      <div className="comic-tech-header" data-reveal>
         <h1 className="comic-tech-title">
           TECH ARSENAL!
         </h1>
@@ -141,7 +141,7 @@ const ComicTechStack = () => {
       </div>
 
       {/* Link through to the full arsenal page */}
-      <div className="comic-tech-cta">
+      <div className="comic-tech-cta" data-reveal>
         <Link to="/arsenal" className="comic-tech-know-more-btn">
           <BookOpen className="btn-icon" size={20} strokeWidth={2.5} />
           <span className="comic-tech-know-more-text-main">SEE FULL ARSENAL</span>

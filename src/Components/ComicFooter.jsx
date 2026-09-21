@@ -32,13 +32,13 @@ const SOCIAL_LINKS = [
 function ComicFooter() {
   return (
     <footer className="comic-footer">
-      <p className="footer-quote">
+      <p className="footer-quote" data-reveal>
         Keeping the web
         <br />
         a little better than I found it.
       </p>
 
-      <div className="footer-bottom">
+      <div className="footer-bottom" data-reveal data-reveal-delay="2">
         <nav className="footer-nav">
           {NAV_LINKS.map((link) => (
             <a key={link.label} href={link.href} className="footer-nav-link">

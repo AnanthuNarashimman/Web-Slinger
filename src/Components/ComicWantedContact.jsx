@@ -83,7 +83,7 @@ function ComicWantedContact() {
       <div className="wanted-speedlines" aria-hidden="true"></div>
 
       <div className="wanted-content">
-        <div className="wanted-poster">
+        <div className="wanted-poster" data-reveal="left">
           <div className="poster-paper">
             <div className="poster-header">
               <span className="poster-ribbon">Commit or Alive</span>
@@ -124,7 +124,7 @@ function ComicWantedContact() {
           </div>
         </div>
 
-        <div className="wanted-contact-panel">
+        <div className="wanted-contact-panel" data-reveal="right" data-reveal-delay="1">
           <div className="torn-strip">Drop me a line on the dusty trail</div>
 
           <div className="contact-links">

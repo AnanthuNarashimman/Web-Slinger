@@ -209,7 +209,7 @@ function ComicGithubHackathons() {
     <div className="buildlog">
       <div className="buildlog-inner">
         {/* Section header */}
-        <div className="buildlog-header">
+        <div className="buildlog-header" data-reveal>
           <div className="buildlog-title-wrap">
             <span className="buildlog-title-bg" aria-hidden="true" />
             <h2 className="buildlog-title">Build Log</h2>
@@ -220,7 +220,7 @@ function ComicGithubHackathons() {
         </div>
 
         {/* ── GitHub panel ─────────────────────────────────────────── */}
-        <section className="gh-panel" aria-label="GitHub activity">
+        <section className="gh-panel" aria-label="GitHub activity" data-reveal="scale">
           <div className="gh-panel-top">
             <a
               className="gh-handle"
@@ -332,7 +332,7 @@ function ComicGithubHackathons() {
         </section>
 
         {/* ── Hackathon strip ──────────────────────────────────────── */}
-        <section className="hack-strip" aria-label="Hackathon diaries">
+        <section className="hack-strip" aria-label="Hackathon diaries" data-reveal>
           <div className="hack-strip-head">
             <div className="hack-strip-heading">
               <Trophy size={22} strokeWidth={2.5} />
