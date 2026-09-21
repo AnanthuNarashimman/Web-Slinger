@@ -49,7 +49,10 @@ const ComicTimeline = () => {
         <div className="header-container" data-reveal>
           <div className="header-wrapper">
             <div className="header-bg"></div>
-            <h1 className="header-title">Experience</h1>
+            {/* h2, not h1: the hero already carries the page's h1, and a
+                screen reader listing headings should see one top-level
+                title with the sections nested under it. */}
+            <h2 className="header-title">Experience</h2>
           </div>
         </div>
 
