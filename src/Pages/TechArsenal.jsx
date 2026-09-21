@@ -39,7 +39,7 @@ const TechArsenal = () => {
         </Link>
 
         {/* Cover header */}
-        <header className="arsenal-header">
+        <header className="arsenal-header" data-reveal>
           <span className="arsenal-issue">ISSUE #01</span>
           <h1 className="arsenal-title">TECH ARSENAL</h1>
           <p className="arsenal-caption">
@@ -49,8 +49,14 @@ const TechArsenal = () => {
 
         {/* Category panels */}
         <div className="arsenal-grid">
-          {Object.entries(detailedTechStack).map(([key, category]) => (
-            <section key={key} className="arsenal-panel">
+          {Object.entries(detailedTechStack).map(([key, category], index) => (
+            <section
+              key={key}
+              className="arsenal-panel"
+              data-reveal="scale"
+              /* the stagger tops out at 6, which is also the panel count */
+              data-reveal-delay={String(Math.min(index + 1, 6))}
+            >
               <div
                 className="arsenal-panel-header"
                 style={{ backgroundColor: category.color }}
@@ -76,7 +82,7 @@ const TechArsenal = () => {
         </div>
 
         {/* Closing strip */}
-        <footer className="arsenal-footer">
+        <footer className="arsenal-footer" data-reveal>
           <p className="arsenal-footer-text">
             TO BE CONTINUED... (the stack keeps growing!)
           </p>

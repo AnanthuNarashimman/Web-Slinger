@@ -26,6 +26,7 @@ export const detailedTechStack = {
       { name: 'Node.js', icon: 'node', color: '#339933' },
       { name: 'Flask', icon: 'flask', color: '#000000' },
       { name: 'FastAPI', icon: 'fastapi', color: '#009688' },
+      { name: 'Electron.js', icon: 'electron', color: '#47848F' },
     ]
   },
   aiml: {
@@ -47,7 +48,6 @@ export const detailedTechStack = {
     blurb: 'Gadgets taken out on real missions.',
     color: '#00BFA5',
     items: [
-      { name: 'Electron.js', icon: 'electron', color: '#47848F' },
       { name: 'LangChain', icon: 'langchain', color: '#1C3C3C' },
       { name: 'Pinecone', icon: 'pinecone', color: '#00BFA5' },
       { name: 'LangGraph', icon: 'langgraph', color: '#1C3C3C' },
