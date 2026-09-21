@@ -135,16 +135,59 @@ function ComicGithubHackathons() {
   // The rail follows the finger instead of waiting for the lift: writing the
   // transform straight onto the node keeps the drag off React's render path,
   // so a move costs one style write rather than a re-render of eight cards.
-  const drag = useRef({ active: false, axis: null, x: 0, y: 0, dx: 0, at: 0, prevDx: 0, prevAt: 0 });
+  const drag = useRef({
+    active: false,
+    axis: null,
+    x: 0,
+    y: 0,
+    base: 0,
+    dx: 0,
+    at: 0,
+    prevDx: 0,
+    prevAt: 0,
+  });
+
+  const settleTimer = useRef(0);
+  useEffect(() => () => window.clearTimeout(settleTimer.current), []);
+
+  // Where the rail is *right now*, mid-animation included. Reads the matrix
+  // rather than assuming the settle has finished.
+  const currentOffset = (rail) => {
+    const value = getComputedStyle(rail).transform;
+    if (!value || value === "none") return 0;
+    const matrix3d = value.match(/matrix3d\(([^)]+)\)/);
+    if (matrix3d) return parseFloat(matrix3d[1].split(",")[12]) || 0;
+    const matrix = value.match(/matrix\(([^)]+)\)/);
+    if (matrix) return parseFloat(matrix[1].split(",")[4]) || 0;
+    return 0;
+  };
 
   const handleTouchStart = (event) => {
     if (event.touches.length !== 1) return;
     const touch = event.touches[0];
+    const rail = railRef.current;
+
+    // Pick the rail up wherever it actually is. Landing a second finger while
+    // the previous swipe is still settling used to start the drag from the
+    // position that swipe was heading to, so the card jumped out from under
+    // the finger before it started tracking. Catching the live offset makes a
+    // quick run through the strip continuous instead of steppy.
+    let base = -activeCard * stepPx;
+    if (rail) {
+      const live = currentOffset(rail);
+      if (Math.abs(live - base) > 0.5) {
+        rail.style.transition = "none";
+        rail.style.transform = `translate3d(${live}px, 0, 0)`;
+        base = live;
+      }
+    }
+
     drag.current = {
       active: true,
       axis: null,
       x: touch.clientX,
       y: touch.clientY,
+      base,
       dx: 0,
       at: event.timeStamp,
       prevDx: 0,
@@ -179,7 +222,7 @@ function ComicGithubHackathons() {
     d.prevAt = d.at;
     d.dx = overscroll ? dx * 0.35 : dx;
     d.at = event.timeStamp;
-    rail.style.transform = `translate3d(${-activeCard * stepPx + d.dx}px, 0, 0)`;
+    rail.style.transform = `translate3d(${d.base + d.dx}px, 0, 0)`;
   };
 
   const handleTouchEnd = (event) => {
@@ -191,16 +234,36 @@ function ComicGithubHackathons() {
     // A short flick counts as much as a long drag
     const elapsed = Math.max(1, d.at - d.prevAt);
     const held = event.timeStamp - d.at > 100; // finger parked before lifting
-    const flick = !held && Math.abs((d.dx - d.prevDx) / elapsed) > 0.35;
+    const speed = Math.abs((d.dx - d.prevDx) / elapsed); // px per ms
+    const flick = !held && speed > 0.35;
+
+    // Measured from the active card's resting spot, not from where the finger
+    // landed, so a drag that began mid-settle is judged on the distance the
+    // card actually travelled.
+    const moved = d.base + d.dx - -activeCard * stepPx;
     const next =
-      flick || Math.abs(d.dx) > stepPx * 0.2
-        ? clamp(activeCard + (d.dx < 0 ? 1 : -1))
+      flick || Math.abs(moved) > stepPx * 0.2
+        ? clamp(activeCard + (moved < 0 ? 1 : -1))
         : activeCard;
 
-    // Hand the transform back to the stylesheet's easing for the settle
-    rail.style.transition = "";
+    // Settle in proportion to the throw. A hard flick that still took the
+    // stylesheet's fixed 340ms to land read as the card dragging its heels;
+    // a gentle nudge snapping back in the same time read as twitchy.
+    const remaining = Math.abs(-next * stepPx - (d.base + d.dx));
+    const ideal = speed > 0.05 ? remaining / (speed * 1.6) : 340;
+    const settle = Math.round(Math.min(380, Math.max(170, ideal)));
+
+    rail.style.transition = `transform ${settle}ms cubic-bezier(0.22, 0.61, 0.36, 1), height 300ms cubic-bezier(0.22, 0.61, 0.36, 1)`;
     rail.style.transform = `translate3d(${-next * stepPx}px, 0, 0)`;
     if (next !== activeCard) setActiveCard(next);
+
+    // Hand the timing back to the stylesheet once this settle has landed.
+    // Left inline it would quietly govern the arrow buttons and the pips too,
+    // at whatever duration the last flick happened to work out to.
+    window.clearTimeout(settleTimer.current);
+    settleTimer.current = window.setTimeout(() => {
+      if (railRef.current) railRef.current.style.transition = "";
+    }, settle + 60);
   };
 
   const closeInvite = useCallback(() => setInviteOpen(false), []);
