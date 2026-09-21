@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Ananthu Narashimman — link preview card</title>
+
+    <!--
+      Source for public/og.png, the image that renders when the site is shared
+      on Slack, WhatsApp, LinkedIn, iMessage, X and so on.
+
+      Built as HTML/CSS rather than in a design tool so it stays editable and
+      stays on the site's own palette and type. Re-render after editing:
+
+        chrome --headless=new --disable-gpu --hide-scrollbars \
+               --window-size=1200,630 --virtual-time-budget=12000 \
+               --screenshot=public/og.png og/og-image.html
+
+      1200x630 is the size every platform crops from. Held to four lines —
+      kicker, title, name, disciplines — plus the portrait, because the card is
+      usually seen at about a third of this size in a chat list, where
+      anything more turns to noise.
+
+      Note both mask-image and its -webkit- twin carry the same values. They
+      are easy to edit apart by accident, and Chrome takes the unprefixed one,
+      so a mismatch silently does nothing.
+    -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bangers&family=Luckiest+Guy&display=block"
+      rel="stylesheet"
+    />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        width: 1200px;
+        height: 630px;
+        overflow: hidden;
+      }
+
+      .og {
+        position: relative;
+        width: 1200px;
+        height: 630px;
+        background-color: #fcc303;
+        overflow: hidden;
+      }
+
+      /* Halftone wash, the same motif the page uses behind its sections. */
+      .og::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(
+          rgba(0, 0, 0, 0.14) 2.2px,
+          transparent 2.3px
+        );
+        background-size: 18px 18px;
+        -webkit-mask-image: radial-gradient(
+          ellipse at 27% 50%,
+          transparent 23%,
+          #000 80%
+        );
+        mask-image: radial-gradient(
+          ellipse at 27% 50%,
+          transparent 23%,
+          #000 80%
+        );
+      }
+
+      /* Speed lines radiating from behind the figure, so the silhouette reads
+         as the thing they are pointing at rather than as loose decoration. */
+      .og::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: repeating-conic-gradient(
+          from 0deg at 79% 55%,
+          rgba(0, 0, 0, 0.075) 0deg 1.2deg,
+          transparent 1.2deg 5.5deg
+        );
+        -webkit-mask-image: radial-gradient(
+          circle at 79% 55%,
+          transparent 17%,
+          #000 46%,
+          transparent 76%
+        );
+        mask-image: radial-gradient(
+          circle at 79% 55%,
+          transparent 17%,
+          #000 46%,
+          transparent 76%
+        );
+      }
+
+      /* Bleeds off the bottom edge: cropping the figure at the frame reads as
+         a deliberate crop, where floating it whole inside the box would leave
+         it stranded in the middle of the yellow. */
+      .portrait {
+        position: absolute;
+        right: 14px;
+        bottom: -62px;
+        height: 676px;
+        width: auto;
+        z-index: 2;
+      }
+
+      .inner {
+        position: absolute;
+        left: 76px;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 3;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 26px;
+        max-width: 672px;
+      }
+
+      .kicker {
+        display: inline-block;
+        font-family: "Bangers", cursive;
+        font-size: 19px;
+        letter-spacing: 4px;
+        color: #ffe135;
+        background: #000;
+        border: 3px solid #000;
+        border-radius: 5px;
+        padding: 5px 17px 3px;
+        transform: rotate(-2deg);
+        box-shadow: 5px 5px 0 #ff1744;
+      }
+
+      .title {
+        font-family: "Luckiest Guy", cursive;
+        font-size: 66px;
+        line-height: 0.98;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        transform: rotate(-1deg);
+      }
+
+      .title span {
+        display: block;
+        -webkit-text-stroke: 6px #000;
+        paint-order: stroke fill;
+        text-shadow: 7px 7px 0 rgba(0, 0, 0, 0.9);
+      }
+
+      .title .l1 {
+        color: #fff;
+      }
+
+      .title .l2 {
+        color: #ff1744;
+      }
+
+      /* Strapline under the nameplate.
+         As bare text on the yellow it floated, with nothing holding it to the
+         block above. On its own black bar it bookends the Portfolio chip at
+         the top of the card — same ink, same yellow lettering, same red plate
+         behind it — so the text column now opens and closes on the same note.
+         Tilted the other way to the nameplate, the way the badges on the
+         site's hero alternate rather than all leaning together. */
+      .disciplines {
+        display: inline-flex;
+        align-items: center;
+        gap: 15px;
+        margin-top: 14px;
+        margin-left: 3px;
+        font-family: "Bangers", cursive;
+        font-size: 22px;
+        letter-spacing: 2.6px;
+        text-transform: uppercase;
+        color: #ffe135;
+        background: #000;
+        border: 3px solid #000;
+        border-radius: 6px;
+        padding: 7px 20px 5px;
+        rotate: 1.5deg;
+        box-shadow: 5px 5px 0 #ff1744;
+      }
+
+      /* Turned squares. Red reads clearly at this size on the black bar and
+         keeps the card to the four colours it already uses. */
+      .disciplines i {
+        width: 7px;
+        height: 7px;
+        background: #ff1744;
+        rotate: 45deg;
+        flex: 0 0 auto;
+      }
+
+      /* The nameplate, carrying the same misregistered red and black plates
+         as the hero card on the site. */
+      .name {
+        font-family: "Bangers", cursive;
+        font-size: 37px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: #111;
+        background-color: #fff;
+        background-image:
+          radial-gradient(rgba(255, 255, 255, 0.055) 0.5px, transparent 0.6px),
+          radial-gradient(rgba(0, 0, 0, 0.06) 0.5px, transparent 0.6px),
+          linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.26) 0%,
+            rgba(255, 255, 255, 0.11) 44%,
+            rgba(0, 0, 0, 0.05) 56%,
+            rgba(0, 0, 0, 0.17) 100%
+          );
+        background-size: 3px 3px, 3px 3px, auto;
+        background-position: 0 0, 1.5px 1.5px, 0 0;
+        background-repeat: repeat, repeat, no-repeat;
+        border: 5px solid #000;
+        border-radius: 13px;
+        padding: 12px 30px 9px;
+        rotate: -1.5deg;
+        box-shadow:
+          inset 0 0 0 3px #ff1744,
+          inset 0 -7px 12px rgba(0, 0, 0, 0.07),
+          7px 7px 0 #ff1744,
+          10px 10px 0 #000;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="og">
+      <img
+        class="portrait"
+        src="../src/assets/Images/comic_sprofile.png"
+        alt=""
+      />
+
+      <div class="inner">
+        <div class="kicker">Portfolio</div>
+
+        <h1 class="title">
+          <span class="l1">Building Solutions</span>
+          <span class="l2">That Matter</span>
+        </h1>
+
+        <div class="name">Ananthu Narashimman</div>
+
+        <!-- The one thing the card was not saying: the field. Three terms
+             rather than a sentence, so it still reads at thumbnail size. -->
+        <div class="disciplines">
+          Agentic AI<i></i>Developer Tools<i></i>Full-Stack
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
