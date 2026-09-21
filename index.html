@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="canonical" href="https://www.ananthu.xyz/" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Ananthu Narashimman — Agentic AI, Developer Tools, Full-Stack</title>
@@ -18,15 +19,17 @@
          LinkedIn, iMessage, Discord or X. Source: og/og-image.html, rendered
          to public/og.png at 1200x630.
 
-         ONE THING TO FINISH: og:url and the two image URLs are root-relative
-         because the deployed domain is not recorded anywhere in this repo.
-         Slack, Discord, WhatsApp and iMessage resolve relative URLs fine; X
-         and LinkedIn want absolute ones. Once the domain is known, make these
-         absolute, e.g. https://your-domain.com/og.png
+         These URLs are absolute, and have to stay that way. A relative
+         og:image is not resolved by WhatsApp, X or LinkedIn - they simply
+         drop the image and show title and description alone, which is exactly
+         what happened when these were written as /og.png.
+
+         Crawlers cache aggressively. After changing the image, re-scrape via
+         each platform's debugger, or test with a cache-busting query string.
          ──────────────────────────────────────────────────────────────── -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Ananthu Narashimman" />
-    <meta property="og:url" content="/" />
+    <meta property="og:url" content="https://www.ananthu.xyz/" />
     <meta
       property="og:title"
       content="Ananthu Narashimman — Building Solutions That Matter"
@@ -35,7 +38,9 @@
       property="og:description"
       content="Agentic AI systems, developer tools and full-stack products — from idea to deployed in days. Always at a hackathon, always shipping."
     />
-    <meta property="og:image" content="/og.png" />
+    <meta property="og:image" content="https://www.ananthu.xyz/og.png" />
+    <meta property="og:image:secure_url" content="https://www.ananthu.xyz/og.png" />
+    <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta
@@ -53,7 +58,7 @@
       name="twitter:description"
       content="Agentic AI systems, developer tools and full-stack products — from idea to deployed in days. Always at a hackathon, always shipping."
     />
-    <meta name="twitter:image" content="/og.png" />
+    <meta name="twitter:image" content="https://www.ananthu.xyz/og.png" />
   </head>
   <body>
     <div id="root"></div>
