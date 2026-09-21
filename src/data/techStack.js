@@ -39,7 +39,7 @@ export const detailedTechStack = {
       { name: 'Scikit-learn', icon: 'sklearn', color: '#F7931E' },
       { name: 'Transformers', icon: 'transformers', color: '#FFD21E' },
       { name: 'LLM Internals', icon: 'llm', color: '#10A37F' },
-      { name: 'Browser-use', icon: 'automation', color: '#4285F4' },
+      { name: 'Browser Automation', icon: 'automation', color: '#4285F4' },
     ]
   },
   exposure: {

@@ -433,8 +433,8 @@
 /* ---------------------------------------------------------------------------
    6. The tech-arsenal CTA
    ---------------------------------------------------------------------------
-   This one is handled on its own because its face is a halftone dot field
-   that is part of its character, and its ::after was the sweeping shine.
+   Handled on its own because its face is a halftone dot field that is part of
+   its character, so it cannot take the shared grain.
    ------------------------------------------------------------------------ */
 
 .comic-tech-know-more-btn.comic-tech-know-more-btn {
@@ -448,7 +448,9 @@
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.12);
 }
 
-/* Shine off, layer reused as the bevel. */
+/* Its bevel layer. The component used to put a sweeping shine on this
+   pseudo-element, which this rule cancelled; that shine has since been
+   deleted at source, so this now just draws the lip. */
 .comic-tech-know-more-btn.comic-tech-know-more-btn::after {
   content: "";
   position: absolute;

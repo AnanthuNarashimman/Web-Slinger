@@ -146,7 +146,11 @@ const ComicTechStack = () => {
       {/* Link through to the full arsenal page */}
       <div className="comic-tech-cta" data-reveal>
         <Link to="/arsenal" className="comic-tech-know-more-btn">
-          <BookOpen className="btn-icon" size={20} strokeWidth={2.5} />
+          {/* The book sits in a well, the same shape the Build Log CTA uses,
+              so the site's two "read the full thing" buttons match. */}
+          <span className="comic-tech-know-more-icon">
+            <BookOpen size={19} strokeWidth={2.5} />
+          </span>
           <span className="comic-tech-know-more-text-main">SEE FULL ARSENAL</span>
           <ArrowRight className="btn-icon btn-icon-arrow" size={20} strokeWidth={3} />
         </Link>

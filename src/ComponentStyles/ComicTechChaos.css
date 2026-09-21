@@ -644,20 +644,6 @@
    Know More Button
    ============================================ */
 
-@keyframes shimmer {
-  0% {
-    left: -100%;
-  }
-  100% {
-    left: 100%;
-  }
-}
-
-@keyframes ctaBounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
-}
-
 @keyframes ctaTagWobble {
   0%, 100% { transform: rotate(-3deg); }
   50% { transform: rotate(3deg); }
@@ -695,56 +681,69 @@
   position: relative;
   z-index: 1;
   text-decoration: none;
-  background: #FF1744;
+  background-color: #FF1744;
   background-image: radial-gradient(rgba(255,255,255,0.35) 1.5px, transparent 1.5px);
   background-size: 9px 9px;
   color: #fff;
   font-family: 'Bangers', cursive;
   font-size: 20px;
-  padding: 0.65rem 1.9rem;
+  /* asymmetric: tight on the left where the well sits, open on the right */
+  padding: 0.5rem 1.7rem 0.5rem 0.5rem;
   border: 4px solid #000;
-  border-radius: 10px;
+  border-radius: 14px;
   cursor: pointer;
   box-shadow: 6px 6px 0px #000;
-  transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.12s ease;
-  display: flex;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    background-color 0.15s ease;
+  display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  animation: ctaBounce 1.5s ease-in-out infinite;
   overflow: hidden;
 }
 
-/* Glossy sweep across the button face */
-.comic-tech-know-more-btn::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 60%;
-  height: 100%;
-  background: linear-gradient(
-    100deg,
-    transparent,
-    rgba(255, 255, 255, 0.55),
-    transparent
-  );
-  animation: shimmer 3.2s ease-in-out infinite;
-  pointer-events: none;
+/* The well. Black on the red face, and it swaps to yellow when the button
+   inverts on hover, so it never disappears into the background. */
+.comic-tech-know-more-icon {
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background-color: #000;
+  background-image: var(--tb-dome);
+  background-repeat: no-repeat;
+  border: 3px solid #000;
+  box-shadow: var(--tb-dome-bevel);
+  color: #ffe135;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    transform 0.25s ease,
+    background-color 0.15s ease,
+    color 0.15s ease;
 }
 
+/* Lifts diagonally like every other button on the site. It used to tilt two
+   degrees on hover, which was the only button here that did. */
 .comic-tech-know-more-btn:hover {
   background-color: #000;
-  transform: translateY(-3px) rotate(-2deg);
+  transform: translate(-3px, -3px);
   box-shadow: 9px 9px 0px #FF1744;
-  animation: none;
+}
+
+.comic-tech-know-more-btn:hover .comic-tech-know-more-icon {
+  background-color: #ffe135;
+  color: #000;
+  transform: rotate(-10deg) scale(1.06);
 }
 
 .comic-tech-know-more-btn:active {
-  transform: translateY(2px) rotate(0deg);
-  box-shadow: 3px 3px 0px #000;
-  animation: none;
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px #000;
 }
 
 .comic-tech-know-more-btn .btn-icon {
@@ -762,9 +761,12 @@
 
 .comic-tech-know-more-text-main {
   font-size: 1em;
+  /* The stroke gives the letterforms their comic weight; the drop behind them
+     was a second full-strength black on top of it, which thickened the type
+     into a blur. Pulled back so the stroke does the work. */
   -webkit-text-stroke: 0.6px #000;
   paint-order: stroke fill;
-  text-shadow: 2px 2px 0px #000;
+  text-shadow: 1.5px 1.5px 0px rgba(0, 0, 0, 0.5);
 }
 
 @media (max-width: 767px) {
@@ -783,22 +785,29 @@
   }
 
   .comic-tech-know-more-btn {
-    padding: 0.6rem 1.2rem;
-    border: 4px solid #000;
+    padding: 0.45rem 1.2rem 0.45rem 0.45rem;
+    border: 3px solid #000;
+    border-radius: 12px;
     box-shadow: 4px 4px 0px #000;
-    animation: none;
     font-size: 15px;
-    gap: 7px;
+    gap: 9px;
     text-align: center;
   }
 
+  .comic-tech-know-more-icon {
+    width: 31px;
+    height: 31px;
+    border-width: 2px;
+  }
+
   .comic-tech-know-more-btn:hover {
-    transform: scale(1.05) rotate(-1deg);
-    box-shadow: 4px 4px 0px #FF1744;
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px #FF1744;
   }
 
   .comic-tech-know-more-btn:active {
-    transform: scale(0.95);
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0px #000;
   }
 
   .comic-tech-know-more-btn .btn-icon {
