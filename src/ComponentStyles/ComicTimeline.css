@@ -117,40 +117,34 @@
 /* Timeline Styles */
 
 /* The spine.
-   It was a flat 6px rectangle of solid black, cut off square at both ends —
-   the one element in a hand-inked section that still looked like a div. It
-   now reads as a drawn stroke: a rounded cord lit from the left like every
-   other surface on the page, ruled with faint ticks so it has some measure to
-   it, and terminated deliberately at both ends rather than just stopping.
+   A thin ruled stroke rather than the slab it used to be: at 3px it recedes
+   behind the entries and the explosion bubbles instead of competing with
+   them, which is what a guide line is for. Faint ticks give it some measure.
 
-   Ends rather than a fade on purpose. Comics do not fade out; a stroke has a
-   start and a finish. The pen touches down at the top and the line arrives at
-   an arrowhead aimed at the badge that closes the section, which also points
-   the eye in the direction the entries actually run: most recent at the top,
-   the beginning at the foot. */
+   No shading across its width — at this weight a left-to-right highlight has
+   nowhere to land and only muddies the edge.
+
+   Terminated at both ends rather than faded, on purpose. Comics do not fade
+   out; a stroke has a start and a finish. The pen touches down at the top and
+   the line arrives at an arrowhead aimed at the badge that closes the
+   section, which also points the eye the way the entries run: most recent at
+   the top, the beginning at the foot. */
 .central-line {
     position: absolute;
     left: 50%;
     top: 8rem;
     bottom: 5.5rem;
-    width: 8px;
+    width: 3px;
     transform: translateX(-50%);
     z-index: 0;
-    border-radius: 4px;
+    border-radius: 1.5px;
     background-color: #000;
     background-image:
         /* ruled ticks down the length */
         repeating-linear-gradient(
             to bottom,
-            rgba(255, 255, 255, 0.18) 0 2px,
-            transparent 2px 24px
-        ),
-        /* cord roundness, lit from the left to match everything else */
-        linear-gradient(
-            90deg,
-            rgba(255, 255, 255, 0.34) 0%,
-            rgba(255, 255, 255, 0.07) 42%,
-            rgba(0, 0, 0, 0.4) 100%
+            rgba(255, 255, 255, 0.22) 0 2px,
+            transparent 2px 22px
         );
 }
 
@@ -158,10 +152,10 @@
 .central-line::before {
     content: "";
     position: absolute;
-    top: -8px;
+    top: -5px;
     left: 50%;
-    width: 18px;
-    height: 18px;
+    width: 11px;
+    height: 11px;
     border-radius: 50%;
     background-color: #000;
     transform: translateX(-50%);
@@ -171,13 +165,13 @@
 .central-line::after {
     content: "";
     position: absolute;
-    bottom: -19px;
+    bottom: -13px;
     left: 50%;
     width: 0;
     height: 0;
-    border-left: 11px solid transparent;
-    border-right: 11px solid transparent;
-    border-top: 19px solid #000;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-top: 13px solid #000;
     transform: translateX(-50%);
 }
 
@@ -511,28 +505,28 @@
         margin-bottom: 0;
     }
 
-    /* Thinner cord, with both terminals scaled to match. The ticks keep their
-       spacing: rescaling them here would squash the pattern rather than
+    /* Thinner again, with both terminals scaled to match. The ticks keep
+       their spacing: rescaling them here would squash the pattern rather than
        repeat it more often. */
     .central-line {
         left: 50%;
-        width: 5px;
+        width: 2px;
         top: 6rem;
         bottom: 4.5rem;
-        border-radius: 2.5px;
+        border-radius: 1px;
     }
 
     .central-line::before {
-        top: -6px;
-        width: 13px;
-        height: 13px;
+        top: -4px;
+        width: 9px;
+        height: 9px;
     }
 
     .central-line::after {
-        bottom: -14px;
-        border-left-width: 8px;
-        border-right-width: 8px;
-        border-top-width: 14px;
+        bottom: -10px;
+        border-left-width: 5px;
+        border-right-width: 5px;
+        border-top-width: 10px;
     }
 
     .bubble-container {

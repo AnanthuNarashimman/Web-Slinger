@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { BookOpen, ArrowRight } from 'lucide-react';
 import TechIcon from './TechIcon';
+import { featuredTech } from '../data/techStack';
 import '../ComponentStyles/ComicTechChaos.css';
 import Techie from '../assets/Images/techie.png';
 
@@ -21,22 +22,17 @@ const ComicTechStack = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Complete Tech List with specific colors/icons
-  const chaosTechStack = [
-    { name: 'React', icon: 'react', color: '#61DAFB' },
-    { name: 'JavaScript', icon: 'js', color: '#F7DF1E' },
-    { name: 'Node.js', icon: 'node', color: '#339933' },
-    { name: 'Python', icon: 'python', color: '#3776AB' },
-    { name: 'Flask', icon: 'flask', color: '#000000' },
-    { name: 'Flutter', icon: 'flutter', color: '#02569B' },
-    { name: 'TypeScript', icon: 'typescript', color: '#3178C6' },
-    { name: 'Next.js', icon: 'next', color: '#000000' },
-    { name: 'Firebase', icon: 'firebase', color: '#FFCA28' },
-    { name: 'Google Cloud', icon: 'gcp', color: '#4285F4' },
-    { name: 'Git', icon: 'git', color: '#F05032' },
-    { name: 'Postman', icon: 'postman', color: '#FF6C37' },
-    { name: 'Figma', icon: 'figma', color: '#F24E1E' },
-  ];
+  /*
+   * The bubbles used to carry their own hardcoded list, which had drifted
+   * from src/data/techStack.js and led with Git, Postman and Figma — table
+   * stakes taking the most visible slots, while none of the agent or LLM work
+   * the rest of the site is built around appeared at all.
+   *
+   * They now read the `featured` shortlist from that file, so the section and
+   * the /arsenal page can no longer disagree, and the order is set once in
+   * the data rather than here.
+   */
+  const chaosTechStack = featuredTech;
 
   // Pseudo-random generator for consistent chaos across renders
   // Positions bubbles around a center image placeholder
