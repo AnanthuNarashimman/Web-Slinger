@@ -120,7 +120,7 @@ export const hackathons = [
     tagline: "Campus innovation sprint",
     date: "January 2026",
     location: "Namakkal",
-    result: "Participant",
+    result: "Winner",
     accent: "#3b82f6",
     summary:
       "An open-brief sprint where the only rule was to build something people would actually use.",
