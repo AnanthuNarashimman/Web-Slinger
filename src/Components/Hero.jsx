@@ -2,7 +2,7 @@ import "../ComponentStyles/Hero.css";
 
 import Profile from "../assets/Images/comic_sprofile.png";
 
-import { Send, Rocket, Users, Bot, Globe, Terminal, Layout } from 'lucide-react';
+import { Send, Users, Bot, Globe, Terminal, Layout } from 'lucide-react';
 
 import NpmStatCard from './NpmStatCard';
 
@@ -50,15 +50,8 @@ function Hero() {
                         </button>
                         </a>
                         <div className="clients">
-                            <div className="stat-card">
-                                <div className="stat-icon stat-icon-pink">
-                                    <Rocket size={20} strokeWidth={2.5} />
-                                </div>
-                                <div className="stat-info">
-                                    <span className="stat-number">8+</span>
-                                    <span className="stat-label">Projects<br />Shipped</span>
-                                </div>
-                            </div>
+                            {/* npm takes the lead slot the projects count used to hold */}
+                            <NpmStatCard />
                             <div className="stat-card">
                                 <div className="stat-icon stat-icon-green">
                                     <Users size={20} strokeWidth={2.5} />
@@ -68,7 +61,6 @@ function Hero() {
                                     <span className="stat-label">Users<br />Served</span>
                                 </div>
                             </div>
-                            <NpmStatCard />
                         </div>
                     </div>
 

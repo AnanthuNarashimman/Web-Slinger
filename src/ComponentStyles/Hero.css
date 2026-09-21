@@ -368,10 +368,6 @@ a:has(.cta-btn):focus {
     color: #fff;
 }
 
-.stat-icon-pink {
-    background: #ff1744;
-}
-
 .stat-icon-green {
     background: #76ff03;
     color: #000;
@@ -582,12 +578,13 @@ a:has(.cta-btn):focus {
     background-color: #00e5ff;
     color: #000;
     top: 20%;
-    left: -2%;
+    left: -9%;
     --badge-tilt: -5deg;
     --badge-delay: 0.15s;
-    --badge-float-dur: 7s;
+    --badge-float-dur: 5.5s;
     --badge-float-delay: 0.65s;
-    --badge-float-rise: -7px;
+    --badge-float-rise: -15px;
+    --badge-float-drift: 5px;
 }
 
 .arrow-1 {
@@ -602,9 +599,10 @@ a:has(.cta-btn):focus {
     right: 0%;
     --badge-tilt: 4deg;
     --badge-delay: 0.28s;
-    --badge-float-dur: 8.5s;
+    --badge-float-dur: 6.7s;
     --badge-float-delay: 0.78s;
-    --badge-float-rise: -5px;
+    --badge-float-rise: -12px;
+    --badge-float-drift: -4px;
 }
 
 .arrow-2 {
@@ -619,9 +617,10 @@ a:has(.cta-btn):focus {
     right: -5%;
     --badge-tilt: 6deg;
     --badge-delay: 0.41s;
-    --badge-float-dur: 6.5s;
+    --badge-float-dur: 5.1s;
     --badge-float-delay: 0.91s;
-    --badge-float-rise: -6px;
+    --badge-float-rise: -14px;
+    --badge-float-drift: -6px;
 }
 
 .badge-4 {
@@ -631,9 +630,10 @@ a:has(.cta-btn):focus {
     left: -10%;
     --badge-tilt: -4deg;
     --badge-delay: 0.54s;
-    --badge-float-dur: 9s;
+    --badge-float-dur: 7.3s;
     --badge-float-delay: 1.04s;
-    --badge-float-rise: -8px;
+    --badge-float-rise: -17px;
+    --badge-float-drift: 6px;
 }
 
 .arrow-4 {
@@ -839,19 +839,27 @@ a:has(.cta-btn):focus {
     }
 }
 
-/* The resting drift. Small amplitude, long period, and the four badges run on
-   near-prime durations so they never settle into a visible shared pulse.
-   The sway is written as the badge's own tilt plus a degree and a bit, so it
-   rocks around the angle it is pinned at instead of rotating back to square. */
+/* The resting drift. Three stops rather than a simple up-and-down, and a
+   little sideways travel on the way, so the badge wanders instead of bobbing
+   on a rail — that is what makes the motion register. The four badges run on
+   unequal durations so they never settle into a visible shared pulse.
+   Every rotation is written as the badge's own tilt plus an offset, so the
+   sway happens around the angle it is pinned at rather than flattening it. */
 @keyframes badgeFloat {
     0%,
     100% {
         translate: 0 0;
         rotate: var(--badge-tilt, 0deg);
     }
-    50% {
-        translate: 0 var(--badge-float-rise, -6px);
-        rotate: calc(var(--badge-tilt, 0deg) + 1.2deg);
+    30% {
+        translate: var(--badge-float-drift, 4px)
+            calc(var(--badge-float-rise, -13px) * 0.55);
+        rotate: calc(var(--badge-tilt, 0deg) + 2deg);
+    }
+    65% {
+        translate: calc(var(--badge-float-drift, 4px) * -0.6)
+            var(--badge-float-rise, -13px);
+        rotate: calc(var(--badge-tilt, 0deg) - 1deg);
     }
 }
 
@@ -1054,7 +1062,7 @@ a:has(.cta-btn):focus {
         height: 30px;
     }
 
-    /* Keep the two count pills side by side, npm drops to its own full row */
+    /* npm takes its own full row, the remaining count pill takes the next */
     .clients {
         margin-top: 30px;
         gap: 10px;
