@@ -719,9 +719,11 @@ a:has(.cta-btn):focus {
         /* the moulded lip; both pseudo-element slots are spoken for here,
            so this rides in the shadow stack instead of on a layer */
         inset 0 -7px 12px rgba(0, 0, 0, 0.07),
-        /* the two misregistered plates */
+        /* The two misregistered plates. The red sits where it was; the black
+           steps only 3px past it rather than 6, so it reads as an edge on the
+           red plate instead of a second slab behind the card. */
         7px 7px 0px #ff1744,
-        13px 13px 0px #000;
+        10px 10px 0px #000;
     /* Just enough to give the letters printed weight without bolding them. */
     text-shadow: 1.5px 1.5px 0 rgba(0, 0, 0, 0.13);
     /* On `rotate`, not inside `transform`, so the entrance animation cannot
@@ -1363,7 +1365,7 @@ a:has(.cta-btn):focus {
             inset 0 0 0 2px #ff1744,
             inset 0 -4px 7px rgba(0, 0, 0, 0.07),
             4px 4px 0px #ff1744,
-            8px 8px 0px #000;
+            6px 6px 0px #000;
         text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.13);
     }
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Menu } from 'lucide-react';
 
 const ComicSidebar = ({ 
@@ -6,6 +6,20 @@ const ComicSidebar = ({
   onNavigate = (item) => console.log(`Navigating to ${item}`)
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  // Escape closes the panel. The listener is attached only while it is open,
+  // so the page is not carrying a keydown handler the rest of the time, and
+  // Escape keeps its usual meaning everywhere else.
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') setIsOpen(false);
+    };
+
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [isOpen]);
 
   return (
     <>
