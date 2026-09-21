@@ -1,0 +1,506 @@
+/* ============================================================================
+   Tactile Buttons — a shared material layer over the existing comic buttons
+   ============================================================================
+
+   The portfolio's buttons are drawn in comic language: a heavy black ink
+   outline and a hard offset shadow, in flat cyan / red / yellow / black.
+   That language stays. What this file adds is the thing flat fills lack —
+   the sense that the button is a real moulded object sitting on the page.
+
+   Four physical cues, applied on top of whatever colour a button already has
+   so every button keeps its own hue:
+
+     1. FACE    a vertical light-to-shade gradient. Light comes from above,
+                so the top of the face is lit and the bottom falls into shade.
+     2. TOOTH   a very fine two-tone dot grain, the tooth of printed paper.
+                One light dot layer and one dark layer, offset from each
+                other, so the grain reads on pale and near-black faces alike.
+     3. BEVEL   a catch-light along the top inner edge and a shade along the
+                bottom inner edge, just inside the ink outline. This is the
+                rounded lip of a moulded surface.
+     4. CONTACT a short, tight, straight-down shadow. It anchors the button
+                to the page. It is deliberately not a glow: no colour, no
+                spread, no large blur.
+
+   Nothing here floats, pulses, spins or glows. Motion happens only in
+   response to a pointer, and on press the button tips away from the light
+   and settles into the page.
+
+   Two implementation notes:
+
+   - The bevel lives on a pseudo-element rather than in the button's own
+     box-shadow. Each button's hard comic shadow has its own offset and
+     colour, and components rewrite that shadow on hover. Keeping the bevel
+     on a separate layer means the material survives those rewrites and this
+     file never has to restate another file's shadow.
+   - Selectors repeat the class name (.cta-btn.cta-btn). That raises
+     specificity above the single-class component rules, so this layer lands
+     correctly no matter where the bundler orders the stylesheets. A few go to
+     three (.comic-button) because the TV stylesheet pairs those classes with
+     a variant, which would otherwise tie.
+
+   To remove all of this: delete this file and its import in src/main.jsx.
+   ========================================================================= */
+
+:root {
+  /* Overhead light across the face. The slight step at the midpoint is what
+     separates a moulded plastic face from a plain linear ramp. */
+  --tb-face: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.26) 0%,
+    rgba(255, 255, 255, 0.11) 44%,
+    rgba(0, 0, 0, 0.05) 56%,
+    rgba(0, 0, 0, 0.17) 100%
+  );
+
+  /* Pressed: the face tips away from the light, so the top highlight mostly
+     goes and the whole surface sits deeper in shade. */
+  --tb-face-press: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.14) 0%,
+    rgba(0, 0, 0, 0.06) 40%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+
+  /* Paper tooth. Sub-pixel dots on a 3px grid — visible as grain, never as
+     a pattern. Two tones so it survives on both white and black faces. */
+  --tb-tooth-light: radial-gradient(
+    rgba(255, 255, 255, 0.055) 0.5px,
+    transparent 0.6px
+  );
+  --tb-tooth-dark: radial-gradient(rgba(0, 0, 0, 0.06) 0.5px, transparent 0.6px);
+
+  /* Moulded lip, just inside the ink outline. */
+  --tb-bevel:
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+  --tb-bevel-press:
+    inset 0 1px 0 rgba(0, 0, 0, 0.16),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.1);
+
+  /* Domed icon well — the small sphere set into a button face. */
+  --tb-dome:
+    radial-gradient(
+      circle at 50% 18%,
+      rgba(255, 255, 255, 0.45) 0%,
+      rgba(255, 255, 255, 0.14) 40%,
+      rgba(255, 255, 255, 0) 66%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.08) 0%,
+      rgba(0, 0, 0, 0.2) 100%
+    );
+  --tb-dome-bevel:
+    inset 0 1.5px 1px rgba(255, 255, 255, 0.28),
+    inset 0 -2.5px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* ---------------------------------------------------------------------------
+   1. Flat-faced buttons
+   ------------------------------------------------------------------------ */
+
+.cta-btn.cta-btn,
+.comic-button.comic-button.comic-button,
+.placeholder-contact-btn.placeholder-contact-btn,
+.link-button.link-button,
+.github-profile-button.github-profile-button,
+.modal-button.modal-button,
+.hack-btn.hack-btn,
+.buildlog-cta-btn.buildlog-cta-btn,
+.hack-all-link.hack-all-link,
+.hacklog-back-btn.hacklog-back-btn,
+.arsenal-back-btn.arsenal-back-btn,
+.arsenal-footer-btn.arsenal-footer-btn,
+.wanted-send-btn.wanted-send-btn,
+.contact-link.contact-link,
+.hack-info-btn.hack-info-btn,
+.social-link.social-link,
+.hack-card-links.hack-card-links a {
+  position: relative;
+  background-image: var(--tb-tooth-light), var(--tb-tooth-dark), var(--tb-face);
+  background-size: 3px 3px, 3px 3px, auto;
+  background-position: 0 0, 1.5px 1.5px, 0 0;
+  background-repeat: repeat, repeat, no-repeat;
+  /* Keep the printed ink crisp against the shading underneath it. */
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.12);
+}
+
+/* The bevel layer. Sits inside the border box, so the catch-light reads as a
+   lip on the face rather than a second outline around it. */
+.cta-btn.cta-btn::after,
+.placeholder-contact-btn.placeholder-contact-btn::after,
+.link-button.link-button::after,
+.github-profile-button.github-profile-button::after,
+.modal-button.modal-button::after,
+.hack-btn.hack-btn::after,
+.buildlog-cta-btn.buildlog-cta-btn::after,
+.hack-all-link.hack-all-link::after,
+.hacklog-back-btn.hacklog-back-btn::after,
+.arsenal-back-btn.arsenal-back-btn::after,
+.arsenal-footer-btn.arsenal-footer-btn::after,
+.contact-link.contact-link::after,
+.hack-info-btn.hack-info-btn::after,
+.social-link.social-link::after,
+.hack-card-links.hack-card-links a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow: var(--tb-bevel);
+  background: none;
+  animation: none;
+}
+
+/* .comic-button already uses ::after for its hover tint, and .wanted-send-btn
+   keeps ::after free for the THWIP tag. Both get the bevel on the layer that
+   is actually available to them. */
+.comic-button.comic-button.comic-button::after {
+  border-radius: inherit;
+  box-shadow: var(--tb-bevel);
+}
+
+.wanted-send-btn.wanted-send-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  box-shadow: var(--tb-bevel);
+}
+
+/* Contact shadow. Applied as a filter rather than a box-shadow so it composes
+   with each button's own hard comic shadow instead of replacing it, and so it
+   survives the hover rules in the component stylesheets. */
+.cta-btn.cta-btn,
+.comic-button.comic-button.comic-button,
+.placeholder-contact-btn.placeholder-contact-btn,
+.comic-tech-know-more-btn.comic-tech-know-more-btn,
+.link-button.link-button,
+.github-profile-button.github-profile-button,
+.modal-button.modal-button,
+.hack-btn.hack-btn,
+.buildlog-cta-btn.buildlog-cta-btn,
+.wanted-send-btn.wanted-send-btn,
+.hack-info-btn.hack-info-btn {
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.18));
+}
+
+/* Most components change a button's colour on hover using the `background`
+   shorthand, and that shorthand resets background-image to none. Without this
+   rule the face, the grain and the shading would all disappear the moment the
+   pointer arrived. The face is re-asserted here at a specificity those hover
+   rules cannot reach, so only the colour underneath it changes. */
+.cta-btn.cta-btn:hover,
+.comic-button.comic-button.comic-button:hover,
+.placeholder-contact-btn.placeholder-contact-btn:hover,
+.link-button.link-button:hover,
+.github-profile-button.github-profile-button:hover,
+.modal-button.modal-button:hover,
+.hack-btn.hack-btn:hover,
+.buildlog-cta-btn.buildlog-cta-btn:hover,
+.hack-all-link.hack-all-link:hover,
+.hacklog-back-btn.hacklog-back-btn:hover,
+.arsenal-back-btn.arsenal-back-btn:hover,
+.arsenal-footer-btn.arsenal-footer-btn:hover,
+.wanted-send-btn.wanted-send-btn:hover,
+.contact-link.contact-link:hover,
+.hack-info-btn.hack-info-btn:hover,
+.social-link.social-link:hover,
+.hack-card-links.hack-card-links a:hover {
+  background-image: var(--tb-tooth-light), var(--tb-tooth-dark), var(--tb-face);
+  background-size: 3px 3px, 3px 3px, auto;
+  background-position: 0 0, 1.5px 1.5px, 0 0;
+  background-repeat: repeat, repeat, no-repeat;
+}
+
+/* ---------------------------------------------------------------------------
+   2. Press physics
+   ---------------------------------------------------------------------------
+   The component stylesheets already move each button on :active and collapse
+   its hard shadow. This adds the part flat fills cannot show: the face tipping
+   out of the light, the lip inverting, and the contact shadow closing up as
+   the button meets the page.
+   ------------------------------------------------------------------------ */
+
+.cta-btn.cta-btn:active,
+.comic-button.comic-button.comic-button:active:not(:disabled),
+.placeholder-contact-btn.placeholder-contact-btn:active,
+.link-button.link-button:active:not(:disabled),
+.github-profile-button.github-profile-button:active,
+.modal-button.modal-button:active,
+.hack-btn.hack-btn:active:not(:disabled),
+.buildlog-cta-btn.buildlog-cta-btn:active,
+.hack-all-link.hack-all-link:active,
+.hacklog-back-btn.hacklog-back-btn:active,
+.arsenal-back-btn.arsenal-back-btn:active,
+.arsenal-footer-btn.arsenal-footer-btn:active,
+.wanted-send-btn.wanted-send-btn:active:not(:disabled),
+.contact-link.contact-link:active,
+.hack-info-btn.hack-info-btn:active,
+.social-link.social-link:active,
+.hack-card-links.hack-card-links a:active {
+  background-image: var(--tb-tooth-light), var(--tb-tooth-dark),
+    var(--tb-face-press);
+  filter: none;
+  text-shadow: none;
+}
+
+.cta-btn.cta-btn:active::after,
+.comic-button.comic-button.comic-button:active:not(:disabled)::after,
+.placeholder-contact-btn.placeholder-contact-btn:active::after,
+.link-button.link-button:active:not(:disabled)::after,
+.github-profile-button.github-profile-button:active::after,
+.modal-button.modal-button:active::after,
+.hack-btn.hack-btn:active:not(:disabled)::after,
+.buildlog-cta-btn.buildlog-cta-btn:active::after,
+.hack-all-link.hack-all-link:active::after,
+.hacklog-back-btn.hacklog-back-btn:active::after,
+.arsenal-back-btn.arsenal-back-btn:active::after,
+.arsenal-footer-btn.arsenal-footer-btn:active::after,
+.contact-link.contact-link:active::after,
+.hack-info-btn.hack-info-btn:active::after,
+.social-link.social-link:active::after,
+.hack-card-links.hack-card-links a:active::after,
+.wanted-send-btn.wanted-send-btn:active:not(:disabled)::before {
+  box-shadow: var(--tb-bevel-press);
+}
+
+/* Hover lifts the button a little further from the page, so the contact
+   shadow opens up by the same small amount. Millimetres, not inches. */
+.cta-btn.cta-btn:hover,
+.comic-button.comic-button.comic-button:hover:not(:disabled),
+.placeholder-contact-btn.placeholder-contact-btn:hover,
+.comic-tech-know-more-btn.comic-tech-know-more-btn:hover,
+.link-button.link-button:hover:not(:disabled),
+.github-profile-button.github-profile-button:hover,
+.modal-button.modal-button:hover,
+.hack-btn.hack-btn:hover:not(:disabled),
+.buildlog-cta-btn.buildlog-cta-btn:hover,
+.wanted-send-btn.wanted-send-btn:hover:not(:disabled) {
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.2));
+}
+
+/* ---------------------------------------------------------------------------
+   3. Domed icon wells
+   ---------------------------------------------------------------------------
+   The round icon holders and circular buttons. A sphere lit from above and
+   set into its surround, with the shade collecting along the lower edge.
+   ------------------------------------------------------------------------ */
+
+.cta-btn .send-icon,
+.buildlog-cta-btn-icon.buildlog-cta-btn-icon,
+.item-link-btn.item-link-btn,
+.modal-close-button.modal-close-button,
+.hack-modal-close.hack-modal-close,
+.hack-notes-close.hack-notes-close {
+  background-image: var(--tb-dome);
+  background-repeat: no-repeat;
+}
+
+/* Same shorthand problem as the flat faces: the close buttons recolour
+   themselves on hover and would drop the dome doing it. */
+.item-link-btn.item-link-btn:hover,
+.modal-close-button.modal-close-button:hover,
+.hack-modal-close.hack-modal-close:hover,
+.hack-notes-close.hack-notes-close:hover {
+  background-image: var(--tb-dome);
+  background-repeat: no-repeat;
+}
+
+/* Each of these keeps its own hard comic shadow, so the well shading is added
+   to that shadow rather than written over it. */
+.cta-btn .send-icon,
+.buildlog-cta-btn-icon.buildlog-cta-btn-icon,
+.hack-notes-close.hack-notes-close {
+  box-shadow: var(--tb-dome-bevel);
+}
+
+.item-link-btn.item-link-btn {
+  box-shadow: var(--tb-dome-bevel), 2px 2px 0 #000;
+}
+
+.item-link-btn.item-link-btn:hover {
+  box-shadow: var(--tb-dome-bevel), 4px 4px 0 #000;
+}
+
+.modal-close-button.modal-close-button {
+  box-shadow: var(--tb-dome-bevel), 5px 5px 0 #000;
+}
+
+.modal-close-button.modal-close-button:hover {
+  box-shadow: var(--tb-dome-bevel), 7px 7px 0 #000;
+}
+
+.hack-modal-close.hack-modal-close {
+  box-shadow: var(--tb-dome-bevel), 2px 2px 0 #000;
+}
+
+/* Pressing a dome pushes the highlight down and deepens the shade under it. */
+.cta-btn:active .send-icon,
+.buildlog-cta-btn:active .buildlog-cta-btn-icon,
+.item-link-btn.item-link-btn:active,
+.modal-close-button.modal-close-button:active,
+.hack-modal-close.hack-modal-close:active,
+.hack-notes-close.hack-notes-close:active {
+  background-image:
+    radial-gradient(
+      circle at 50% 78%,
+      rgba(255, 255, 255, 0.18) 0%,
+      rgba(255, 255, 255, 0) 60%
+    ),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.22) 0%, rgba(0, 0, 0, 0.04) 100%);
+  box-shadow:
+    inset 0 2px 3px rgba(0, 0, 0, 0.34),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.12);
+}
+
+/* Those two carry their own offset shadow. When it collapses under the press
+   they travel the same distance, so the button meets the page instead of
+   appearing to deflate in place. The close button keeps its tilt.
+   The notes close button is left out: it already scales down on press. */
+.item-link-btn.item-link-btn:active,
+.hack-modal-close.hack-modal-close:active {
+  transform: translate(2px, 2px);
+}
+
+.modal-close-button.modal-close-button:active {
+  transform: translate(3px, 3px) rotate(10deg);
+}
+
+/* ---------------------------------------------------------------------------
+   4. Printed labels
+   ---------------------------------------------------------------------------
+   Chips and tags are not pressable, so they get the paper treatment only:
+   grain and a soft lip, no press state and no contact shadow.
+   ------------------------------------------------------------------------ */
+
+.npm-chip.npm-chip,
+.comic-tech-cta-tag.comic-tech-cta-tag {
+  position: relative;
+  background-image: var(--tb-tooth-light), var(--tb-tooth-dark),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.2) 0%,
+      rgba(0, 0, 0, 0.08) 100%
+    );
+  background-size: 3px 3px, 3px 3px, auto;
+  background-position: 0 0, 1.5px 1.5px, 0 0;
+  background-repeat: repeat, repeat, no-repeat;
+}
+
+/* ---------------------------------------------------------------------------
+   5. Retiring the idle motion
+   ---------------------------------------------------------------------------
+   A button that bobs, spins or sweeps a shine across itself on a timer is the
+   one thing that most breaks the illusion of a real object. These elements
+   now hold still until they are pointed at.
+   ------------------------------------------------------------------------ */
+
+.cta-btn.cta-btn,
+.social-link.social-link,
+.comic-tech-know-more-btn.comic-tech-know-more-btn,
+.comic-tech-cta-tag.comic-tech-cta-tag,
+.cta-btn .send-icon {
+  animation: none;
+}
+
+/* The tag's tilt lived only inside its wobble keyframes, so it is restated
+   here or the tag snaps square once the animation is off. Nothing else needs
+   a transform restated: the CTA and the social links both declare their
+   resting transform in their own stylesheets.
+
+   Deliberately left at single-class specificity. These elements have hover
+   rules of their own, and those must still outrank this. */
+.comic-tech-cta-tag {
+  transform: rotate(-3deg);
+}
+
+.social-link.social-link {
+  /* The float animation was also supplying the resting opacity. */
+  opacity: 0.95;
+}
+
+/* ---------------------------------------------------------------------------
+   6. The tech-arsenal CTA
+   ---------------------------------------------------------------------------
+   This one is handled on its own because its face is a halftone dot field
+   that is part of its character, and its ::after was the sweeping shine.
+   ------------------------------------------------------------------------ */
+
+.comic-tech-know-more-btn.comic-tech-know-more-btn {
+  position: relative;
+  background-image:
+    radial-gradient(rgba(255, 255, 255, 0.35) 1.5px, transparent 1.5px),
+    var(--tb-face);
+  background-size: 9px 9px, auto;
+  background-position: 0 0, 0 0;
+  background-repeat: repeat, no-repeat;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.12);
+}
+
+/* Shine off, layer reused as the bevel. */
+.comic-tech-know-more-btn.comic-tech-know-more-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  left: 0;
+  top: 0;
+  width: auto;
+  height: auto;
+  border-radius: inherit;
+  pointer-events: none;
+  background: none;
+  animation: none;
+  box-shadow: var(--tb-bevel);
+}
+
+.comic-tech-know-more-btn.comic-tech-know-more-btn:active {
+  background-image:
+    radial-gradient(rgba(255, 255, 255, 0.28) 1.5px, transparent 1.5px),
+    var(--tb-face-press);
+  background-size: 9px 9px, auto;
+  filter: none;
+  text-shadow: none;
+}
+
+.comic-tech-know-more-btn.comic-tech-know-more-btn:active::after {
+  box-shadow: var(--tb-bevel-press);
+}
+
+/* ---------------------------------------------------------------------------
+   7. Toning down the older glass sheens
+   ---------------------------------------------------------------------------
+   These two sat at 45% white across the top half, which read as polished
+   glass rather than printed card. Pulled back so they agree with the face
+   gradient underneath instead of competing with it.
+   ------------------------------------------------------------------------ */
+
+.comic-button.comic-button.comic-button::before,
+.placeholder-contact-btn.placeholder-contact-btn::before {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.16) 0%,
+    rgba(255, 255, 255, 0.02) 100%
+  );
+}
+
+/* ---------------------------------------------------------------------------
+   8. Reduced motion
+   ------------------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  .cta-btn.cta-btn,
+  .comic-button.comic-button.comic-button,
+  .placeholder-contact-btn.placeholder-contact-btn,
+  .comic-tech-know-more-btn.comic-tech-know-more-btn,
+  .link-button.link-button,
+  .github-profile-button.github-profile-button,
+  .modal-button.modal-button,
+  .hack-btn.hack-btn,
+  .buildlog-cta-btn.buildlog-cta-btn,
+  .wanted-send-btn.wanted-send-btn,
+  .social-link.social-link {
+    transition: none;
+  }
+}
