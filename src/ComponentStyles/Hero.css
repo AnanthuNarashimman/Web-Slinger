@@ -178,18 +178,41 @@
     color: #ff1744;
 }
 
+/* The speech bubble under the title.
+   Figtree rather than Titillium Web: it is the face the Build Log section
+   already uses for running text, it has a taller x-height at this size, and
+   it stops the hero from introducing a typeface nothing else on the page
+   uses. The measure is capped so the line length stays readable when the
+   column is wide. */
 .hero-subtitle {
+    font-family: "Figtree", "Inter", sans-serif;
     font-size: 19px;
-    line-height: 1.6;
-    color: #000;
+    font-weight: 500;
+    line-height: 1.68;
+    letter-spacing: 0.005em;
+    color: #14161a;
+    max-width: 56ch;
     margin-bottom: 40px;
-    font-family: "Titillium Web", sans-serif;
-    font-weight: 550;
-    background: #fff;
-    padding: 24px 28px;
+    background-color: #fff;
+    /* Same printed-paper treatment as the buttons: fine grain and a face lit
+       from above, so the bubble reads as a panel rather than a white box. */
+    background-image: var(--tb-tooth-light), var(--tb-tooth-dark),
+        linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.9) 0%,
+            rgba(0, 0, 0, 0.018) 55%,
+            rgba(0, 0, 0, 0.05) 100%
+        );
+    background-size: 3px 3px, 3px 3px, auto;
+    background-position: 0 0, 1.5px 1.5px, 0 0;
+    background-repeat: repeat, repeat, no-repeat;
+    padding: 26px 30px;
     border: 4px solid #000;
     border-radius: 20px;
-    box-shadow: 8px 8px 0px #000;
+    box-shadow:
+        inset 0 2px 0 rgba(255, 255, 255, 0.9),
+        inset 0 -3px 6px rgba(0, 0, 0, 0.05),
+        8px 8px 0px #000;
     position: relative;
 }
 
@@ -217,9 +240,21 @@
     border-top: 17px solid #fff;
 }
 
+/* Marker swipe rather than only a colour change, so the emphasis survives
+   being read quickly and matches the hand-made feel of the rest of the page.
+   The band sits low enough to clear the descenders. */
 .hero-subtitle .highlight {
     color: #ff1744;
-    font-weight: 600;
+    font-weight: 800;
+    background-image: linear-gradient(
+        180deg,
+        transparent 58%,
+        rgba(255, 215, 0, 0.5) 58%,
+        rgba(255, 215, 0, 0.5) 94%,
+        transparent 94%
+    );
+    padding: 0 3px;
+    margin: 0 -1px;
 }
 
 .cta-btn {
@@ -428,46 +463,84 @@ a:has(.cta-btn):focus {
     margin-left: 5%;
 }
 
+/* Skill badges pinned around the portrait.
+   These are stickers pressed onto the page, not balloons. They arrive in a
+   short stagger, settle, and then hold still. */
 .badge {
     position: absolute;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 10px;
-    padding: 6px 18px 6px 6px;
-    border-radius: 14px;
-    font-size: 18px;
-    font-weight: 400 !important;
+    padding: 5px 20px 5px 5px;
+    /* A pill with a round well on the left, which is the shape the icon
+       already wanted. The old 14px radius fought it. */
+    border-radius: 999px;
     font-family: "Bangers", cursive;
-    box-shadow: 5px 5px 0px #000;
-    white-space: nowrap;
-    animation: fadeInFloat 0.8s ease-out forwards;
-    opacity: 0;
-    z-index: 10;
-    border: 3px solid #000;
+    font-size: 17px;
+    font-weight: 400 !important;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.7px;
     line-height: 1.15;
+    white-space: nowrap;
+    border: 3px solid #000;
+    box-shadow: 5px 5px 0px #000;
+    z-index: 10;
+
+    /* Printed face and grain, matching the buttons. Each badge sets only its
+       own background-color, so this shading rides on top of any of them. */
+    background-image: var(--tb-tooth-light), var(--tb-tooth-dark), var(--tb-face);
+    background-size: 3px 3px, 3px 3px, auto;
+    background-position: 0 0, 1.5px 1.5px, 0 0;
+    background-repeat: repeat, repeat, no-repeat;
+    filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.18));
+
+    /* The tilt lives on the `rotate` property rather than inside `transform`.
+       It used to be declared as transform: rotate(...) and was then silently
+       wiped by the float keyframes, which reset transform wholesale — so none
+       of the intended tilts ever showed. Keeping them on a separate property
+       means an animation that only touches translate, scale and opacity can
+       never overwrite them. */
+    rotate: var(--badge-tilt, 0deg);
+
+    animation: badgeIn 0.5s cubic-bezier(0.2, 0.75, 0.35, 1)
+        var(--badge-delay, 0s) backwards;
     transition:
-        transform 0.3s ease,
-        box-shadow 0.3s ease;
+        transform 0.22s ease,
+        box-shadow 0.22s ease,
+        filter 0.22s ease;
+}
+
+/* Moulded lip, on its own layer so the badge's hard shadow stays untouched. */
+.badge::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    box-shadow: var(--tb-bevel);
 }
 
 .badge:hover {
-    transform: translate(-2px, -2px) scale(1.05);
+    transform: translate(-2px, -2px) scale(1.03);
     box-shadow: 7px 7px 0px #000;
+    filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.2));
 }
 
+/* The round well, lit from the same direction as everything else. */
 .badge-icon {
     width: 30px;
     height: 30px;
     min-width: 30px;
     border-radius: 50%;
-    background: #fff;
+    background-color: #fff;
+    background-image: var(--tb-dome);
+    background-repeat: no-repeat;
     border: 3px solid #000;
     display: flex;
     align-items: center;
     justify-content: center;
     color: #000;
+    box-shadow: var(--tb-dome-bevel);
 }
 
 .badge-arrow {
@@ -477,16 +550,15 @@ a:has(.cta-btn):focus {
     animation: fadeInFloat 0.8s ease-out 0.9s forwards;
 }
 
+/* background-color, not the background shorthand: the shorthand would reset
+   the grain and face set on .badge. */
 .badge-1 {
-    background: #00e5ff;
+    background-color: #00e5ff;
     color: #000;
     top: 20%;
     left: -2%;
-    animation:
-        fadeInFloat 0.8s ease-out forwards,
-        floatBadge1 4s ease-in-out infinite;
-    animation-delay: 0.2s, 0.8s;
-    transform: rotate(-6deg);
+    --badge-tilt: -5deg;
+    --badge-delay: 0.15s;
 }
 
 .arrow-1 {
@@ -495,15 +567,12 @@ a:has(.cta-btn):focus {
 }
 
 .badge-2 {
-    background: #ffd700;
+    background-color: #ffd700;
     color: #000;
     top: 8%;
     right: 0%;
-    animation:
-        fadeInFloat 0.8s ease-out forwards,
-        floatBadge2 5s ease-in-out infinite;
-    animation-delay: 0.4s, 1s;
-    transform: rotate(5deg);
+    --badge-tilt: 4deg;
+    --badge-delay: 0.28s;
 }
 
 .arrow-2 {
@@ -512,27 +581,21 @@ a:has(.cta-btn):focus {
 }
 
 .badge-3 {
-    background: #76ff03;
+    background-color: #76ff03;
     color: #000;
     bottom: 34%;
     right: -5%;
-    animation:
-        fadeInFloat 0.8s ease-out forwards,
-        floatBadge3 4.5s ease-in-out infinite;
-    animation-delay: 0.6s, 1.2s;
-    transform: rotate(8deg);
+    --badge-tilt: 6deg;
+    --badge-delay: 0.41s;
 }
 
 .badge-4 {
-    background: #ff1744;
+    background-color: #ff1744;
     color: #fff;
     bottom: 16%;
     left: -10%;
-    animation:
-        fadeInFloat 0.8s ease-out forwards,
-        floatBadge4 5.5s ease-in-out infinite;
-    animation-delay: 0.8s, 1.4s;
-    transform: rotate(-5deg);
+    --badge-tilt: -4deg;
+    --badge-delay: 0.54s;
 }
 
 .arrow-4 {
@@ -551,101 +614,68 @@ a:has(.cta-btn):focus {
     }
 }
 
-@keyframes floatBadge1 {
-    0%,
-    100% {
-        transform: translateY(0) translateX(0) rotate(0deg);
-    }
-    25% {
-        transform: translateY(-12px) translateX(5px) rotate(2deg);
-    }
-    50% {
-        transform: translateY(-8px) translateX(-5px) rotate(-1deg);
-    }
-    75% {
-        transform: translateY(-15px) translateX(3px) rotate(1deg);
-    }
-}
+/* Name Banner
+   -----------------------------------------------------------------------
+   This used to be `left: 52%` with `transform: translateX(-50%)`, which
+   centres the badge against its OWN width. The badge is only as wide as its
+   text, and that text is set in Bangers, a webfont. Until Bangers arrived the
+   text rendered in the fallback, which is much wider — so the badge sat well
+   to the left, and then jumped right the moment the font swapped in. That is
+   the sideways travel on load.
 
-@keyframes floatBadge2 {
-    0%,
-    100% {
-        transform: translateY(0) translateX(0) rotate(0deg);
-    }
-    25% {
-        transform: translateY(-10px) translateX(-8px) rotate(-2deg);
-    }
-    50% {
-        transform: translateY(-18px) translateX(6px) rotate(1deg);
-    }
-    75% {
-        transform: translateY(-6px) translateX(-4px) rotate(-1deg);
-    }
-}
-
-@keyframes floatBadge3 {
-    0%,
-    100% {
-        transform: translateY(0) translateX(0) rotate(0deg);
-    }
-    25% {
-        transform: translateY(-15px) translateX(-6px) rotate(2deg);
-    }
-    50% {
-        transform: translateY(-10px) translateX(8px) rotate(-2deg);
-    }
-    75% {
-        transform: translateY(-20px) translateX(-3px) rotate(1deg);
-    }
-}
-
-@keyframes floatBadge4 {
-    0%,
-    100% {
-        transform: translateY(0) translateX(0) rotate(0deg);
-    }
-    25% {
-        transform: translateY(-8px) translateX(7px) rotate(-1deg);
-    }
-    50% {
-        transform: translateY(-16px) translateX(-5px) rotate(2deg);
-    }
-    75% {
-        transform: translateY(-12px) translateX(4px) rotate(-2deg);
-    }
-}
-
-/* Name Banner */
+   A full-width band that centres its child cannot do that. The band's width
+   comes from the container, which is settled before first paint, so the
+   badge's centre never moves. When the font swaps the badge now just narrows
+   evenly about that fixed centre. */
 .name-banner {
     position: absolute;
     bottom: -30px;
-    left: 52%;
-    transform: translateX(-50%);
-    text-align: center;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    /* The old 52% nudge, re-expressed against the band's stable width. */
+    transform: translateX(2%);
     z-index: 20;
-    animation: bannerEntrance 1s ease-out 0.5s backwards;
+    /* The band now spans the full width, so it must not swallow pointer
+       events meant for the artwork and badges behind it. */
+    pointer-events: none;
 }
 
 .name-text {
+    pointer-events: auto;
     font-family: "Bangers", cursive;
     font-size: 42px;
     color: #000;
     text-transform: uppercase;
     letter-spacing: 3px;
     padding: 15px 40px;
-    background: #fff;
+    background-color: #fff;
+    background-image: var(--tb-tooth-light), var(--tb-tooth-dark), var(--tb-face);
+    background-size: 3px 3px, 3px 3px, auto;
+    background-position: 0 0, 1.5px 1.5px, 0 0;
+    background-repeat: repeat, repeat, no-repeat;
     border: 6px solid #000;
     border-radius: 15px;
+    /* Red keyline, black outer rule, then the hard drop. The two insets give
+       the card a moulded lip; both pseudo-element slots are already spoken
+       for here, so the bevel rides in the shadow stack instead. */
     box-shadow:
+        inset 0 2px 0 rgba(255, 255, 255, 0.85),
+        inset 0 -3px 5px rgba(0, 0, 0, 0.07),
         0 0 0 3px #ff1744,
         0 0 0 9px #000,
         12px 12px 0px #000;
-    transform: rotate(-2deg);
-    animation: nameBounce 2s ease-in-out infinite;
+    /* On `rotate`, not inside `transform`, so the entrance animation cannot
+       flatten the tilt on its way past. */
+    rotate: -2deg;
+    animation: bannerEntrance 0.75s cubic-bezier(0.2, 0.75, 0.35, 1) 0.45s
+        backwards;
     position: relative;
     white-space: nowrap;
 }
 
+/* The tab above the card. Static now: it was wiggling on a two-second loop. */
 .name-text::before {
     content: "";
     position: absolute;
@@ -656,22 +686,23 @@ a:has(.cta-btn):focus {
     border-left: 20px solid transparent;
     border-right: 20px solid transparent;
     border-bottom: 15px solid #000;
-    animation: pointerWiggle 2s ease-in-out infinite;
 }
 
+/* Corner star. Parked at a fixed angle instead of spinning forever. */
 .name-text::after {
     content: "★";
     position: absolute;
-    top: -10px;
-    right: -15px;
+    top: -12px;
+    right: -16px;
     font-size: 40px;
+    line-height: 1;
     color: #ffd700;
+    rotate: 12deg;
     text-shadow:
         -2px -2px 0 #000,
         2px -2px 0 #000,
         -2px 2px 0 #000,
         2px 2px 0 #000;
-    animation: starSpin 4s linear infinite;
 }
 
 .name-subtitle {
@@ -729,27 +760,38 @@ a:has(.cta-btn):focus {
 }
 
 /* Comic-style Animations */
+/* Both entrances drive `translate`, `scale` and `opacity` only. They never
+   touch `transform` or `rotate`, so each element's resting tilt survives the
+   animation instead of being reset by it. A small overshoot reads as the card
+   being pressed down and settling, rather than drifting into place. */
 @keyframes bannerEntrance {
     0% {
         opacity: 0;
-        transform: translateX(-50%) translateY(50px) scale(0.5) rotate(-10deg);
+        translate: 0 18px;
+        scale: 0.97;
     }
-    60% {
-        transform: translateX(-50%) translateY(-10px) scale(1.1) rotate(2deg);
+    70% {
+        opacity: 1;
+        translate: 0 -3px;
+        scale: 1.008;
     }
     100% {
         opacity: 1;
-        transform: translateX(-50%) translateY(0) scale(1) rotate(0deg);
+        translate: 0 0;
+        scale: 1;
     }
 }
 
-@keyframes nameBounce {
-    0%,
-    100% {
-        transform: rotate(-2deg) translateY(0);
+@keyframes badgeIn {
+    0% {
+        opacity: 0;
+        translate: 0 12px;
+        scale: 0.96;
     }
-    50% {
-        transform: rotate(-2deg) translateY(-8px);
+    100% {
+        opacity: 1;
+        translate: 0 0;
+        scale: 1;
     }
 }
 
@@ -760,34 +802,6 @@ a:has(.cta-btn):focus {
     }
     50% {
         transform: rotate(1deg) scale(1.05);
-    }
-}
-
-@keyframes pointerWiggle {
-    0%,
-    100% {
-        transform: translateX(0);
-    }
-    50% {
-        transform: translateX(-5px);
-    }
-}
-
-@keyframes starSpin {
-    0% {
-        transform: rotate(0deg) scale(1);
-    }
-    25% {
-        transform: rotate(90deg) scale(1.2);
-    }
-    50% {
-        transform: rotate(180deg) scale(1);
-    }
-    75% {
-        transform: rotate(270deg) scale(1.2);
-    }
-    100% {
-        transform: rotate(360deg) scale(1);
     }
 }
 
@@ -1226,7 +1240,10 @@ a:has(.cta-btn):focus {
         padding: 8px 18px;
         letter-spacing: 1px;
         border: 4px solid #000;
+        /* Tighter rings at this size, but the moulded lip is carried over. */
         box-shadow:
+            inset 0 2px 0 rgba(255, 255, 255, 0.85),
+            inset 0 -2px 4px rgba(0, 0, 0, 0.07),
             0 0 0 2px #ff1744,
             0 0 0 6px #000,
             8px 8px 0px #000;

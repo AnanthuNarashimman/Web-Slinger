@@ -39,7 +39,16 @@
      three (.comic-button) because the TV stylesheet pairs those classes with
      a variant, which would otherwise tie.
 
+   The :root block below is the shared source of truth for this material.
+   Hero.css reads the same tokens for the skill badges and the name card, so
+   the hero and the buttons cannot drift apart. Custom properties resolve
+   across the whole document regardless of stylesheet order, so that works
+   even though this file is loaded last.
+
    To remove all of this: delete this file and its import in src/main.jsx.
+   The hero would then fall back to flat fills, since its var() references
+   would no longer resolve — move the :root block into App.css first if you
+   want to keep the hero's treatment.
    ========================================================================= */
 
 :root {
