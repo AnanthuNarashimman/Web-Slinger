@@ -8,7 +8,7 @@ const PACKAGES = [
     name: "tracetel",
     description:
       "Turns every Composio tool call into a proper OpenTelemetry span — streamed into Agnost, SigNoz, Datadog or any OTel backend.",
-    downloads: "887",
+    downloads: "983",
     tags: ["OpenTelemetry", "Composio"],
     accent: "#cb3837",
     url: "https://www.npmjs.com/package/tracetel",
@@ -17,7 +17,7 @@ const PACKAGES = [
     name: "@flash_dev/agent-smith",
     description:
       "A goal-fidelity watchdog for AI coding agents. Flags every risky action that contradicts what you said you were building.",
-    downloads: "62",
+    downloads: "105",
     tags: ["AI Agents", "Governance"],
     accent: "#2979ff",
     url: "https://www.npmjs.com/package/@flash_dev/agent-smith",
@@ -161,7 +161,7 @@ function NpmStatCard() {
           <Package size={20} strokeWidth={2.5} />
         </span>
         <span className="stat-info">
-          <span className="stat-number">900+</span>
+          <span className="stat-number">1k+</span>
           <span className="stat-label">
             npm
             <br />
